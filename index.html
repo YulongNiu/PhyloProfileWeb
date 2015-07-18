@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Online Prediciton of Human Whole Genomic Linkages</title>
+    <link href="./CSS/style1.css" rel="stylesheet" type="text/css" />
+    <!-- <script language="javascript" type="text/javascript" src="./JS/moreinfo.js"></script> -->
+  </head> 
+  
+  <body>
+    <h3><p>Online Prediciton of Human Whole Genomic Linkages</p></h3>
+    
+    
+    <!-- Input candidate data -->
+    <form target="_blank" method="post" action="/cgi-bin/linkage_predict.py" enctype="multipart/form-data">
+      <fieldset>
+	<legend><h2>Candidate Gene List</h2></legend>
+	<p>Choose batch file: <input type="file" name="candidateList"/></p>
+      </fieldset>
+      
+      <br />
+      <center>
+	<p><input type="submit" value="Submit" /></p>
+      </center>
+    </form>
+    
+    
+    <table>
+      <tr>
+	<td>Click to see example:</td>
+	<td><a href="./Exampledata/phylopred_atpSub/index.html" target="_blank"><input type="button" value="Example"/></a></td>
+	<td>&nbsp;</td>
+      </tr>
+      <tr>
+	<td>Click to download example input files (F1Fo ATP synthase):</td>
+	<td><a target="_blank" href="./Exampledata/phylopred_atpSub/atpSub.txt">"txt" format</a></td>
+	<td><a target="_blank" href="./Exampledata/phylopred_atpSub/atpSub.csv">"csv" format</a></td>
+      </tr>
+    </table>
+    
+    <!-- contact information -->
+    <hr />
+    <p>If you have any questions or suggestion, please do not hesitate to contact us. </p>
+    <h4>Yulong Niu</h4>
+    <p>email: <a href="mailto:yulong.niu@aol.com">yulong.niu (AT) aol.com</a></p>
+  </body>
+
+
+  <!-- google anlaytics -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53073828-3', 'auto');
+  ga('send', 'pageview');
+
+  </script>
+  
+</html>
