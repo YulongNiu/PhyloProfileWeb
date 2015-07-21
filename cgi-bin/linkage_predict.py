@@ -27,8 +27,6 @@ def GetRFilePath(folderName, fileName):
     return filepwd
 ####################################################
 
-
-
 fnDir = RandomName('phylopred')
 fn = tempPath + fnDir
 if os.path.exists(fn):
@@ -65,14 +63,14 @@ if len(message) == 0:
     # read in file
     if filen.split('.')[-1] == 'csv':
         # for csv file
-        batArgu = r['read.csv'](fn + '/' + filen, stringsAsFactors = FALSE)
+        batArgu = r['read.csv'](fn + '/' + filen, stringsAsFactors = False)
         geneList = batArgu.rx(True, 1)
-        geneCol = batArgu.rx(True, 2)
+        geneColVec = batArgu.rx(True, 2)
     elif filen.split('.')[-1] == 'txt':
         # for txt file
-        batArgu = r['read.table'](fn + '/' + filen, sep = '\t', header = True,  stringsAsFactors = FALSE, comment.char = '')
+        batArgu = r['read.table'](fn + '/' + filen, sep = '\t', header = True, stringsAsFactors = False, **{'comment.char': ''})
         geneList = batArgu.rx(True, 1)
-        geneCol = batArgu.rx(True, 2)
+        geneColVec = batArgu.rx(True, 2)
     else:
         message.append('Only "txt" or "csv" file format is allowed.\n')
 
@@ -81,6 +79,38 @@ if len(message) == 0:
     if len(message) == 0:
 
         ##~~~~~~~~~~~~~~~~~~~~~~~~plot phyloprofile~~~~~~~~~~~~~~~~~~~
+        # select profiles
+        profileMat = r['GetProfile'](geneList, wholePhyloDataNet)
+        # set names of gene colors vector
+        geneColVec.names = geneList
+
+        # set profile plot path
+        profileFigPdfPath = GetRFilePath(fn, 'profilePlot.pdf')
+        profileFigJpgPath = GetRFilePath(fn, 'profilePlot.jpg')
+       
+        r['pdf'](profileFigPdfPath)
+        profileFig = r['PlotPhyloProfile'](profileMat, speCol = kingdomCol, geneCol = geneColVec)
+        r['dev.off']()
+
+        os.system('convert -density 100 ' + ''.join(list(profileFigPdfPath)) +' ' + ''.join(list(profileFigJpgPath)) + ' >/dev/null')
+        
+        profileFigObj = r("hwriteImage('profilePlot.jpg', center = TRUE)")
+        profileFigObj = tuple(profileFigObj)[0]
+        ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        ##~~~~~~~~~~~~~~~~~~~~~~~~plot cormatrix~~~~~~~~~~~~~~~~~~~
+        # set profile plot path
+        cormatrixFigPdfPath = GetRFilePath(fn, 'cormatrixPlot.pdf')
+        cormatrixFigJpgPath = GetRFilePath(fn, 'cormatrixPlot.jpg')
+        
+        r['pdf'](cormatrixFigPdfPath)
+        cormatrixFig = r['PlotPhyloCor'](profileMat, geneCol = geneColVec)
+        r['dev.off']()
+
+        os.system('convert -density 100 ' + ''.join(list(cormatrixFigPdfPath)) + ' ' + ''.join(list(cormatrixFigJpgPath)) + ' >/dev/null')
+
+        cormatrixFigObj = r("hwriteImage('cormatrixPlot.jpg', center = TRUE)")
+        cormatrixFigObj = tuple(cormatrixFigObj)[0]
         ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
         ##~~~~~~~~~~~~~~~~~~~~~~~~~interaction matrix~~~~~~~~~~~~~~~~~~~~
@@ -95,10 +125,10 @@ if len(message) == 0:
         ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
         # read html template
         htmltemp = open('/var/www/cgi-bin/' + 'phylo_linkages.html').read()
-        htmlReturn = htmltemp %(linksMat, fnDir)
+        htmlReturn = htmltemp %(profileFigObj, cormatrixFigObj, linksMat, fnDir)
         # beware of the path!!!!!!!!!!!!!
         # write html index
-        f = open(fn+'/index.html', 'w')
+        f = open(fn + '/index.html', 'w')
         f.write(htmlReturn + '\n')
         f.close()
 
@@ -115,7 +145,7 @@ if len(message) == 0:
         ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         ##~~~~~~~~~~~~~~~~~~~~~~~~tar_Results~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        tarcom = 'tar -zcvf '  + fn + '.tar.gz ' '-C '+ tempPath + ' ' + fnDir
+        tarcom = 'tar -zcvf ' + fn + '.tar.gz ' '-C '+ tempPath + ' ' + fnDir
         os.system(tarcom + '>/dev/null')
         ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
