@@ -53,6 +53,7 @@ else:
 #########################Process_data##################
 if len(message) == 0:
     # source the R code. After that I just need to load the package.
+    # I may need to use a database instead of load RData
     r.source('phylo_getlinkages.R')
     r.load('top400Viz.RData')
     r.load('profileViz.RData')
@@ -124,7 +125,7 @@ if len(message) == 0:
 
         ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
         # read html template
-        htmltemp = open('/var/www/cgi-bin/' + 'phylo_linkages.html').read()
+        htmltemp = open('/var/www/cgi-bin/phyloCGI/' + 'phylo_linkages.html').read()
         htmlReturn = htmltemp %(profileFigObj, cormatrixFigObj, linksMat, fnDir)
         # beware of the path!!!!!!!!!!!!!
         # write html index
