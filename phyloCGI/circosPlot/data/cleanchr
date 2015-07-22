@@ -1,0 +1,10 @@
+#!/bin/bash
+
+for file in *.txt ; do
+
+echo "cleaning chr names in $file"
+cat $file | grep -v _random | grep -v hsM | grep -v _hap > tmp.1
+\mv tmp.1 $file
+
+done
+
