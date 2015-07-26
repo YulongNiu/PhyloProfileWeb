@@ -10,7 +10,7 @@
   
   <body>
     <h3><p>Online Prediciton of Human Whole Genomic Linkages</p></h3>
-    <p>Version: 0.02 (July 21, 2015)</p>
+    <p>Current version: 0.02 (July 21, 2015)</p>
     
     <!-- Input candidate data -->
     <form target="_blank" method="post" action="/cgi-bin/phyloCGI/linkage_predict.py" enctype="multipart/form-data">
@@ -47,9 +47,10 @@
     <h4>Input</h4>
     <p>Only the "txt" or the "csv" format is allowed for the input files. </p>
     <ol>
-      <li>The number of input genes is supposed to be at least two. There are serveral reasons. The most important one is our algorithm is based on the whole genome, and the prediction results are more reliable when taking into account a cluster of genes like genes from a complex or a biological pathway. Our team is now working on an advanced algorithms based on the statistical distribution of linkages for each gene. Several clues indicate the new algorithm have a better performace in reducing the false positive rate, which haunts all the existing methods for protein linkage prediction. </li>
+      <li>The number of input genes is supposed to be at least two. Otherwise, an error message will return. There are several reasons. The most important one is our algorithm is based on the whole genome, and the prediction results are more reliable when taking into account a cluster of genes like genes from a complex or a biological pathway. Our team is now working on an advanced algorithms based on the statistical distribution of linkages for each gene. Several clues indicate the new algorithm have a better performace in reducing the false positive rate, which haunts all the existing methods for protein linkage prediction. </li>
       <li>1st column contains the input genes. The "GeneID" is used as the unique gene name for each gene, for example "hsa:513" denotes the human gene "ATP5D" (ATP synthase, H+ transporting, mitochondrial F1 complex, delta subunit (EC:3.6.1.14)). Other formats of gene names may be supported in the furture. </li>
       <li>2nd column contains the colours for each input genes. Colour modes like the hex triplet and colour names are both supported. For example, the "red" and "#ff0000" are legal input colours. If you do not want to show the colour for a gene, an easy way is to set the colour as "white" or "#FFFFFF". </li>
+      <li>3rd column defines tfhe colour linkages. The colour format is different from the ones in the 2nd column. The legal input colours are described as the <a target="_blank" href="http://circos.ca/documentation/tutorials/configuration/colors/">Circos configuration</a>. Seven colours, red, orange, yellow, green, blue, purple, and grey are predefined with prefix to show the light ("l", "vl", "vvl"') and dard ("d", "vd", "vvd") verions. Five degrees of <a target="_blank" href="http://circos.ca/tutorials/lessons/recipes/transparent_links/">transparent colous</a> are allowed, "_a1" have a 17% transparency, "_a2" 33%, "_a3" 50%, "_a4" 67% and "_a5" 83%. For example, "vlred_a4" is the very light red colour with 67% transparency. You may want to hidden the linkaged for certain genes, just use "NA" (not "na", not "white", not "Na") as the link color. But, at least one genes should have proper linkage colour.
     </ol>
     
     <h4>Ouput</h4>
@@ -59,15 +60,33 @@
       <li>The downloaded folder includes published quality of figures mentioned above in both "pdf" and "jpg" formats. The prediction linkages is stored in a "csv" file that can be easily used for other analysis and validation experiments. Moreover, the same webage is stored in a "html" file used for a overview of the results.</li>
     </ol>
 
+    <!-- release history -->
+    <hr />
+    <h4>Release history</h4>
+    <ul>
+      <li>version 0.02 (July 21, 2015)</li>
+      <ol>
+	<li>add plot of phylogenetic profiles;</li>
+	<li>add plot of correlation matrix.</li>
+      </ol>
+      <li>version 0.01 (May 5, 2015)</li>
+      <ol>
+	<li>first release; </li>
+	<li>return predicted linkage.</li>
+      </ol>
+    </ul>
+
+
     <!-- TODO LIST -->
     <hr />
     <h4>TODO LIST</h4>
-    <ol>
+    <ul>
       <li>Adding the Circos plot (feature).</li>
       <li>Using the sql database instead of loading R data directly (speed).</li>
       <li>Building an extended R package instead of loading R scripts in the web CGI (speed).</li>
       <li>Supporting other formates of gene names (feature).</li>
-    </ol>
+      <li>Check the number of input genes is at least two.</li>
+    </ul>
     
     <!-- contact information -->
     <hr />

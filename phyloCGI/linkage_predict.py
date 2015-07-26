@@ -11,10 +11,11 @@ cgitb.enable()
 
 import cgi, os
 from set_uni_file import RandomName
-from rpy2.robjects import r, globalenv, FloatVector, StrVector
+from rpy2.robjects import r, StrVector, IntVector
 from rpy2.robjects.packages import importr
 importr('hwriter')
 importr('PhyloProfile')
+importr('PhyloProfileSuppl')
 
 
 ######################Python_Funciton###############
@@ -22,16 +23,16 @@ def GetRFilePath(folderName, fileName):
     """
     'GetRFilePath' is used to generate a R file path in python CGI
     """
-    filepwd = StrVector(folderName + '/'+ fileName)
+    filepwd = StrVector(folderName + fileName)
     filepwd = r['paste'](filepwd, collapse = '')
     return filepwd
 ####################################################
 
 fnDir = RandomName('phylopred')
-fn = tempPath + fnDir
+fn = tempPath + fnDir + '/'
 if os.path.exists(fn):
     fnDir = RandomName('phylopred')
-    fn = tempPath + fnDir
+    fn = tempPath + fnDir + '/'
 os.mkdir(fn)
 
 # return message whethe the upload data is correct
@@ -44,7 +45,7 @@ fileitem = form['candidateList']
 if fileitem.filename:
     # strip leading path from file name to avoid directory traversal attacks
     filen = os.path.basename(fileitem.filename)
-    open(fn + '/' + filen, 'wb').write(fileitem.file.read())
+    open(fn + filen, 'wb').write(fileitem.file.read())
 else:
     message.append('No file was uploaded.\n')
 
@@ -52,36 +53,43 @@ else:
 
 #########################Process_data##################
 if len(message) == 0:
-    # source the R code. After that I just need to load the package.
     # I may need to use a database instead of load RData
-    r.source('phylo_getlinkages.R')
-    r.load('top400Viz.RData')
-    r.load('profileViz.RData')
+    r['load']('top400Viz.RData')
+    r['load']('wholeProfile.RData')
+    r['load']('kingdomCol.RData')
+    r['load']('geneAnno.RData')
+    r['load']('phyloSpe.RData')
     top400Viz = r['top400Viz']
-    wholePhyloDataNet = r['wholePhyloDataNet']
+    wholeProfile = r['wholeProfile']
     kingdomCol = r['kingdomCol']
+    geneAnno = r['geneAnno']
+    phyloSpe = r['phyloSpe']
     
     # read in file
     if filen.split('.')[-1] == 'csv':
         # for csv file
-        batArgu = r['read.csv'](fn + '/' + filen, stringsAsFactors = False)
-        geneList = batArgu.rx(True, 1)
-        geneColVec = batArgu.rx(True, 2)
+        batArgu = r['read.csv'](fn + filen, stringsAsFactors = False)
     elif filen.split('.')[-1] == 'txt':
         # for txt file
-        batArgu = r['read.table'](fn + '/' + filen, sep = '\t', header = True, stringsAsFactors = False, **{'comment.char': ''})
-        geneList = batArgu.rx(True, 1)
-        geneColVec = batArgu.rx(True, 2)
+        batArgu = r['read.table'](fn + filen, sep = '\t', header = True, stringsAsFactors = False, **{"comment.char": ""})
     else:
         message.append('Only "txt" or "csv" file format is allowed.\n')
 
-        
     # No warning message
     if len(message) == 0:
 
+        # retrieve vec
+        geneList = batArgu.rx(True, 1)
+        geneColVec = batArgu.rx(True, 2)
+        linkColVec = batArgu.rx(True, 3)
+
+        # check row number should be more than 1
+        if list(r['length'](geneList))[0] < 2:
+            message.append('The input gene number should be at least two.\n')
+
         ##~~~~~~~~~~~~~~~~~~~~~~~~plot phyloprofile~~~~~~~~~~~~~~~~~~~
         # select profiles
-        profileMat = r['GetProfile'](geneList, wholePhyloDataNet)
+        profileMat = r['GetProfile'](geneList, wholeProfile)
         # set names of gene colors vector
         geneColVec.names = geneList
 
@@ -118,24 +126,56 @@ if len(message) == 0:
         linksMat = r['GetLinkages'](geneList, top400Viz)
         linksMatpwd = GetRFilePath(fn, 'predicted_linakges.csv')
         r['write.csv'](linksMat, linksMatpwd)
-        globalenv['linksMat'] = linksMat
-        linksMat = r("hwrite(linksMat, center = TRUE, row.bgcolor = '#a7c942', col.bgcolor = list('From' = '#a7c942', 'To' = '#a7c942'), row.style = list('font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'), col.style = list('From' = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em', 'To' = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'), br = TRUE, table.class = 'table')")
-        linksMat = tuple(linksMat)[0]
+        linksMatObj = r['hwrite'](linksMat, center = True, br = True, **{"row.bgcolor": "#a7c942", "col.bgcolor": r['list'](From = '#a7c942', To = '#a7c942'), "row.style": r['list']('font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'), "col.style": r['list'](From = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em', To = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'), "table.class": "'table'"})
+        linksMatObj = tuple(linksMatObj)[0]
         ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        ##~~~~~~~~~~~~~~~~~~~~~~~~~circos plot~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        # check link colours
+        checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
+        wm = checkColList.rx2(4)
+        if list(r['length'](wm))[0] == 0:
+            geneList = checkColList.rx2(1)
+            linkColVec = checkColList.rx2(2)
+            geneSym = checkColList.rx2(3)
+
+            # copy and compress circos folder
+            os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
+            os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
+
+            # generate circos files
+            ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
+            r['writeCircos'](geneList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig/phylo/')
+
+            # generate circos config
+            r['writeConf']('phylo/', geneList, geneSym, linkColVec, fn + 'circosConfig/')
+
+            # circos plot
+            os.system('circos-0.67-7/bin/circos -conf ' + fn + 'circosConfig/circosConf.conf ' + '-outputdir ' + fn + ' -outputfile ' + 'circosPlot' + ' >/dev/null')
+            os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png' + ' >/dev/null')
+            circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
+            circosFigObj = tuple(circosFigObj)[0]
+            
+            
+        else:
+            wm = r.hwrite(wm)
+            circosFigObj = tuple(wm)[0]
+        
+        ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
         # read html template
         htmltemp = open('/var/www/cgi-bin/phyloCGI/' + 'phylo_linkages.html').read()
-        htmlReturn = htmltemp %(profileFigObj, cormatrixFigObj, linksMat, fnDir)
+        htmlReturn = htmltemp %(profileFigObj, cormatrixFigObj, circosFigObj, linksMatObj, fnDir)
         # beware of the path!!!!!!!!!!!!!
         # write html index
-        f = open(fn + '/index.html', 'w')
+        f = open(fn + 'index.html', 'w')
         f.write(htmlReturn + '\n')
         f.close()
 
         # # read css template
         # csstemp = open('/var/www/html/metaker/CSS/style2.css').read()
-        # f = open(fn+'/style2.css', 'w')
+        # f = open(fn + 'style2.css', 'w')
         # f.write(csstemp + '\n')
         # f.close()
 
@@ -146,8 +186,8 @@ if len(message) == 0:
         ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         ##~~~~~~~~~~~~~~~~~~~~~~~~tar_Results~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        tarcom = 'tar -zcvf ' + fn + '.tar.gz ' '-C '+ tempPath + ' ' + fnDir
-        os.system(tarcom + '>/dev/null')
+        tarcom = 'tar -zcvf ' + fn[ :-1] + '.tar.gz ' '-C '+ tempPath + ' ' + fnDir
+        os.system(tarcom + ' >/dev/null')
         ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
