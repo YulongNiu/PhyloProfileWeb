@@ -142,6 +142,7 @@ if len(message) == 0:
             # copy and compress circos folder
             os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
             os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
+            os.system('rm ' + fn + 'circosConfig.tar.gz' + ' >/dev/null')
 
             # generate circos files
             ftMat = linksMat.rx(True, IntVector((1, 3, 5)))

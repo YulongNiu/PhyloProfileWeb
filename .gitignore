@@ -6,3 +6,4 @@
 .directory
 *.RData
 *.pyc
+ExampleData/*
