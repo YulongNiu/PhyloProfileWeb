@@ -11,7 +11,8 @@ cgitb.enable()
 
 import cgi, os
 from set_uni_file import RandomName
-from rpy2.robjects import r, StrVector, IntVector
+from rpy2.robjects import r
+from rpy2.robjects.vectors import StrVector, IntVector
 from rpy2.robjects.packages import importr
 importr('hwriter')
 importr('PhyloProfile')
@@ -28,12 +29,13 @@ def GetRFilePath(folderName, fileName):
     return filepwd
 ####################################################
 
-fnDir = RandomName('phylopred')
-fn = tempPath + fnDir + '/'
-if os.path.exists(fn):
+while True:
     fnDir = RandomName('phylopred')
     fn = tempPath + fnDir + '/'
-os.mkdir(fn)
+    if os.path.exists(fn) is not True:
+        # get an unique name 
+        os.mkdir(fn)
+        break
 
 # return message whethe the upload data is correct
 message = []
@@ -84,7 +86,7 @@ if len(message) == 0:
         linkColVec = batArgu.rx(True, 3)
 
         # check row number should be more than 1
-        if list(r['length'](geneList))[0] < 2:
+        if len(geneList) < 2:
             message.append('The input gene number should be at least two.\n')
 
         ##~~~~~~~~~~~~~~~~~~~~~~~~plot phyloprofile~~~~~~~~~~~~~~~~~~~
@@ -134,7 +136,7 @@ if len(message) == 0:
         # check link colours
         checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
         wm = checkColList.rx2(4)
-        if list(r['length'](wm))[0] == 0:
+        if len(wm) == 0:
             geneList = checkColList.rx2(1)
             linkColVec = checkColList.rx2(2)
             geneSym = checkColList.rx2(3)
