@@ -59,17 +59,16 @@ while True:
     if os.path.exists(fn) is not True:
         # get an unique name 
         os.mkdir(fn)
+        open(fn + filen, 'wb').write(fileitem.file.read())
         break
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # read in file
 if fileSuffix == 'csv':
     # for csv file
-    open(fn + filen, 'wb').write(fileitem.file.read())
     batArgu = r['read.csv'](fn + filen, stringsAsFactors = False)
 else:
     # for txt file
-    open(fn + filen, 'wb').write(fileitem.file.read())
     batArgu = r['read.table'](fn + filen, sep = '\t', header = True,
                               stringsAsFactors = False, **{"comment.char": ""})
 
