@@ -152,12 +152,16 @@ linksMatObj = tuple(linksMatObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~circos plot~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # check link colours
 checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
-wm = checkColList.rx2(4)
-if len(wm) == 0:
-    geneList = checkColList.rx2(1)
-    linkColVec = checkColList.rx2(2)
-    geneSym = checkColList.rx2(3)
-    
+geneList = checkColList.rx2('checkGeneVec')
+linkColVec = checkColList.rx2('checkLinkCol')
+geneSym = checkColList.rx2('checkGeneSym')
+wm = checkColList.rx2('wm')
+
+if len(wm) > 1:
+    circosFigObj = tuple(wm)[0]
+elif len(wm) == 0 and len(geneList) > 5:
+    circosFigObj = 'The number of candidate genes for Circos plot should no more than 5.\n'
+elif len(wm) == 0 and len(geneList) <= 5:
     # copy and compress circos folder
     os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
     os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
@@ -175,9 +179,6 @@ if len(wm) == 0:
     os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png' + ' >/dev/null')
     circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
     circosFigObj = tuple(circosFigObj)[0]
-else:
-    wm = r.hwrite(wm)
-    circosFigObj = tuple(wm)[0]     
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
