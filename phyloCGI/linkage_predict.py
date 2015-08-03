@@ -15,7 +15,7 @@ cgitb.enable()
 import cgi, os, sys
 from set_uni_file import RandomName
 from rpy2.robjects import r
-from rpy2.robjects.vectors import StrVector, IntVector
+from rpy2.robjects.vectors import StrVector, IntVector, FloatVector
 from rpy2.robjects.packages import importr
 
 ######################Python_Funciton###############
@@ -113,7 +113,10 @@ profileFigPdfPath = GetRFilePath(fn, 'profilePlot.pdf')
 profileFigJpgPath = GetRFilePath(fn, 'profilePlot.jpg')
         
 r['pdf'](profileFigPdfPath)
-profileFig = r['PlotPhyloProfile'](profileMat, speCol = kingdomCol, geneCol = geneColVec)
+profileFig = r['PlotPhyloProfile'](profileMat,
+                                   speCol = kingdomCol,
+                                   geneCol = geneColVec,
+                                   widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7]))
 r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(profileFigPdfPath)) +' ' + ''.join(list(profileFigJpgPath)) + ' >/dev/null')
@@ -128,7 +131,10 @@ cormatrixFigPdfPath = GetRFilePath(fn, 'cormatrixPlot.pdf')
 cormatrixFigJpgPath = GetRFilePath(fn, 'cormatrixPlot.jpg')
 
 r['pdf'](cormatrixFigPdfPath)
-cormatrixFig = r['PlotPhyloCor'](profileMat, geneCol = geneColVec)
+cormatrixFig = r['PlotPhyloCor'](profileMat,
+                                 geneCol = geneColVec,
+                                 widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7]),
+                                 showCorVal = False)
 r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(cormatrixFigPdfPath)) + ' ' + ''.join(list(cormatrixFigJpgPath)) + ' >/dev/null')
@@ -159,9 +165,9 @@ wm = checkColList.rx2('wm')
 
 if len(wm) > 1:
     circosFigObj = tuple(wm)[0]
-elif len(wm) == 0 and len(geneList) > 5:
-    circosFigObj = 'The number of candidate genes for Circos plot should no more than 5.\n'
-elif len(wm) == 0 and len(geneList) <= 5:
+elif len(wm) == 0 and len(geneList) > 7:
+    circosFigObj = 'The number of candidate genes for Circos plot should no more than 7.\n'
+elif len(wm) == 0 and len(geneList) <= 7:
     # copy and compress circos folder
     os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
     os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
