@@ -15,7 +15,7 @@ cgitb.enable()
 import cgi, os, sys
 from set_uni_file import RandomName
 from rpy2.robjects import r
-from rpy2.robjects.vectors import StrVector, IntVector
+from rpy2.robjects.vectors import StrVector, IntVector, FloatVector
 from rpy2.robjects.packages import importr
 
 ######################Python_Funciton###############
@@ -113,7 +113,10 @@ profileFigPdfPath = GetRFilePath(fn, 'profilePlot.pdf')
 profileFigJpgPath = GetRFilePath(fn, 'profilePlot.jpg')
         
 r['pdf'](profileFigPdfPath)
-profileFig = r['PlotPhyloProfile'](profileMat, speCol = kingdomCol, geneCol = geneColVec)
+profileFig = r['PlotPhyloProfile'](profileMat,
+                                   speCol = kingdomCol,
+                                   geneCol = geneColVec,
+                                   widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7]))
 r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(profileFigPdfPath)) +' ' + ''.join(list(profileFigJpgPath)) + ' >/dev/null')
@@ -128,7 +131,10 @@ cormatrixFigPdfPath = GetRFilePath(fn, 'cormatrixPlot.pdf')
 cormatrixFigJpgPath = GetRFilePath(fn, 'cormatrixPlot.jpg')
 
 r['pdf'](cormatrixFigPdfPath)
-cormatrixFig = r['PlotPhyloCor'](profileMat, geneCol = geneColVec)
+cormatrixFig = r['PlotPhyloCor'](profileMat,
+                                 geneCol = geneColVec,
+                                 widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7]),
+                                 showCorVal = False)
 r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(cormatrixFigPdfPath)) + ' ' + ''.join(list(cormatrixFigJpgPath)) + ' >/dev/null')
