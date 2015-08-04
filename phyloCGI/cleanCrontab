@@ -1,0 +1,2 @@
+# remove phylogenetic profile tmp data every 30mins
+0,30 * * * * /var/www/cgi-bin/phyloCGI/cleanTmp2h.sh
