@@ -6,11 +6,11 @@ do
     fileDate=`stat "$i" | grep Modify | awk '{print $2, $3}'`
     transDate=`date -d "$fileDate" +%s`
 
-    # 6 hours ago
-    ago6h=`date -d '-2 hours' +%s`
+    # 2 hours ago
+    ago2h=`date -d '-2 hours' +%s`
 
     # compare file date
-    if [ $transDate -le $ago6h ]; then
+    if [ $transDate -le $ago2h ]; then
 	`rm -rf "$i"`
     fi
 done
