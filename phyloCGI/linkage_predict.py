@@ -163,7 +163,7 @@ linkColVec = checkColList.rx2('checkLinkCol')
 geneSym = checkColList.rx2('checkGeneSym')
 wm = checkColList.rx2('wm')
 
-if len(wm) > 1:
+if len(wm) == 1:
     circosFigObj = tuple(wm)[0]
 elif len(wm) == 0 and len(geneList) > 7:
     circosFigObj = 'The number of candidate genes for Circos plot should no more than 7.\n'
