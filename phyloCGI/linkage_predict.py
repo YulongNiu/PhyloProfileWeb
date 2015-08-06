@@ -36,9 +36,8 @@ form = cgi.FieldStorage()
 topNum = form.getfirst('topNum', '')
 topNum = math.ceil(float(topNum))
 topNum = int(topNum)
-if topNum >= 1 and topNum <= 500:
-    topNum = topNum
-else:
+
+if topNum < 1 or topNum > 500:
     message += 'The threshold should be set between 1 and 500.\n'
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
