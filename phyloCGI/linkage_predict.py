@@ -12,7 +12,7 @@ message = ''
 import cgitb
 cgitb.enable()
 
-import cgi, os, sys
+import cgi, os, sys, math
 from set_uni_file import RandomName
 from rpy2.robjects import r
 from rpy2.robjects.vectors import StrVector, IntVector, FloatVector
@@ -29,8 +29,19 @@ def GetRFilePath(folderName, fileName):
 ####################################################
 
 
-#~~~~~~~~~~~ check uploaded file~~~~~~~~
+#~~~~~~~~~~~ check threshold and input file~~~~~~~~
 form = cgi.FieldStorage()
+
+# get threshold
+topNum = form.getfirst('topNum', '')
+topNum = math.ceil(float(topNum))
+topNum = int(topNum)
+if topNum >= 1 and topNum <= 500:
+    topNum = topNum
+else:
+    message += 'The threshold should be set between 1 and 500.\n'
+    print('<html><body>%s</body></html>' % message)
+    sys.exit(0)
 
 # A nested FieldStorage instance holds the file
 fileitem = form['candidateList']
@@ -86,12 +97,16 @@ importr('PhyloProfile')
 importr('PhyloProfileSuppl')
 
 # I may need to use a database instead of load RData
-r['load']('top400Viz.RData')
+# r['load']('top400Viz.RData')
+r['load']('top500List.RData')
+r['load']('wholePhyloDataAnno.RData')
 r['load']('wholeProfile.RData')
 r['load']('kingdomCol.RData')
 r['load']('geneAnno.RData')
 r['load']('phyloSpe.RData')
-top400Viz = r['top400Viz']
+# top400Viz = r['top400Viz']
+top500List = r['top500List']
+wholePhyloDataAnno = r['wholePhyloDataAnno']
 wholeProfile = r['wholeProfile']
 kingdomCol = r['kingdomCol']
 geneAnno = r['geneAnno']
@@ -105,6 +120,7 @@ linkColVec = batArgu.rx(True, 3)
 ##~~~~~~~~~~~~~~~~~~~~~~~~plot phyloprofile~~~~~~~~~~~~~~~~~~~
 # select profiles
 profileMat = r['GetProfile'](geneList, wholeProfile)
+
 # set names of gene colors vector
 geneColVec.names = geneList
 
@@ -144,7 +160,11 @@ cormatrixFigObj = tuple(cormatrixFigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
 ##~~~~~~~~~~~~~~~~~~~~~~~~~interaction matrix~~~~~~~~~~~~~~~~~~~~
-linksMat = r['GetLinkages'](geneList, top400Viz)
+# linksMat = r['GetLinkages'](geneList, top400Viz)
+linksMat = r['GetTopLink'](geneIDs = geneList,
+                             linkData = top500List,
+                             annoVec = wholePhyloDataAnno,
+                             threshold = topNum)
 linksMatpwd = GetRFilePath(fn, 'predicted_linakges.csv')
 r['write.csv'](linksMat, linksMatpwd)
 linksMatObj = r['hwrite'](linksMat, center = True, br = True,
@@ -163,7 +183,7 @@ linkColVec = checkColList.rx2('checkLinkCol')
 geneSym = checkColList.rx2('checkGeneSym')
 wm = checkColList.rx2('wm')
 
-if len(wm) > 1:
+if len(wm) == 1:
     circosFigObj = tuple(wm)[0]
 elif len(wm) == 0 and len(geneList) > 7:
     circosFigObj = 'The number of candidate genes for Circos plot should no more than 7.\n'
@@ -190,7 +210,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
 ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
 # read html template
 htmltemp = open('/var/www/cgi-bin/phyloCGI/' + 'phylo_linkages.html').read()
-htmlReturn = htmltemp %(profileFigObj, cormatrixFigObj, circosFigObj, linksMatObj, fnDir)
+htmlReturn = htmltemp %(topNum, profileFigObj, cormatrixFigObj, circosFigObj, linksMatObj, fnDir)
 # beware of the path!!!!!!!!!!!!!
 # write html index
 f = open(fn + 'index.html', 'w')
