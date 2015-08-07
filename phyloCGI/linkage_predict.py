@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 
-print "Content-Type: text/html\n"
+print("Content-Type: text/html\n")
 
 # tmpData path
 tempPath = '/var/www/html/phyloprofile/tmpData/'
@@ -37,7 +37,7 @@ topNum = form.getfirst('topNum', '')
 topNum = math.ceil(float(topNum))
 topNum = int(topNum)
 
-if topNum < 1 or topNum > 500:
+if (not 1 <= topNum <= 500):
     message += 'The threshold should be set between 1 and 500.\n'
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
@@ -236,7 +236,7 @@ os.system(tarcom + ' >/dev/null')
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~Return_HMTL_file~~~~~~~~~~~~~~~~~~~~~~~
 # print htmlReturn
-print """\
+print("""\
 <html>
 <head>
 <meta http-equiv="Refresh" content="2;url=/phyloprofile/tmpData/%s/index.html">
@@ -248,6 +248,6 @@ New address in 2s.
 </p>
 </body>
 </html>
-""" % fnDir
+""") % fnDir
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##################################################################
