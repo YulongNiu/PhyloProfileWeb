@@ -96,14 +96,12 @@ importr('PhyloProfile')
 importr('PhyloProfileSuppl')
 
 # I may need to use a database instead of load RData
-# r['load']('top400Viz.RData')
 r['load']('top500List.RData')
 r['load']('wholePhyloDataAnno.RData')
 r['load']('wholeProfile.RData')
 r['load']('kingdomCol.RData')
 r['load']('geneAnno.RData')
 r['load']('phyloSpe.RData')
-# top400Viz = r['top400Viz']
 top500List = r['top500List']
 wholePhyloDataAnno = r['wholePhyloDataAnno']
 wholeProfile = r['wholeProfile']
@@ -159,7 +157,6 @@ cormatrixFigObj = tuple(cormatrixFigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
 ##~~~~~~~~~~~~~~~~~~~~~~~~~interaction matrix~~~~~~~~~~~~~~~~~~~~
-# linksMat = r['GetLinkages'](geneList, top400Viz)
 linksMat = r['GetTopLink'](geneIDs = geneList,
                              linkData = top500List,
                              annoVec = wholePhyloDataAnno,
