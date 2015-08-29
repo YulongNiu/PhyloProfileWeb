@@ -175,6 +175,11 @@ os.system('convert -density 100 ' + ''.join(list(cormatrixFigPdfPath)) + ' ' + '
 
 cormatrixFigObj = r("hwriteImage('cormatrixPlot.jpg', center = TRUE)")
 cormatrixFigObj = tuple(cormatrixFigObj)[0]
+
+# write correlation matrix
+corMat = r['GetPhyloCorMat'](profileMat)
+corMatpwd = GetRFilePath(fn, 'correlation_matrix.csv')
+r['write.csv'](corMat, corMatpwd)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
 ##~~~~~~~~~~~~~~~~~~~~~~~~~interaction matrix~~~~~~~~~~~~~~~~~~~~
