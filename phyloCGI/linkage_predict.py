@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 
-print "Content-Type: text/html\n"
+print("Content-Type: text/html\n")
 
 # tmpData path
 tempPath = '/var/www/html/phyloprofile/tmpData/'
@@ -32,16 +32,20 @@ def GetRFilePath(folderName, fileName):
 #~~~~~~~~~~~ check threshold and input file~~~~~~~~
 form = cgi.FieldStorage()
 
-# get threshold
+# get top number threshold
 topNum = form.getfirst('topNum', '')
 topNum = math.ceil(float(topNum))
 topNum = int(topNum)
-if topNum >= 1 and topNum <= 500:
-    topNum = topNum
-else:
+
+if (not 1 <= topNum <= 500):
     message += 'The threshold should be set between 1 and 500.\n'
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
+
+# get phylogenetic plot para
+phyloGeneNameSize = float(form.getfirst('phyloGeneNameSize', ''))
+# get correlation plot para
+corGeneNameSize = float(form.getfirst('corGeneNameSize', ''))
 
 # A nested FieldStorage instance holds the file
 fileitem = form['candidateList']
@@ -97,30 +101,39 @@ importr('PhyloProfile')
 importr('PhyloProfileSuppl')
 
 # I may need to use a database instead of load RData
-# r['load']('top400Viz.RData')
 r['load']('top500List.RData')
 r['load']('wholePhyloDataAnno.RData')
 r['load']('wholeProfile.RData')
 r['load']('kingdomCol.RData')
 r['load']('geneAnno.RData')
 r['load']('phyloSpe.RData')
-# top400Viz = r['top400Viz']
+r['load']('kingdomAnno.RData')
 top500List = r['top500List']
 wholePhyloDataAnno = r['wholePhyloDataAnno']
 wholeProfile = r['wholeProfile']
 kingdomCol = r['kingdomCol']
 geneAnno = r['geneAnno']
 phyloSpe = r['phyloSpe']
+kingdomAnno = r['kingdomAnno']
 
 # retrieve vec
 geneList = batArgu.rx(True, 1)
 geneColVec = batArgu.rx(True, 2)
 linkColVec = batArgu.rx(True, 3)
 
-##~~~~~~~~~~~~~~~~~~~~~~~~plot phyloprofile~~~~~~~~~~~~~~~~~~~
+##~~~~~~~~~~~~~~~~~~~~~~~~~retrieve profile data~~~~~~~~~~~
 # select profiles
 profileMat = r['GetProfile'](geneList, wholeProfile)
 
+# annotation
+if batArgu.ncol == 4:
+    # transfer gene anno to rownames
+    usrGeneName = batArgu.rx(True, 4)
+    geneMatchIdx = r['match'](profileMat.rownames, geneList)
+    profileMat.rownames = usrGeneName.rx(geneMatchIdx)
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+##~~~~~~~~~~~~~~~~~~~~~~~~plot phyloprofile~~~~~~~~~~~~~~~~~~~
 # set names of gene colors vector
 geneColVec.names = geneList
 
@@ -128,11 +141,15 @@ geneColVec.names = geneList
 profileFigPdfPath = GetRFilePath(fn, 'profilePlot.pdf')
 profileFigJpgPath = GetRFilePath(fn, 'profilePlot.jpg')
         
-r['pdf'](profileFigPdfPath)
+r['pdf'](profileFigPdfPath, width = 10)
 profileFig = r['PlotPhyloProfile'](profileMat,
+                                   geneNameSize = phyloGeneNameSize,
                                    speCol = kingdomCol,
                                    geneCol = geneColVec,
-                                   widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7]))
+                                   classCol = kingdomAnno,
+                                   widthsShinkage = FloatVector([0.7, 0.9, 0.3, 7, 2]),
+                                   **{"legend.position": "left"})
+
 r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(profileFigPdfPath)) +' ' + ''.join(list(profileFigJpgPath)) + ' >/dev/null')
@@ -148,6 +165,7 @@ cormatrixFigJpgPath = GetRFilePath(fn, 'cormatrixPlot.jpg')
 
 r['pdf'](cormatrixFigPdfPath)
 cormatrixFig = r['PlotPhyloCor'](profileMat,
+                                 geneNameSize = corGeneNameSize,
                                  geneCol = geneColVec,
                                  widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7]),
                                  showCorVal = False)
@@ -157,10 +175,14 @@ os.system('convert -density 100 ' + ''.join(list(cormatrixFigPdfPath)) + ' ' + '
 
 cormatrixFigObj = r("hwriteImage('cormatrixPlot.jpg', center = TRUE)")
 cormatrixFigObj = tuple(cormatrixFigObj)[0]
+
+# write correlation matrix
+corMat = r['GetPhyloCorMat'](profileMat)
+corMatpwd = GetRFilePath(fn, 'correlation_matrix.csv')
+r['write.csv'](corMat, corMatpwd)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
 ##~~~~~~~~~~~~~~~~~~~~~~~~~interaction matrix~~~~~~~~~~~~~~~~~~~~
-# linksMat = r['GetLinkages'](geneList, top400Viz)
 linksMat = r['GetTopLink'](geneIDs = geneList,
                              linkData = top500List,
                              annoVec = wholePhyloDataAnno,
@@ -169,7 +191,8 @@ linksMatpwd = GetRFilePath(fn, 'predicted_linakges.csv')
 r['write.csv'](linksMat, linksMatpwd)
 linksMatObj = r['hwrite'](linksMat, center = True, br = True,
                           **{"row.bgcolor": "#a7c942",
-                             "col.bgcolor": r['list'](From = '#a7c942', To = '#a7c942'), "row.style": r['list']('font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
+                             "col.bgcolor": r['list'](From = '#a7c942', To = '#a7c942'),
+                             "row.style": r['list']('font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
                              "col.style": r['list'](From = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em', To = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
                              "table.class": "'table'"})
 linksMatObj = tuple(linksMatObj)[0]
@@ -237,7 +260,7 @@ os.system(tarcom + ' >/dev/null')
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~Return_HMTL_file~~~~~~~~~~~~~~~~~~~~~~~
 # print htmlReturn
-print """\
+print("""\
 <html>
 <head>
 <meta http-equiv="Refresh" content="2;url=/phyloprofile/tmpData/%s/index.html">
@@ -249,6 +272,6 @@ New address in 2s.
 </p>
 </body>
 </html>
-""" % fnDir
+""") % fnDir
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##################################################################
