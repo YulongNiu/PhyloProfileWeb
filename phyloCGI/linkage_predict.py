@@ -138,7 +138,7 @@ profileFig = r['PlotPhyloProfile'](profileMat,
                                    speCol = kingdomCol,
                                    geneCol = geneColVec,
                                    classCol = kingdomAnno,
-                                   widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7, 2]),
+                                   widthsShinkage = FloatVector([0.7, 0.9, 0.3, 7, 2]),
                                    **{"legend.position": "left"})
 
 r['dev.off']()
