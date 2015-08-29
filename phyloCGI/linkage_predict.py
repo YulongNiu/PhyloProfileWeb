@@ -32,7 +32,7 @@ def GetRFilePath(folderName, fileName):
 #~~~~~~~~~~~ check threshold and input file~~~~~~~~
 form = cgi.FieldStorage()
 
-# get threshold
+# get top number threshold
 topNum = form.getfirst('topNum', '')
 topNum = math.ceil(float(topNum))
 topNum = int(topNum)
@@ -41,6 +41,11 @@ if (not 1 <= topNum <= 500):
     message += 'The threshold should be set between 1 and 500.\n'
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
+
+# get phylogenetic plot para
+phyloGeneNameSize = float(form.getfirst('phyloGeneNameSize', ''))
+# get correlation plot para
+corGeneNameSize = float(form.getfirst('corGeneNameSize', ''))
 
 # A nested FieldStorage instance holds the file
 fileitem = form['candidateList']
@@ -102,12 +107,14 @@ r['load']('wholeProfile.RData')
 r['load']('kingdomCol.RData')
 r['load']('geneAnno.RData')
 r['load']('phyloSpe.RData')
+r['load']('kingdomAnno.RData')
 top500List = r['top500List']
 wholePhyloDataAnno = r['wholePhyloDataAnno']
 wholeProfile = r['wholeProfile']
 kingdomCol = r['kingdomCol']
 geneAnno = r['geneAnno']
 phyloSpe = r['phyloSpe']
+kingdomAnno = r['kingdomAnno']
 
 # retrieve vec
 geneList = batArgu.rx(True, 1)
@@ -125,11 +132,15 @@ geneColVec.names = geneList
 profileFigPdfPath = GetRFilePath(fn, 'profilePlot.pdf')
 profileFigJpgPath = GetRFilePath(fn, 'profilePlot.jpg')
         
-r['pdf'](profileFigPdfPath)
+r['pdf'](profileFigPdfPath, width = 10)
 profileFig = r['PlotPhyloProfile'](profileMat,
+                                   geneNameSize = phyloGeneNameSize,
                                    speCol = kingdomCol,
                                    geneCol = geneColVec,
-                                   widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7]))
+                                   classCol = kingdomAnno,
+                                   widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7, 2]),
+                                   **{"legend.position": "left"})
+
 r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(profileFigPdfPath)) +' ' + ''.join(list(profileFigJpgPath)) + ' >/dev/null')
@@ -145,6 +156,7 @@ cormatrixFigJpgPath = GetRFilePath(fn, 'cormatrixPlot.jpg')
 
 r['pdf'](cormatrixFigPdfPath)
 cormatrixFig = r['PlotPhyloCor'](profileMat,
+                                 geneNameSize = corGeneNameSize,
                                  geneCol = geneColVec,
                                  widthsShinkage = FloatVector([0.9, 0.9, 0.3, 7]),
                                  showCorVal = False)
@@ -165,7 +177,8 @@ linksMatpwd = GetRFilePath(fn, 'predicted_linakges.csv')
 r['write.csv'](linksMat, linksMatpwd)
 linksMatObj = r['hwrite'](linksMat, center = True, br = True,
                           **{"row.bgcolor": "#a7c942",
-                             "col.bgcolor": r['list'](From = '#a7c942', To = '#a7c942'), "row.style": r['list']('font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
+                             "col.bgcolor": r['list'](From = '#a7c942', To = '#a7c942'),
+                             "row.style": r['list']('font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
                              "col.style": r['list'](From = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em', To = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
                              "table.class": "'table'"})
 linksMatObj = tuple(linksMatObj)[0]

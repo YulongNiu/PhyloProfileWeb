@@ -10,15 +10,34 @@
   
   <body>
     <h3><p>Online Prediciton of Human Whole Genomic Linkages</p></h3>
-    <p>version 0.06 (August 7, 2015)</p>
-    <p style="color:blue">Please try the new feature: freedomly choose the threshold of predicted linkage.</p>
-    <!-- <p style="color:red"> There will be a major update very soon. It will last about 1 hour, and the server becomes unstable. So please pause and try again later.</p>  -->
+    <p>version 0.0.6 (August 7, 2015)</p>
+    <!-- <p style="color:blue">Please try the new feature: freedomly choose the threshold of predicted linkage.</p> -->
+    <p style="color:red"> There will be a major update very soon. It will last about 6 hours, and the server becomes unstable. So please pause your input and try again later. Sorry for any inconvenience we may cause.</p>
     
     <!-- Input candidate list -->
     <form target="_blank" method="post" action="/cgi-bin/phyloCGI/linkage_predict.py" enctype="multipart/form-data">
       <fieldset>
 	<legend><h2>Threshold of linkages number for each gene</h2></legend>
 	1 &le; <input type="text" name="topNum" value='400'/> &le; 500
+      </fieldset>
+
+      <fieldset>
+	<legend><h2>Plot parameters</h2></legend>
+	<ol>
+	  <li> Phylogenic plot </li>
+	  <ul>
+	    <li>
+	      Size of gene names: 0 &lt; <input type="text" name="phyloGeneNameSize" value='3.1'/> (smaller value, samller text size)
+	    </li>
+	  </ul>
+	  <li> Correlation plot </li>
+	  <ul>
+	    <li>
+	      Size of gene names: 0 &lt; <input type="text" name="corGeneNameSize" value='3.1'/> (smaller value, samller text size)
+	    </li>
+	  </ul>
+	</ol>
+
       </fieldset>
       
       <fieldset>
@@ -75,6 +94,7 @@
     <h4>Input</h4>
     <ol>
       <li>The threshold of linkages number for each gene could be randomly chose between 1 and 500 (even a float number like 5.4). A smaller vaule means a more stringent threshold of predicted linkages. If you want to get less but more reliable results, please try a small value, for example 20. Please be aware, a small value also means you may miss some potential and novel linkages which do not have very strong evidence.</li>
+      <li>Please try default plot parameters at first.</li>
       <li>Only the "txt" (with the separator of "Tab") or the "csv" (with teh separator of ",") format is allowed for the input files. Please do not try to upload other types of files (like "test.html"). Otherwise, an error web-page may return.</li>
       <li>The number of input genes is supposed to be at least two. Otherwise, an error message will return. There are several reasons. The most important one is our algorithm is based on the whole genome, and the prediction results are more reliable when taking into account a cluster of genes like genes from a complex or a biological pathway. Our team is now working on an advanced algorithms based on the statistical distribution of linkages for each gene. Several clues indicate the new algorithm have a better performace in reducing the false positive rate, which haunts all the existing methods for protein linkage prediction. </li>
       <li>1st column contains the input genes. The "GeneID" is used as the unique gene name for each gene, for example "hsa:513" denotes the human gene "ATP5D" (ATP synthase, H+ transporting, mitochondrial F1 complex, delta subunit (EC:3.6.1.14)). Other formats of gene names may be supported in the furture. </li>
@@ -95,35 +115,35 @@
     <hr />
     <h4>Release history</h4>
     <ul>
-      <li>version 0.06 (August 7, 2015)</li>
+      <li>version 0.0.6 (August 7, 2015)</li>
       <ol>
 	<li>freedomly choose threshold of linkage number;</li>
 	<li>input genes are sort and gathered on the left of return list;</li>
 	<li>fix bugs when input no Circos colours.</li>
       </ol>
-      <li>version 0.05 (August 3, 2015)</li>
+      <li>version 0.0.5 (August 3, 2015)</li>
       <ol>
 	<li>hide the correlation value in the correlation plot;</li>
 	<li>maximum number of condidate genes for Circos plot is set as 7.</li>
       </ol>
-      <li>version 0.04 (July 28, 2015)</li>
+      <li>version 0.0.4 (July 28, 2015)</li>
       <ol>
 	<li>add bad examples;</li>
 	<li>reduce the response time of checking the input file.</li>
       </ol>
-      <li>version 0.03 (July 26, 2015)</li>
+      <li>version 0.0.3 (July 26, 2015)</li>
       <ol>
 	<li>add Circos plot for predicted linkages;</li>
 	<li>building an extended R package instead of loading R scripts in the web CGI;</li>
 	<li>check the number of input genes is at least two;</li>
 	<li>add an example that only plotting predicted linkages from one candicate gene.</li>
       </ol>
-      <li>version 0.02 (July 21, 2015)</li>
+      <li>version 0.0.2 (July 21, 2015)</li>
       <ol>
 	<li>add plot of phylogenetic profiles;</li>
 	<li>add plot of correlation matrix.</li>
       </ol>
-      <li>version 0.01 (May 5, 2015)</li>
+      <li>version 0.0.1 (May 5, 2015)</li>
       <ol>
 	<li>first release; </li>
 	<li>return predicted linkage.</li>
