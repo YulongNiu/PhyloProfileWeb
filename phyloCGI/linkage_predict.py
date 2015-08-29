@@ -121,10 +121,19 @@ geneList = batArgu.rx(True, 1)
 geneColVec = batArgu.rx(True, 2)
 linkColVec = batArgu.rx(True, 3)
 
-##~~~~~~~~~~~~~~~~~~~~~~~~plot phyloprofile~~~~~~~~~~~~~~~~~~~
+##~~~~~~~~~~~~~~~~~~~~~~~~~retrieve profile data~~~~~~~~~~~
 # select profiles
 profileMat = r['GetProfile'](geneList, wholeProfile)
 
+# annotation
+if batArgu.ncol == 4:
+    # transfer gene anno to rownames
+    usrGeneName = batArgu.rx(True, 4)
+    geneMatchIdx = r['match'](profileMat.rownames, geneList)
+    profileMat.rownames = usrGeneName.rx(geneMatchIdx)
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+##~~~~~~~~~~~~~~~~~~~~~~~~plot phyloprofile~~~~~~~~~~~~~~~~~~~
 # set names of gene colors vector
 geneColVec.names = geneList
 
