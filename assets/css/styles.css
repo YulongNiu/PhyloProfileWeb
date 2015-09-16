@@ -339,16 +339,16 @@ pre code {
   background-clip: padding-box;
 }
 /* ======= License Section ======= */
-.license {
+.examples {
   padding: 80px 0;
   background: #f5f5f5;
 }
-.license .title {
+.examples .title {
   margin-top: 0;
   margin-bottom: 60px;
   color: #074f66;
 }
-.license .license-inner {
+.examples .examples-inner {
   max-width: 800px;
   background: #fff;
   padding: 30px;
@@ -362,11 +362,11 @@ pre code {
   background-clip: padding-box;
   margin: 0 auto;
 }
-.license .info {
+.examples .info {
   max-width: 760px;
   margin: 0 auto;
 }
-.license .cta-container {
+.examples .cta-container {
   max-width: 540px;
   margin: 0 auto;
   margin-top: 60px;
@@ -379,7 +379,7 @@ pre code {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-.license .cta-container .speech-bubble {
+.examples .cta-container .speech-bubble {
   background: #d6f3fc;
   color: #074f66;
   padding: 30px;
@@ -394,7 +394,7 @@ pre code {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-.license .cta-container .speech-bubble:after {
+.examples .cta-container .speech-bubble:after {
   position: absolute;
   left: 50%;
   bottom: -10px;
@@ -407,13 +407,13 @@ pre code {
   border-right: 10px solid transparent;
   border-top: 10px solid #d6f3fc;
 }
-.license .cta-container .icon-holder {
+.examples .cta-container .icon-holder {
   margin-bottom: 15px;
 }
-.license .cta-container .icon-holder .fa {
+.examples .cta-container .icon-holder .fa {
   font-size: 56px;
 }
-.license .cta-container .intro {
+.examples .cta-container .intro {
   margin-bottom: 30px;
 }
 /* ======= Contact Section ======= */
