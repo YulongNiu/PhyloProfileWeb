@@ -1,5 +1,15 @@
 # User's guide #
 
+<!-- content start -->
+**Table of Contents**
+
+- [1. Input](#1-input)
+    - [1.1 Linkage number](#11-linkage-number)
+    - [1.2 Plot parameters](#11-linkage-number)
+- [2. Output](#2-output ) 
+<!-- contend end -->
+
+
 ## 1. Input ##
 
 ### 1.1 Linkage number ###
@@ -12,7 +22,7 @@ If you want to get less but more reliable linkages, please try a small value, fo
 
 Please try default plot parameters at first. If you are not satisfied with output figures, please adjust the parameters and run it again.
 
-## Output ##
+## 2. Output ##
 
 
 
