@@ -402,22 +402,6 @@
       </center>
     </form>
 
-    <!-- help information -->
-    <hr />
-    <h3>User's guide</h3>
-    <h4>Input</h4>
-    <ol>
-      <li>The threshold of linkages number for each gene could be randomly chose between 1 and 500 (even a float number like 5.4). A smaller vaule means a more stringent threshold of predicted linkages. If you want to get less but more reliable results, please try a small value, for example 20. Please be aware, a small value also means you may miss some potential and novel linkages which do not have very strong evidence.</li>
-      <li>Please try default plot parameters at first.</li>
-      <li>Only the "txt" (with the separator of "Tab") or the "csv" (with teh separator of ",") format is allowed for the input files. Please do not try to upload other types of files (like "test.html"). Otherwise, an error web-page may return.</li>
-      <li>The number of input genes is supposed to be at least two. Otherwise, an error message will return. There are several reasons. The most important one is our algorithm is based on the whole genome, and the prediction results are more reliable when taking into account a cluster of genes like genes from a complex or a biological pathway. Our team is now working on an advanced algorithms based on the statistical distribution of linkages for each gene. Several clues indicate the new algorithm have a better performace in reducing the false positive rate, which haunts all the existing methods for protein linkage prediction. </li>
-      <li>1st column contains the input genes. The "GeneID" is used as the unique gene name for each gene, for example "hsa:513" denotes the human gene "ATP5D" (ATP synthase, H+ transporting, mitochondrial F1 complex, delta subunit (EC:3.6.1.14)). A total of 20127 <a target="_blank" href="./Exampledata/wholeGenomeGenes.csv">human whole genomic genes</a> are used, <a style="color:orange">please refer this to set your own input genes</a>. Other formats of gene names may be supported in the furture. </li>
-      <li>2nd column contains the colours for each input genes. Colour modes like the hex triplet and colour names are both supported. For example, the "red" and "#ff0000" are legal input colours. If you do not want to show the colour for a gene, an easy way is to set the colour as "white" or "#FFFFFF". </li>
-      <li>3rd column defines linkages colours. The colour format is different from the ones in the 2nd column. The legal input colours are described as the <a target="_blank" href="http://circos.ca/documentation/tutorials/configuration/colors/">Circos configuration</a>. Seven colours, red, orange, yellow, green, blue, purple, and grey are predefined with prefix to show the light ("l", "vl", "vvl"') and dard ("d", "vd", "vvd") verions. Five degrees of <a target="_blank" href="http://circos.ca/tutorials/lessons/recipes/transparent_links/">transparent colous</a> are allowed, "_a1" have a 17% transparency, "_a2" 33%, "_a3" 50%, "_a4" 67% and "_a5" 83%. For example, "vlred_a4" is the very light red colour with 67% transparency. You may want to hidden the linkaged for certain genes, just use "NA" (not "na", not "white", not "Na") as the link color. But, at least one genes should have proper linkage colour.</li>
-      <li>4th column allows pre-defined gene names (optional). As the GeneID (e.g., hsa:513) is hard to get its meaning, the 4th column could provide a way to transfer the GeneID to other formats (<a target="_blank" href="./Exampledata/phylopred_fatp1Link/atpSubOne.txt">Example</a>). The pre-defined gene names will be used inboth phylogenetic profile and correlation figures. This column is optional; if you want to keep the GeneID in figures, please leave it as blank (no column names and no values).</li>
-      <li>An internal <a target="_blank" href="./Exampledata/geneAnno.csv">gene annotation file</a> is used for Circos plot. <a style="color:orange">Any genes not in this list will be neglected</a>. The time of plotting the Circos figure increases dramatically along with increment of predicted linkages. As the web-server connection will be closed in 15 minutes, the input candidate gene number for Circos plot  we recommend is no more than 7.</li>
-    </ol>
-
     <h4>Ouput</h4>
     <p>We provide two ways to illustrate the prediction results. A webpage merged the all the figures and tables will be returned at first. At the bottom of the webpage, a linkage will guide you to download all the results into your local computer.</p>
     <ol>
