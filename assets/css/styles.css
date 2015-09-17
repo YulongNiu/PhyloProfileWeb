@@ -334,6 +334,23 @@ pre code {
 .docs .block {
   margin-bottom: 60px;
 }
+.docs .step-block {
+    margin: 30px inherit;
+    padding: 20px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background: #f5f5f5;
+}
+.docs .step-title{
+    margin-bottom: 20px;
+    color: #074f66;
+}
 .docs .code-block {
   margin: 30px inherit;
 }
@@ -376,6 +393,8 @@ pre code {
   margin: 0 auto;
 }
 .examples .example-title{
+    margin-top: 20px;
+    margin-bottom: 10px;
     color: #074f66;
 }
 .examples .cta-container {
