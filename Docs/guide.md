@@ -1,13 +1,15 @@
 # User's guide #
 
 <!-- content start -->
+
 **Table of Contents**
 
 - [1. Input](#1-input)
     - [1.1 Linkage number](#11-linkage-number)
-    - [1.2 Plot parameters](#11-linkage-number)
-- [2. Output](#2-output ) 
-<!-- contend end -->
+    - [1.2 Plot parameters](#12-plot-parameters)
+- [2. Output](#2-output) 
+
+<!-- content end -->
 
 
 ## 1. Input ##
