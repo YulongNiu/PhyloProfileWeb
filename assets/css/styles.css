@@ -338,7 +338,7 @@ pre code {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-/* ======= License Section ======= */
+/* ======= Examples Section ======= */
 .examples {
   padding: 80px 0;
   background: #f5f5f5;
@@ -365,6 +365,9 @@ pre code {
 .examples .info {
   max-width: 760px;
   margin: 0 auto;
+}
+.examples .example-title{
+    color: #074f66;
 }
 .examples .cta-container {
   max-width: 540px;
