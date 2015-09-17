@@ -275,7 +275,7 @@ pre code {
 }
 /* ======= Features Section ======= */
 .features {
-  padding: 80px 0;
+  padding: 20px 0;
   background: #17baef;
   color: #fff;
 }
@@ -298,6 +298,15 @@ pre code {
   margin-right: 5px;
   color: #fff;
 }
+.features .release {
+    margin-top: 40px;
+}
+.features .release a {
+    color: #0a7396;
+}
+/* .features .release li { */
+/*     margin-bottom: 20px; */
+/* }     */
 /* ======= Docs Section ======= */
 .docs {
   padding: 80px 0;
