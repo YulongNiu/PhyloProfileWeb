@@ -7,7 +7,9 @@
 - [1. Input](#1-input)
     - [1.1 Linkage number](#11-linkage-number)
     - [1.2 Plot parameters](#12-plot-parameters)
-- [2. Output](#2-output) 
+    - [1.3 Candidate gene list](#13-candidate-gene-list) 
+- [2. Output](#2-output)
+
 <!-- content end -->
 
 
@@ -22,6 +24,19 @@ If you want to get less but more reliable linkages, please try a small value, fo
 ### 1.2 Plot parameters ###
 
 Please try default plot parameters at first. If you are not satisfied with output figures, please adjust the parameters and run it again.
+
+### 1.3 Candidate gene list###
+
+Only the `txt` (with the separator of `"Tab"`) or the `csv` (with the separator of `","`) format is allowed for the input files. Please do not try to upload other types of files (like `test.html`). Otherwise, an error web-page may return.
+
+The number of input genes is supposed to be at least two. Otherwise, an error message will return. There are several reasons. The most important one is our algorithm is based on the whole genome, and the prediction results are more reliable when taking into account a cluster of genes like genes from a complex or a biological pathway. Our team is now working on an advanced algorithms based on the statistical distribution of linkages for each gene. Several clues indicate the new algorithm have a better performace in reducing the false positive rate, which haunts all the existing methods for protein linkage prediction.
+
+* 1st column
+
+1st column contains the input genes. The "GeneID" is used as the unique gene name for each gene, for example "hsa:513" denotes the human gene "ATP5D" (ATP synthase, H+ transporting, mitochondrial F1 complex, delta subunit (EC:3.6.1.14)). A total of 20127 [human whole genomic genes](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/wholeGenomeGenes.csv) 
+<a target="_blank" href="./Exampledata/wholeGenomeGenes.csv">test1</a> are used, **please refer this to set your own input genes**. Other formats of gene names may be supported in the future.
+
+
 
 ## 2. Output ##
 
