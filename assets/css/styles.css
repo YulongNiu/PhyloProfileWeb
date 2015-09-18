@@ -347,9 +347,15 @@ pre code {
     background-clip: padding-box;
     background: #f5f5f5;
 }
-.docs .step-title{
+.docs .step-title {
     margin-bottom: 20px;
     color: #074f66;
+}
+.docs .tip-info {
+    margin-top: 10px;
+}
+.docs .input-group {
+    margin-top: 10px;
 }
 .docs .code-block {
   margin: 30px inherit;

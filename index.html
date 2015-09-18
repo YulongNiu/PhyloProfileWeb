@@ -301,26 +301,21 @@
               <h3 class="sub-title text-center">Step 1</h3>
               <div class="step-block">
                 <h4 class="step-title">Linkages number for each gene</h4>
-                <div class="row">
-                  <div class="col-xs-6">
-                    <div class="input-group">
-                      <div class="input-group-addon">1 &le;</div>
-                      <input class="form-control" type="text" name="topNum" value='400'/>
-                      <div class="input-group-addon">&le; 500</div>
-                    </div>
-                  </div>
-                  <div class="col-xs-6">
-                    <div class="alert alert-warning" role="alert">smaller value, samller text size</div>
-                  </div>
-                </div>
-              </div>
+                  <div class="input-group">
+                    <div class="input-group-addon">1 &le;</div>
+                    <input class="form-control" type="text" name="topNum" value='400'/>
+                    <div class="input-group-addon">&le; 500</div>
+                  </div> <!-- input-group -->
+                  <div class="tip-info">
+                    <div class="alert alert-warning" role="alert">The smaller value, the less predicted linkages.</div>
+                  </div> <!-- tip-infor -->
+              </div> <!-- step1-block-excute -->
             </div><!--//step1-block-->
 
             <div class="block">
               <h3 class="sub-title text-center">Step 2</h3>
               <div class="step-block">
                 <h4 class="step-title">Plot parameters</h4>
-
                 <ul class="nav nav-tabs nav-justified">
                   <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Phylogenic plot<span class="caret"></span></a>
@@ -335,16 +330,26 @@
                     </ul>
                   </li>
                 </ul>
-
                 <div class="tab-content">
                   <div id="profilefig" class="tab-pane fade">
-                    0 &lt; <input type="text" name="phyloGeneNameSize" value='3.1'/> (smaller value, samller text size)
+                    <div class="input-group">
+                      <div class="input-group-addon">0 &lt;</div>
+                      <input class="form-control" type="text" name="phyloGeneNameSize" value='3.1'/>
+                    </div> <!-- input-group -->
+                    <div class="tip-info">
+                      <div class="alert alert-warning" role="alert">The smaller value, the samller text size. <b>Tip: try the default value at first.</b></div>
+                    </div> <!-- tip-infor -->
                   </div>
                   <div id="corfig" class="tab-pane fade">
-                    0 &lt; <input type="text" name="corGeneNameSize" value='3.1'/> (smaller value, samller text size)
+                    <div class="input-group">
+                      <div class="input-group-addon">0 &lt;</div>
+                      <input class="form-control" type="text" name="corGeneNameSize" value='3.1'/>
+                    </div> <!-- input-group -->
+                    <div class="tip-info">
+                      <div class="alert alert-warning" role="alert">The smaller value, the samller text size. <b>Tip: try the default value at first.</b></div>
+                    </div> <!-- tip-infor -->
                   </div>
                 </div>
-
               </div>
             </div><!--//step2-block-->
 
