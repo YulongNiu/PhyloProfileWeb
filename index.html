@@ -47,7 +47,7 @@
               <li class="nav-item"><a class="scrollto" href="#about">About</a></li>
               <li class="nav-item"><a class="scrollto" href="#features">Features</a></li>
                <li class="nav-item"><a class="scrollto" href="#examples">Examples</a></li>
-              <li class="nav-item"><a class="scrollto" href="#docs">Docs</a></li>
+              <li class="nav-item"><a class="scrollto" href="#docs">Start!</a></li>
               <li class="nav-item last"><a class="scrollto" href="#contact">Contact</a></li>
             </ul><!--//nav-->
           </div><!--//navabr-collapse-->
@@ -97,7 +97,7 @@
             </div>
             <div class="content">
               <h3 class="sub-title">Easy-to-use</h3>
-              <p>Only a data table in the txt or csv format is needed. Additional web-page entering paramters are supported for advanced usage. </p>
+              <p>Only a data table in the <a href="./ExampleData/phylopred_fatp1Link/atpSubOne.txt" target="_blank">txt</a> or <a href="./ExampleData/phylopred_fatp1Link/atpSubOne.csv" target="_blank">csv</a> format is all you need to prepare. Additional web-page entering paramters are supported for advanced usage. </p>
             </div><!--//content-->
           </div><!--//item-->
           <div class="item col-md-4 col-sm-6 col-xs-12">
@@ -196,19 +196,19 @@
                   <tr>
 	                  <td>Click to download example input files:&nbsp;&nbsp;</td>
                     <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-primary">Files</button>
-                      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><a target="_blank" href="./ExampleData/phylopred_fatp1Link/atpSubOne.txt">txt format</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a target="_blank" href="./ExampleData/phylopred_fatp1Link/atpSubOne.csv">csv format</a></li>
-                      </ul>
-                    </div>
-	                 </td>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Files</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="caret"></span>
+                          <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a target="_blank" href="./ExampleData/phylopred_fatp1Link/atpSubOne.txt">txt format</a></li>
+                          <li role="separator" class="divider"></li>
+                          <li><a target="_blank" href="./ExampleData/phylopred_fatp1Link/atpSubOne.csv">csv format</a></li>
+                        </ul>
+                      </div>
+	                  </td>
                   </tr>
                 </table>
                 <h4 class="example-title">Citation:</h4>
@@ -296,7 +296,6 @@
         <div class="docs-inner">
           <form target="_blank" method="post" action="/cgi-bin/phyloCGI/linkage_predict.py" enctype="multipart/form-data">
             <h2 class="title text-center">Get Started</h2>
-
             <div class="block">
               <h3 class="sub-title text-center">Step 1</h3>
               <div class="step-block">
@@ -305,13 +304,12 @@
                     <div class="input-group-addon">1 &le;</div>
                     <input class="form-control" type="text" name="topNum" value='400'/>
                     <div class="input-group-addon">&le; 500</div>
-                  </div> <!-- input-group -->
+                  </div><!-- input-group -->
                   <div class="tip-info">
                     <div class="alert alert-warning" role="alert">The smaller value, the less predicted linkages.</div>
-                  </div> <!-- tip-infor -->
-              </div> <!-- step1-block-excute -->
+                  </div><!-- tip-infor -->
+              </div><!-- step1-block-excute -->
             </div><!--//step1-block-->
-
             <div class="block">
               <h3 class="sub-title text-center">Step 2</h3>
               <div class="step-block">
@@ -350,82 +348,37 @@
                     </div> <!-- tip-infor -->
                   </div>
                 </div>
-              </div>
+              </div><!-- step1-block-excute -->
             </div><!--//step2-block-->
-
             <div class="block">
               <h3 class="sub-title text-center">Step 3</h3>
               <div class="step-block">
                 <h4 class="step-title">Candidate gene list</h4>
-                <p><input type="file" name="candidateList"/></p>
-              </div>
+                <div class="input-group">
+                  <input type="file" name="candidateList"/>
+                </div><!-- input-group -->
+                <div class="tip-info">
+                  <div class="alert alert-warning" role="alert">The  <a href="./ExampleData/phylopred_fatp1Link/atpSubOne.txt" target="_blank">txt</a> or <a href="./ExampleData/phylopred_fatp1Link/atpSubOne.csv" target="_blank">csv</a> format is supported.</div>
+                </div> <!-- tip-infor -->
+              </div><!-- step3-block-excute -->
             </div><!--//step3-block-->
-
-            <p><input type="submit" value="Submit" /></p>
-
+            <div class="text-center">
+              <button type="submit" value="Submit" class="btn btn-success">Submit</button>
+              <!-- <Input type="submit" value="Submit" /> -->
+            </div><!-- submit -->
           </form><!-- form -->
-
           <div class="block">
             <h3 class="sub-title text-center">Full Documentation</h3>
-
-
-            <p>If your documentation is very long you can host the full docs page (including FAQ etc) on GitHub and provide a Call to Action button below to direct users there.</p>
+            <p>More details about setting paramters, file formats, and source codes are hosted on GitHub. </p>
             <p class="text-center">
               <a class="btn btn-cta-primary" href="https://github.com/twbs/bootstrap" target="_blank">More on GitHub</a>
             </p>
           </div><!--//block-->
-
         </div><!--//docs-inner-->
       </div><!--//container-->
     </section><!--//features-->
 
-
     <!-- <p style="color:red"> There will be a major update very soon. It will last about 6 hours, and the server becomes unstable. So please pause your input and try again later. Sorry for any inconvenience we may cause.</p> -->
-
-    <!-- Input candidate list -->
-    <form target="_blank" method="post" action="/cgi-bin/phyloCGI/linkage_predict.py" enctype="multipart/form-data">
-      <fieldset>
-	<legend><h2>Threshold of linkages number for each gene</h2></legend>
-	1 &le; <input type="text" name="topNum" value='400'/> &le; 500
-      </fieldset>
-
-      <fieldset>
-	<legend><h2>Plot parameters</h2></legend>
-	<ol>
-	  <li> Phylogenic plot </li>
-	  <ul>
-	    <li>
-	      Size of gene names: 0 &lt; <input type="text" name="phyloGeneNameSize" value='3.1'/> (smaller value, samller text size)
-	    </li>
-	  </ul>
-	  <li> Correlation plot </li>
-	  <ul>
-	    <li>
-	      Size of gene names: 0 &lt; <input type="text" name="corGeneNameSize" value='3.1'/> (smaller value, samller text size)
-	    </li>
-	  </ul>
-	</ol>
-
-      </fieldset>
-
-      <fieldset>
-	<legend><h2>Candidate Gene List</h2></legend>
-	<p>Choose batch file: <input type="file" name="candidateList"/></p>
-      </fieldset>
-
-      <br />
-      <center>
-	<p><input type="submit" value="Submit" /></p>
-      </center>
-    </form>
-
-    <!-- TODO LIST -->
-    <hr />
-    <h4>TODO LIST</h4>
-    <ul>
-      <li>Using the sql database instead of loading R data directly (speed).</li>
-      <li>Supporting other formates of gene names (feature).</li>
-    </ul>
 
     <!-- contact information -->
     <hr />
