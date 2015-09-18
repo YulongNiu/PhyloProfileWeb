@@ -188,7 +188,9 @@ pre code {
 .promo .title {
   font-size: 98px;
   color: #074f66;
-  margin-top: 0;
+  margin-top: 0 auto;
+  word-wrap: break-word;
+  word-break: normal; 
 }
 .promo .title .highlight {
   color: #eebf3f;
