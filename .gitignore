@@ -8,3 +8,4 @@
 *.pyc
 ExampleData/*
 DevAidExample.html
+*.DS_Store
