@@ -72,7 +72,7 @@ while True:
     fnDir = RandomName('phylopred')
     fn = tempPath + fnDir + '/'
     if os.path.exists(fn) is not True:
-        # get an unique name 
+        # get an unique name
         os.mkdir(fn)
         open(fn + filen, 'wb').write(fileitem.file.read())
         break
@@ -140,7 +140,7 @@ geneColVec.names = geneList
 # set profile plot path
 profileFigPdfPath = GetRFilePath(fn, 'profilePlot.pdf')
 profileFigJpgPath = GetRFilePath(fn, 'profilePlot.jpg')
-        
+
 r['pdf'](profileFigPdfPath, width = 10)
 profileFig = r['PlotPhyloProfile'](profileMat,
                                    geneNameSize = phyloGeneNameSize,
@@ -240,12 +240,32 @@ elif len(wm) == 0 and len(geneList) <= 7:
     ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
     annoftMat = r['Annoft'](geneList, ftMat, geneAnno)
 
+    # annotation geneList
+    geneListIdx = r['%in%'](geneAnno.rx(True, 1), geneList)
+    geneListSymb = geneAnno.rx(geneListIdx, 2)
+    geneListSymb = r['unlist'](geneListSymb)
+
+    # transfer and plot de network
+    d3ft = r['d3Transft'](geneListSymb, annoftMat)
+    d3Obj = r['d3PlotNet'](d3ft)
+
+    # write d3net
+    r['writed3Net'](d3Obj, fileName = 'networkd3.html', savePath = fn)
+    d3FigObj = r['d3ExtractNetEle'](fn + 'networkd3.html')
+    d3FigObj = tuple(d3FigObj)[0]
+
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
 # read html template
 htmltemp = open('/var/www/cgi-bin/phyloCGI/' + 'phylo_linkages.html').read()
-htmlReturn = htmltemp %(topNum, profileFigObj, cormatrixFigObj, circosFigObj, linksMatObj, fnDir)
+htmlReturn = htmltemp %(topNum,
+                        profileFigObj,
+                        cormatrixFigObj,
+                        circosFigObj,
+                        d3FigObj,
+                        linksMatObj,
+                        fnDir)
 # beware of the path!!!!!!!!!!!!!
 # write html index
 f = open(fn + 'index.html', 'w')
