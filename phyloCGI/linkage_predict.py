@@ -227,6 +227,10 @@ elif len(wm) == 0 and len(geneList) <= 7:
     os.system('circos-0.67-7/bin/circos -conf ' + fn + 'circosConfig/circosConf.conf ' + '-outputdir ' + fn + ' -outputfile ' + 'circosPlot' + ' >/dev/null')
     os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png' + ' >/dev/null')
     circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
+
+    # remove config folder
+    os.system('rm -rf ' + fn + 'circosConfig' + ' >/dev/null')
+
     circosFigObj = tuple(circosFigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -252,8 +256,11 @@ elif len(wm) == 0 and len(geneList) <= 7:
     # write d3net
     r['writed3Net'](d3Obj, fileName = 'networkd3.html', savePath = fn)
     d3FigObj = r['d3ExtractNetEle'](fn + 'networkd3.html')
-    d3FigObj = tuple(d3FigObj)[0]
 
+    # remove old html file
+    os.remove(fn + 'networkd3.html')
+    
+    d3FigObj = tuple(d3FigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
@@ -300,7 +307,7 @@ print("""\
 </head>
 <body>
 <p>
-New address in 2s.
+New address in 2s. Please refresh this page if no response in a long time.
 </p>
 </body>
 </html>
