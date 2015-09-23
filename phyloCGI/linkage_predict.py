@@ -181,7 +181,7 @@ corMat = r['GetPhyloCorMat'](profileMat)
 corMatpwd = GetRFilePath(fn, 'correlation_matrix.csv')
 r['write.csv'](corMat, corMatpwd)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        
+
 ##~~~~~~~~~~~~~~~~~~~~~~~~~interaction matrix~~~~~~~~~~~~~~~~~~~~
 linksMat = r['GetTopLink'](geneIDs = geneList,
                              linkData = top500List,
@@ -209,7 +209,7 @@ wm = checkColList.rx2('wm')
 if len(wm) == 1:
     circosFigObj = tuple(wm)[0]
 elif len(wm) == 0 and len(geneList) > 7:
-    circosFigObj = 'The number of candidate genes for Circos plot should no more than 7.\n'
+    circosFigObj = 'The number of candidate genes for Circos plot should be no more than 7.\n'
 elif len(wm) == 0 and len(geneList) <= 7:
     # copy and compress circos folder
     os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
@@ -219,7 +219,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
     # generate circos files
     ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
     r['writeCircos'](geneList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig/phylo/')
-    
+
     # generate circos config
     r['writeConf']('phylo/', geneList, geneSym, linkColVec, fn + 'circosConfig/')
 
@@ -229,6 +229,18 @@ elif len(wm) == 0 and len(geneList) <= 7:
     circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
     circosFigObj = tuple(circosFigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~d3 network~~~~~~~~~~~~~~~~~~~~~~~~~
+if len(wm) == 1:
+    d3FigObj = tuple(wm)[0]
+elif len(wm) == 0 and len(geneList) > 7:
+    d3FigObj = 'The number of candidate genes for D3network plot should be no more than 7.\n'
+elif len(wm) == 0 and len(geneList) <= 7:
+    # selection and annotation ftmat
+    ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
+    annoftMat = r['Annoft'](geneList, ftMat, geneAnno)
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
 # read html template
