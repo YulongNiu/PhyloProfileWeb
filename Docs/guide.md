@@ -45,6 +45,8 @@ The number of input genes is supposed to be at least two. Otherwise, an error me
 
 An internal [gene annotation file](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/geneAnno.csv) is used for Circos plot. **Any genes not in this list will be neglected**. The time of plotting the Circos figure increases dramatically along with increment of predicted linkages. As the web-server connection will be closed in 15 minutes, the input candidate gene number for Circos plot  we recommend is no more than `7`.
 
+The D3 interactive network is constructed based on the 3rd column data. It is designed as an alternative way to show the linkages network.
+
 * 4th column
 
 4th column allows pre-defined gene names (optional). As the GeneID (*e.g.*, `hsa:513`) is hard to get its meaning, the 4th column could provide a way to transfer the GeneID to other formats ([Example](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.txt)). The pre-defined gene names will be used inboth phylogenetic profile and correlation figures. This column is optional; if you want to keep the GeneID in figures, please leave it as blank (no column names and no values).
@@ -55,7 +57,7 @@ We provide two ways to illustrate the prediction results. A webpage merged the a
 
 * Webpage
 
-The webpage contains visualization of phylogenetic profiles, correlation matrix, and list of prediction linkages. A grey block will be used to represent the negative correlation value in the correlation matrix plot.
+The webpage contains visualization of phylogenetic profiles, correlation matrix, Circos plot, D3 interactive network, and list of prediction linkages. A grey block will be used to represent the negative correlation value in the correlation matrix plot.
 
 * Download folder
 
