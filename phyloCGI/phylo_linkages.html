@@ -1,28 +1,44 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html lang="en">
+
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-    <title>PhyloProfile</title>
+    <title>PrePhyloPro</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Online prediction of whole genomic linkages" />
+    <meta name="author" content="Yulong Niu" />
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- network3d -->
+    <script src="networkd3_files/htmlwidgets-0.5/htmlwidgets.js"></script>
+    <script src="networkd3_files/d3-3.5.2/d3.min.js"></script>
+    <script src="networkd3_files/forceNetwork-binding-0.2.1/forceNetwork.js"></script>
     <!-- <link href="style2.css" rel="stylesheet" type="text/css" media="screen"/> -->
   </head>
 
   <h3 id="plot_profile">Threshold of linkages number for each gene</h3>
   %s
-  
-  <h3 id="plot_profile">The Phylogenetic Profiles of Input Genes</h3>
+
+  <h3 id="plot_profile">Phylogenetic profiles of input genes</h3>
   %s
 
-  <h3 id="plot_cormatrix">The Correlation Matrix of Input Genes</h3>
+  <h3 id="plot_cormatrix">Correlation matrix of input genes</h3>
   %s
 
-  <h3 id="plot_circos">The Circos Plot of Predicted Linkages</h3>
+  <h3 id="plot_circos">Circos plot of predicted linkages</h3>
+  <p>
+    %s
+  </p>
+
+  <h3 id="plot_d3network">D3 network of predicted linkages</h3>
   %s
-  
-  <h3 id="linkage_matrix">Predicted Linkages</h3>
+
+  <h3 id="linkage_matrix">Predicted linkages</h3>
   %s
-  
+
   <h3 id="download">Download</h3>
   <p><a href="/phyloprofile/tmpData/%s.tar.gz">Click to download results</a></p>
-  
+
 </html>

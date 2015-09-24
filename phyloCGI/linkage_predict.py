@@ -72,7 +72,7 @@ while True:
     fnDir = RandomName('phylopred')
     fn = tempPath + fnDir + '/'
     if os.path.exists(fn) is not True:
-        # get an unique name 
+        # get an unique name
         os.mkdir(fn)
         open(fn + filen, 'wb').write(fileitem.file.read())
         break
@@ -140,7 +140,7 @@ geneColVec.names = geneList
 # set profile plot path
 profileFigPdfPath = GetRFilePath(fn, 'profilePlot.pdf')
 profileFigJpgPath = GetRFilePath(fn, 'profilePlot.jpg')
-        
+
 r['pdf'](profileFigPdfPath, width = 10)
 profileFig = r['PlotPhyloProfile'](profileMat,
                                    geneNameSize = phyloGeneNameSize,
@@ -181,7 +181,7 @@ corMat = r['GetPhyloCorMat'](profileMat)
 corMatpwd = GetRFilePath(fn, 'correlation_matrix.csv')
 r['write.csv'](corMat, corMatpwd)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        
+
 ##~~~~~~~~~~~~~~~~~~~~~~~~~interaction matrix~~~~~~~~~~~~~~~~~~~~
 linksMat = r['GetTopLink'](geneIDs = geneList,
                              linkData = top500List,
@@ -209,7 +209,7 @@ wm = checkColList.rx2('wm')
 if len(wm) == 1:
     circosFigObj = tuple(wm)[0]
 elif len(wm) == 0 and len(geneList) > 7:
-    circosFigObj = 'The number of candidate genes for Circos plot should no more than 7.\n'
+    circosFigObj = 'The number of candidate genes for Circos plot should be no more than 7.\n'
 elif len(wm) == 0 and len(geneList) <= 7:
     # copy and compress circos folder
     os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
@@ -219,7 +219,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
     # generate circos files
     ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
     r['writeCircos'](geneList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig/phylo/')
-    
+
     # generate circos config
     r['writeConf']('phylo/', geneList, geneSym, linkColVec, fn + 'circosConfig/')
 
@@ -227,13 +227,52 @@ elif len(wm) == 0 and len(geneList) <= 7:
     os.system('circos-0.67-7/bin/circos -conf ' + fn + 'circosConfig/circosConf.conf ' + '-outputdir ' + fn + ' -outputfile ' + 'circosPlot' + ' >/dev/null')
     os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png' + ' >/dev/null')
     circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
+
+    # remove config folder
+    os.system('rm -rf ' + fn + 'circosConfig' + ' >/dev/null')
+
     circosFigObj = tuple(circosFigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~d3 network~~~~~~~~~~~~~~~~~~~~~~~~~
+if len(wm) == 1:
+    d3FigObj = tuple(wm)[0]
+elif len(wm) == 0 and len(geneList) > 7:
+    d3FigObj = 'The number of candidate genes for D3network plot should be no more than 7.\n'
+elif len(wm) == 0 and len(geneList) <= 7:
+    # selection and annotation ftmat
+    ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
+    annoftMat = r['Annoft'](geneList, ftMat, geneAnno)
+
+    # annotation geneList
+    geneListIdx = r['%in%'](geneAnno.rx(True, 1), geneList)
+    geneListSymb = geneAnno.rx(geneListIdx, 2)
+    geneListSymb = r['unlist'](geneListSymb)
+
+    # transfer and plot de network
+    d3ft = r['d3Transft'](geneListSymb, annoftMat)
+    d3Obj = r['d3PlotNet'](d3ft)
+
+    # write d3net
+    r['writed3Net'](d3Obj, fileName = 'networkd3.html', savePath = fn)
+    d3FigObj = r['d3ExtractNetEle'](fn + 'networkd3.html')
+
+    # remove old html file
+    os.remove(fn + 'networkd3.html')
+    
+    d3FigObj = tuple(d3FigObj)[0]
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
 # read html template
 htmltemp = open('/var/www/cgi-bin/phyloCGI/' + 'phylo_linkages.html').read()
-htmlReturn = htmltemp %(topNum, profileFigObj, cormatrixFigObj, circosFigObj, linksMatObj, fnDir)
+htmlReturn = htmltemp %(topNum,
+                        profileFigObj,
+                        cormatrixFigObj,
+                        circosFigObj,
+                        d3FigObj,
+                        linksMatObj,
+                        fnDir)
 # beware of the path!!!!!!!!!!!!!
 # write html index
 f = open(fn + 'index.html', 'w')
@@ -268,7 +307,7 @@ print("""\
 </head>
 <body>
 <p>
-New address in 2s.
+New address in 2s. Please refresh this page if no response in a long time.
 </p>
 </body>
 </html>
