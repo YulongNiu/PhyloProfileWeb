@@ -32,7 +32,34 @@
   %s
 
   <h3 id="linkage_matrix">Predicted linkages</h3>
-  %s
+  <table id="linkmatrix" class="row-border hover order-column" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>FromAnno</th>
+        <th>To</th>
+        <th>ToAnno</th>
+        <th>Jaccard</th>
+        <th>Cor</th>
+      </tr>
+    </thead>
+
+    <tfoot>
+      <tr>
+        <th>From</th>
+        <th>FromAnno</th>
+        <th>To</th>
+        <th>ToAnno</th>
+        <th>Jaccard</th>
+        <th>Cor</th>
+      </tr>
+    </tfoot>
+
+    <tbody>
+      %s
+    </tbody>
+  </table>
+
 
   <h3 id="download">Download</h3>
   <p><a href="/phyloprofile/tmpData/%s.tar.gz">Click to download results</a></p>
@@ -41,5 +68,25 @@
   <script src="networkd3_files/htmlwidgets-0.5/htmlwidgets.js"></script>
   <script src="networkd3_files/d3-3.5.2/d3.min.js"></script>
   <script src="networkd3_files/forceNetwork-binding-0.2.1/forceNetwork.js"></script>
+  <!-- DataTable -->
+  <script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,dt-1.10.9/datatables.min.js"></script>
+  <script>
+   $(document).ready(function() {
+       var lastIdx = null;
+       var table = $('#linkmatrix').DataTable();
 
+       $('#linkmatrix tbody')
+        .on( 'mouseover', 'td', function () {
+            var colIdx = table.cell(this).index().column;
+
+            if ( colIdx !== lastIdx ) {
+                $( table.cells().nodes() ).removeClass( 'highlight' );
+                $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+            }
+        } )
+        .on( 'mouseleave', function () {
+            $( table.cells().nodes() ).removeClass( 'highlight' );
+        } );
+   } );
+  </script>
 </html>

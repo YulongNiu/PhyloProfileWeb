@@ -195,6 +195,8 @@ linksMatObj = r['hwrite'](linksMat, center = True, br = True,
                              "row.style": r['list']('font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
                              "col.style": r['list'](From = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em', To = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
                              "table.class": "'table'"})
+# linksMatObj = r['hwrite'](linksMat)
+# linksMatObj = r['htmlExtractTable'](linksMatObj)
 linksMatObj = tuple(linksMatObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -259,7 +261,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
 
     # remove old html file
     os.remove(fn + 'networkd3.html')
-    
+
     d3FigObj = tuple(d3FigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
