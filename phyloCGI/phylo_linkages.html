@@ -11,35 +11,65 @@
     <meta name="author" content="Yulong Niu" />
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <!-- <link href="style2.css" rel="stylesheet" type="text/css" media="screen"/> -->
+    <!-- DataTable and self defined css -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/jq-2.1.4,dt-1.10.9/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/YulongNiu/pppStyle/master/linkmat/pppDataTable.css"/>
   </head>
 
   <h3 id="plot_profile">Threshold of linkages number for each gene</h3>
-  %s
+  {topNum}
 
   <h3 id="plot_profile">Phylogenetic profiles of input genes</h3>
-  %s
+  {profileFigObj}
 
   <h3 id="plot_cormatrix">Correlation matrix of input genes</h3>
-  %s
+  {cormatrixFigObj}
 
   <h3 id="plot_circos">Circos plot of predicted linkages</h3>
   <p>
-    %s
+    {circosFigObj}
   </p>
 
   <h3 id="plot_d3network">D3 network of predicted linkages</h3>
-  %s
+  {d3FigObj}
 
   <h3 id="linkage_matrix">Predicted linkages</h3>
-  %s
+  <table id="linksmat" class="row-border hover order-column" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>FromAnno</th>
+        <th>To</th>
+        <th>ToAnno</th>
+        <th>Jaccard</th>
+        <th>Cor</th>
+      </tr>
+    </thead>
+
+    <tfoot>
+      <tr>
+        <th>From</th>
+        <th>FromAnno</th>
+        <th>To</th>
+        <th>ToAnno</th>
+        <th>Jaccard</th>
+        <th>Cor</th>
+      </tr>
+    </tfoot>
+
+    <tbody>
+      {linksMatObj}
+    </tbody>
+  </table>
 
   <h3 id="download">Download</h3>
-  <p><a href="/phyloprofile/tmpData/%s.tar.gz">Click to download results</a></p>
+  <p><a href="/phyloprofile/tmpData/{fnDir}.tar.gz">Click to download results</a></p>
 
   <!-- network3d -->
-  <script src="networkd3_files/htmlwidgets-0.5/htmlwidgets.js"></script>
-  <script src="networkd3_files/d3-3.5.2/d3.min.js"></script>
-  <script src="networkd3_files/forceNetwork-binding-0.2.1/forceNetwork.js"></script>
-
+  <script src="https://cdn.rawgit.com/YulongNiu/pppStyle/master/d3network/htmlwidgets-0.5/htmlwidgets.js"></script>
+  <script src="https://cdn.rawgit.com/YulongNiu/pppStyle/master/d3network/d3-3.5.2/d3.min.js"></script>
+  <script src="https://cdn.rawgit.com/YulongNiu/pppStyle/master/d3network/forceNetwork-binding-0.2.1/forceNetwork.js"></script>
+  <!-- DataTable -->
+  <Script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,dt-1.10.9/datatables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/YulongNiu/pppStyle/master/linkmat/pppDataTable.js"></script>
 </html>
