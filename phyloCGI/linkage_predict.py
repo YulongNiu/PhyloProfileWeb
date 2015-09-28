@@ -13,21 +13,10 @@ import cgitb
 cgitb.enable()
 
 import cgi, os, sys, math
-from set_uni_file import RandomName
+from set_uni_file import RandomName, GetRFilePath
 from rpy2.robjects import r
 from rpy2.robjects.vectors import StrVector, IntVector, FloatVector
 from rpy2.robjects.packages import importr
-
-######################Python_Funciton###############
-def GetRFilePath(folderName, fileName):
-    """
-    'GetRFilePath' is used to generate a R file path in python CGI
-    """
-    filepwd = StrVector(folderName + fileName)
-    filepwd = r['paste'](filepwd, collapse = '')
-    return filepwd
-####################################################
-
 
 #~~~~~~~~~~~ check threshold and input file~~~~~~~~
 form = cgi.FieldStorage()
@@ -189,14 +178,8 @@ linksMat = r['GetTopLink'](geneIDs = geneList,
                              threshold = topNum)
 linksMatpwd = GetRFilePath(fn, 'predicted_linakges.csv')
 r['write.csv'](linksMat, linksMatpwd)
-linksMatObj = r['hwrite'](linksMat, center = True, br = True,
-                          **{"row.bgcolor": "#a7c942",
-                             "col.bgcolor": r['list'](From = '#a7c942', To = '#a7c942'),
-                             "row.style": r['list']('font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
-                             "col.style": r['list'](From = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em', To = 'font-weight:bold; text-align:center; color:#413b62; padding-top:5px; padding-bottom:4px; font-size:1.1em'),
-                             "table.class": "'table'"})
-# linksMatObj = r['hwrite'](linksMat)
-# linksMatObj = r['htmlExtractTable'](linksMatObj)
+linksMatObj = r['hwrite'](linksMat, **{"col.names": False})
+linksMatObj = r['htmlExtractTable'](linksMatObj)
 linksMatObj = tuple(linksMatObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -268,13 +251,14 @@ elif len(wm) == 0 and len(geneList) <= 7:
 ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
 # read html template
 htmltemp = open('/var/www/cgi-bin/phyloCGI/' + 'phylo_linkages.html').read()
-htmlReturn = htmltemp %(topNum,
-                        profileFigObj,
-                        cormatrixFigObj,
-                        circosFigObj,
-                        d3FigObj,
-                        linksMatObj,
-                        fnDir)
+replaceDic = {'topNum': topNum,
+              'profileFigObj': profileFigObj,
+              'cormatrixFigObj': cormatrixFigObj,
+              'circosFigObj': circosFigObj,
+              'd3FigObj': d3FigObj,
+              'linksMatObj': linksMatObj,
+              'fnDir': fnDir}
+htmlReturn = htmltemp.format(**replaceDic)
 # beware of the path!!!!!!!!!!!!!
 # write html index
 f = open(fn + 'index.html', 'w')

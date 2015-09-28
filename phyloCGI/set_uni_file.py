@@ -18,3 +18,15 @@ def RandomName(fileType):
     name = ''.join(head + body)
     fullName = fileType + '_' + name
     return(fullName)
+
+
+"""
+'GetRFilePath' is used to generate a R file path in python CGI
+"""
+def GetRFilePath(folderName, fileName):
+    """
+    'GetRFilePath' is used to generate a R file path in python CGI
+    """
+    filepwd = StrVector(folderName + fileName)
+    filepwd = r['paste'](filepwd, collapse = '')
+    return filepwd
