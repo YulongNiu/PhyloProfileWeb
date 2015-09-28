@@ -242,8 +242,9 @@ elif len(wm) == 0 and len(geneList) <= 7:
     r['writed3Net'](d3Obj, fileName = 'networkd3.html', savePath = fn)
     d3FigObj = r['d3ExtractNetEle'](fn + 'networkd3.html')
 
-    # remove old html file
+    # remove old html file and js/css
     os.remove(fn + 'networkd3.html')
+    os.system('rm -rf ' + fn + 'networkd3_files' + ' >/dev/null')
 
     d3FigObj = tuple(d3FigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

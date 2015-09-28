@@ -23,6 +23,8 @@ def RandomName(fileType):
 """
 'GetRFilePath' is used to generate a R file path in python CGI
 """
+from rpy2.robjects import r
+from rpy2.robjects.vectors import StrVector
 def GetRFilePath(folderName, fileName):
     """
     'GetRFilePath' is used to generate a R file path in python CGI
