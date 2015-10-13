@@ -31,6 +31,10 @@ if (not 1 <= topNum <= 500):
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
 
+# get blast evalue threshold
+evalue = form.getfirst('evalue', '')
+evalueObj = format(float(evalue), '.4f')
+
 # get phylogenetic plot para
 phyloGeneNameSize = float(form.getfirst('phyloGeneNameSize', ''))
 # get correlation plot para
@@ -90,9 +94,9 @@ importr('PhyloProfile')
 importr('PhyloProfileSuppl')
 
 # I may need to use a database instead of load RData
-r['load']('top500List.RData')
+r['load']('top500List' + evalue + '.RData')
 r['load']('wholePhyloDataAnno.RData')
-r['load']('wholeProfile.RData')
+r['load']('wholeProfile' + evalue + '.RData')
 r['load']('kingdomCol.RData')
 r['load']('geneAnno.RData')
 r['load']('phyloSpe.RData')
@@ -253,6 +257,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
 # read html template
 htmltemp = open('/var/www/cgi-bin/phyloCGI/' + 'phylo_linkages.html').read()
 replaceDic = {'topNum': topNum,
+              'evalueObj': evalueObj,
               'profileFigObj': profileFigObj,
               'cormatrixFigObj': cormatrixFigObj,
               'circosFigObj': circosFigObj,
