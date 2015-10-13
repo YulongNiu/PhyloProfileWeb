@@ -265,17 +265,6 @@ htmlReturn = htmltemp.format(**replaceDic)
 f = open(fn + 'index.html', 'w')
 f.write(htmlReturn + '\n')
 f.close()
-
-# # read css template
-# csstemp = open('/var/www/html/metaker/CSS/style2.css').read()
-# f = open(fn + 'style2.css', 'w')
-# f.write(csstemp + '\n')
-# f.close()
-
-# # copy images
-# imgdir = '/var/www/html/metaker/Pic/'
-# os.system('cp ' + imgdir + 'LOGO_PIC.png ' + fn)
-# os.system('cp ' + imgdir + 'LOGO_METAKER.png ' + fn)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~tar_Results~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
