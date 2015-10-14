@@ -17,7 +17,7 @@
 
 ### 1.1 Algorithm parameters ###
 
-* Linkage number
+* Linkages number
 
 The threshold of linkages number for each gene could be randomly chose between `1` and `500`(even a float number like `5.4`). A smaller vaule means a more stringent threshold of predicted linkages.
 
@@ -25,7 +25,7 @@ If you want to get less but more reliable linkages, please try a small value, fo
 
 * BLAST Evalue
 
-
+Three BLAST E-value threshold, 0.001, 0.0005, 0.0001, were provided. This threshold was used in choosing homologous proteins. For a pair proteins (the referenced protein and test protein), if the blast E-value that is smaller than the threshold, the homologs is through to be present; otherwise, the homologs is absent. Correspondingly, in the phylogenetic profile, "1" and "0" are used to denote the presence and absence.
 
 ### 1.2 Plot parameters ###
 
