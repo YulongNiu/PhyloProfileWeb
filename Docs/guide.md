@@ -5,7 +5,7 @@
 **Table of Contents**
 
 - [1. Input](#1-input)
-    - [1.1 Linkage number](#11-linkage-number)
+    - [1.1 Algorithm parameters](#11-algorithm-parameters)
     - [1.2 Plot parameters](#12-plot-parameters)
     - [1.3 Candidate gene list](#13-candidate-gene-list) 
 - [2. Output](#2-output)
@@ -15,11 +15,17 @@
 
 ## 1. Input ##
 
-### 1.1 Linkage number ###
+### 1.1 Algorithm parameters ###
+
+* Linkage number
 
 The threshold of linkages number for each gene could be randomly chose between `1` and `500`(even a float number like `5.4`). A smaller vaule means a more stringent threshold of predicted linkages.
 
 If you want to get less but more reliable linkages, please try a small value, for example `20`. Please be aware, a small value may be at a risk of missing some potential and novel linkages which do not have very strong evidence.
+
+* BLAST Evalue
+
+
 
 ### 1.2 Plot parameters ###
 
