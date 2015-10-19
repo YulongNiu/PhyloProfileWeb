@@ -45,7 +45,7 @@
               <li class="active nav-item sr-only"><a class="scrollto" href="#promo">Home</a></li>
               <li class="nav-item"><a class="scrollto" href="#about">About</a></li>
               <li class="nav-item"><a class="scrollto" href="#features">Features</a></li>
-               <li class="nav-item"><a class="scrollto" href="#examples">Examples</a></li>
+              <li class="nav-item"><a class="scrollto" href="#examples">Examples</a></li>
               <li class="nav-item"><a class="scrollto" href="#docs">Start!</a></li>
               <li class="nav-item last"><a class="scrollto" href="#contact">Contact</a></li>
             </ul><!--//nav-->
@@ -65,7 +65,7 @@
 	        <a class="btn btn-cta-primary" href="#docs">Start Now!</a>
         </div>
 	      <div class="version">
-	        <p>Current Version 0.1.2 (September 28, 2015)</p>
+	        <p>Current Version 0.1.3 (October 18, 2015)</p>
 	      </div>
 	      <ul class="meta list-inline">
 	        <li><a href="https://github.com/YulongNiu/PhyloProfileWeb" target="_blank">View on GitHub</a></li>
@@ -73,7 +73,7 @@
 	        <li>Created by: <a href="http://yulongniu.bionutshell.org/" target="_blank">Yulong Niu</a></li>
         </ul><!--//meta-->
       </div><!--//container-->
-      </section><!--//promo-->
+    </section><!--//promo-->
 
     <!-- ******ABOUT****** -->
     <section id="about" class="about section">
@@ -146,7 +146,7 @@
         <h2 class="title">New features</h2>
         <ul class="feature-list list-unstyled">
           <li><i class="fa fa-check"></i> <a target="_blank" href="./ExampleData/phylopred_fatp1Link/index.html">Pre-defined</a> annotation of input genes;</li>
-          <li><i class="fa fa-check"></i> Phylogeny legend is added in the phylogenetic profiling plot;</li>
+          <li><i class="fa fa-check"></i> Options of BLAST Evalue threshold;</li>
           <li><i class="fa fa-check"></i> d3 interactive network;</li>
           <li><i class="fa fa-check"></i> Advanced parameters to control output figures. </li>
         </ul>
@@ -163,8 +163,8 @@
       <div class="container">
         <div class="examples-inner">
           <h2 class="title text-center">Examples</h2>
-          <div class="info">
 
+          <div class="info">
             <ul class="nav nav-tabs nav-justified">
               <li class="active"><a data-toggle="tab" href="#Example1">Example 1</a></li>
               <li><a data-toggle="tab" href="#Example2">Example 2</a></li>
@@ -295,20 +295,53 @@
         <div class="docs-inner">
           <form target="_blank" method="post" action="/cgi-bin/phyloCGI/linkage_predict.py" enctype="multipart/form-data">
             <h2 class="title text-center">Get Started</h2>
+
             <div class="block">
               <h3 class="sub-title text-center">Step 1</h3>
               <div class="step-block">
-                <h4 class="step-title">Linkages number for each gene</h4>
-                  <div class="input-group">
-                    <div class="input-group-addon">1 &le;</div>
-                    <input class="form-control" type="text" name="topNum" value='400'/>
-                    <div class="input-group-addon">&le; 500</div>
-                  </div><!-- input-group -->
-                  <div class="tip-info">
-                    <div class="alert alert-warning" role="alert">The smaller value, the less predicted linkages.</div>
-                  </div><!-- tip-infor -->
+                <h4 class="step-title">Algorithm parameters</h4>
+                <ul class="nav nav-tabs nav-justified">
+                  <li class="active"><a data-toggle="tab" href="#linkNum">Linkages number</a></li>
+                  <li><a data-toggle="tab" href="#blastThres">BLAST Evalue</a></li>
+                </ul>
+                <div class="tab-content">
+                  <div id="linkNum" class="tab-pane fade in active">
+                    <div class="input-group">
+                      <div class="input-group-addon">1 &le;</div>
+                      <input class="form-control" type="text" name="topNum" value="400"/>
+                      <div class="input-group-addon">&le; 500</div>
+                    </div><!-- input-group -->
+                    <div class="tip-info">
+                      <div class="alert alert-warning" role="alert">The smaller value, the less predicted linkages.</div>
+                    </div><!-- tip-infor -->
+                  </div><!-- linkage number -->
+                  <div id="blastThres" class="tab-pane fade">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" name="evalue" value="1e-03" checked="checked"/>
+                      </span>
+                      <input type="text" class="form-control" value="0.001" readonly/>
+                    </div><!-- threshold -->
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" name="evalue" value="5e-04"/>
+                      </span>
+                      <input type="text" class="form-control" value="0.0005" readonly/>
+                    </div><!-- threshold -->
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" name="evalue" value="1e-04"/>
+                      </span>
+                      <input type="text" class="form-control" value="0.0001" readonly/>
+                    </div><!-- threshold -->
+                    <div class="tip-info">
+                      <div class="alert alert-warning" role="alert">The smaller value, the less homologs in the profile.</div>
+                    </div><!-- tip-infor -->
+                  </div><!-- blast threshold -->
+                </div>
               </div><!-- step1-block-excute -->
             </div><!--//step1-block-->
+
             <div class="block">
               <h3 class="sub-title text-center">Step 2</h3>
               <div class="step-block">
@@ -347,8 +380,9 @@
                     </div> <!-- tip-infor -->
                   </div>
                 </div>
-              </div><!-- step1-block-excute -->
+              </div><!-- step2-block-excute -->
             </div><!--//step2-block-->
+
             <div class="block">
               <h3 class="sub-title text-center">Step 3</h3>
               <div class="step-block">
@@ -361,9 +395,9 @@
                 </div> <!-- tip-infor -->
               </div><!-- step3-block-excute -->
             </div><!--//step3-block-->
+
             <div class="text-center">
               <button type="submit" value="Submit" class="btn btn-success">Submit</button>
-              <!-- <Input type="submit" value="Submit" /> -->
             </div><!-- submit -->
           </form><!-- form -->
           <div class="block">
@@ -395,10 +429,10 @@
               <br/>
               <p><strong>Citation:</strong></p>
               <p> Niu Y, Yang Y, Alavian K <i>et.al.</i>: <b>Whole-genome phylogenetic profiling reveals novel functional interaction with the F1Fo ATP synthase</b> (manuscript in preparation).</p>
-                <div class="source">
-                  <span class="name">Yulong Niu</span>
-                  <br />
-                </div><!--//source-->
+              <div class="source">
+                <span class="name">Yulong Niu</span>
+                <br />
+              </div><!--//source-->
             </div><!--//speech-bubble-->
           </div><!--//author-message-->
           <div class="clearfix"></div>
@@ -430,12 +464,12 @@
 
   <!-- google anlaytics -->
   <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-53073828-3', 'auto');
-  ga('send', 'pageview');
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	                          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+   ga('create', 'UA-53073828-3', 'auto');
+   ga('send', 'pageview');
   </script>
 
 </html>

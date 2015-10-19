@@ -5,7 +5,7 @@
 **Table of Contents**
 
 - [1. Input](#1-input)
-    - [1.1 Linkage number](#11-linkage-number)
+    - [1.1 Algorithm parameters](#11-algorithm-parameters)
     - [1.2 Plot parameters](#12-plot-parameters)
     - [1.3 Candidate gene list](#13-candidate-gene-list) 
 - [2. Output](#2-output)
@@ -15,11 +15,17 @@
 
 ## 1. Input ##
 
-### 1.1 Linkage number ###
+### 1.1 Algorithm parameters ###
+
+* Linkages number
 
 The threshold of linkages number for each gene could be randomly chose between `1` and `500`(even a float number like `5.4`). A smaller vaule means a more stringent threshold of predicted linkages.
 
 If you want to get less but more reliable linkages, please try a small value, for example `20`. Please be aware, a small value may be at a risk of missing some potential and novel linkages which do not have very strong evidence.
+
+* BLAST Evalue
+
+Three BLAST E-value threshold, 0.001, 0.0005, 0.0001, were provided. This threshold was used in choosing homologous proteins. For a pair proteins (the referenced protein and test protein), if the blast E-value that is smaller than the threshold, the homologs is through to be present; otherwise, the homologs is absent. Correspondingly, in the phylogenetic profile, "1" and "0" are used to denote the presence and absence.
 
 ### 1.2 Plot parameters ###
 
