@@ -124,7 +124,7 @@ if batArgu.ncol == 4:
     geneMatchIdx = r['match'](profileMat.rownames, geneList)
     profileMat.rownames = usrGeneName.rx(geneMatchIdx)
     ## change gene colours names
-    geneColVec.names = profileMat.rownames
+    geneColVec.names = usrGeneName
 else:
     geneColVec.names = geneList
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
