@@ -2,13 +2,13 @@
 
 print("Content-Type: text/html\n")
 
-# tmpData path
+## tmpData path
 tempPath = '/var/www/html/phyloprofile/tmpData/'
 
-# Initial warning message
+## Initial warning message
 message = ''
 
-# Debugging, and should be removed after publish the webpage.
+## Debugging, and should be removed after publish the webpage.
 import cgitb
 cgitb.enable()
 
@@ -18,10 +18,10 @@ from rpy2.robjects import r
 from rpy2.robjects.vectors import StrVector, IntVector, FloatVector
 from rpy2.robjects.packages import importr
 
-#~~~~~~~~~~~ check threshold and input file~~~~~~~~
+##~~~~~~~~~~~ check threshold and input file~~~~~~~~
 form = cgi.FieldStorage()
 
-# get top number threshold
+## get top number threshold
 topNum = form.getfirst('topNum', '')
 topNum = math.ceil(float(topNum))
 topNum = int(topNum)
@@ -31,19 +31,19 @@ if (not 1 <= topNum <= 500):
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
 
-# get blast evalue threshold
+## get blast evalue threshold
 evalue = form.getfirst('evalue', '')
 evalueObj = format(float(evalue), '.4f')
 
-# get phylogenetic plot para
+## get phylogenetic plot para
 phyloGeneNameSize = float(form.getfirst('phyloGeneNameSize', ''))
-# get correlation plot para
+## get correlation plot para
 corGeneNameSize = float(form.getfirst('corGeneNameSize', ''))
 
-# A nested FieldStorage instance holds the file
+## A nested FieldStorage instance holds the file
 fileitem = form['candidateList']
 if fileitem.filename:
-    # strip leading path from file name to avoid directory traversal attacks
+    ## strip leading path from file name to avoid directory traversal attacks
     filen = fileitem.filename
 else:
     message += 'No file was uploaded.\n'
@@ -56,11 +56,10 @@ if fileSuffix not in ['csv', 'txt']:
     message += 'Only "txt" or "csv" file format is allowed.\n'
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#~~~~~~~~~~~~~~~~~~~get file~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#~~~~~~~~~~~~~~~~build tmp folder name~~~~~~~~~
+##~~~~~~~~~~~~~~~~~~~get file~~~~~~~~~~~~~~~~~~~~~~~~~
+##~~~~~~~~~~~~~~~~build tmp folder name~~~~~~~~~
 while True:
     fnDir = RandomName('phylopred')
     fn = tempPath + fnDir + '/'
@@ -69,31 +68,31 @@ while True:
         os.mkdir(fn)
         open(fn + filen, 'wb').write(fileitem.file.read())
         break
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# read in file
+## read in file
 if fileSuffix == 'csv':
-    # for csv file
+    ## for csv file
     batArgu = r['read.csv'](fn + filen, stringsAsFactors = False)
 else:
-    # for txt file
+    ## for txt file
     batArgu = r['read.table'](fn + filen, sep = '\t', header = True,
                               stringsAsFactors = False, **{"comment.char": ""})
 
-# check the number of input genes should be at least two
+## check the number of input genes should be at least two
 if len(batArgu.rx(True, 1)) < 2:
     message += 'The input gene number should be at least two.\n'
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #########################Process_data##################
-# load library
+## load library
 importr('hwriter')
 importr('PhyloProfile')
 importr('PhyloProfileSuppl')
 
-# I may need to use a database instead of load RData
+## I may need to use a database instead of load RData
 r['load']('top500List' + evalue + '.RData')
 r['load']('wholePhyloDataAnno.RData')
 r['load']('wholeProfile' + evalue + '.RData')
@@ -109,28 +108,32 @@ geneAnno = r['geneAnno']
 phyloSpe = r['phyloSpe']
 kingdomAnno = r['kingdomAnno']
 
-# retrieve vec
+## retrieve vec
 geneList = batArgu.rx(True, 1)
 geneColVec = batArgu.rx(True, 2)
 linkColVec = batArgu.rx(True, 3)
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~retrieve profile data~~~~~~~~~~~
-# select profiles
+## select profiles
 profileMat = r['GetProfile'](geneList, wholeProfile)
 
-# annotation
+## annotation
 if batArgu.ncol == 4:
-    # transfer gene anno to rownames
+    ## transfer gene anno to rownames
     usrGeneName = batArgu.rx(True, 4)
     geneMatchIdx = r['match'](profileMat.rownames, geneList)
     profileMat.rownames = usrGeneName.rx(geneMatchIdx)
+    ## change gene colours names
+    geneColVec.names = profileMat.rownames
+else:
+    geneColVec.names = geneList
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~plot phyloprofile~~~~~~~~~~~~~~~~~~~
-# set names of gene colors vector
+## set names of gene colors vector
 geneColVec.names = geneList
 
-# set profile plot path
+## set profile plot path
 profileFigPdfPath = GetRFilePath(fn, 'profilePlot.pdf')
 profileFigJpgPath = GetRFilePath(fn, 'profilePlot.jpg')
 
@@ -148,11 +151,12 @@ r['dev.off']()
 os.system('convert -density 100 ' + ''.join(list(profileFigPdfPath)) +' ' + ''.join(list(profileFigJpgPath)) + ' >/dev/null')
 
 profileFigObj = r("hwriteImage('profilePlot.jpg', center = TRUE)")
+
 profileFigObj = tuple(profileFigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~plot cormatrix~~~~~~~~~~~~~~~~~~~
-# set profile plot path
+## set profile plot path
 cormatrixFigPdfPath = GetRFilePath(fn, 'cormatrixPlot.pdf')
 cormatrixFigJpgPath = GetRFilePath(fn, 'cormatrixPlot.jpg')
 
@@ -169,7 +173,7 @@ os.system('convert -density 100 ' + ''.join(list(cormatrixFigPdfPath)) + ' ' + '
 cormatrixFigObj = r("hwriteImage('cormatrixPlot.jpg', center = TRUE)")
 cormatrixFigObj = tuple(cormatrixFigObj)[0]
 
-# write correlation matrix
+## write correlation matrix
 corMat = r['GetPhyloCorMat'](profileMat)
 corMatpwd = GetRFilePath(fn, 'correlation_matrix.csv')
 r['write.csv'](corMat, corMatpwd)
@@ -188,7 +192,7 @@ linksMatObj = tuple(linksMatObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~circos plot~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# check link colours
+## check link colours
 checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
 geneList = checkColList.rx2('checkGeneVec')
 linkColVec = checkColList.rx2('checkLinkCol')
@@ -200,24 +204,24 @@ if len(wm) == 1:
 elif len(wm) == 0 and len(geneList) > 7:
     circosFigObj = 'The number of candidate genes for Circos plot should be no more than 7.\n'
 elif len(wm) == 0 and len(geneList) <= 7:
-    # copy and compress circos folder
+    ## copy and compress circos folder
     os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
     os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
     os.system('rm ' + fn + 'circosConfig.tar.gz' + ' >/dev/null')
 
-    # generate circos files
+    ## generate circos files
     ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
     r['writeCircos'](geneList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig/phylo/')
 
-    # generate circos config
+    ## generate circos config
     r['writeConf']('phylo/', geneList, geneSym, linkColVec, fn + 'circosConfig/')
 
-    # circos plot
+    ## circos plot
     os.system('circos-0.67-7/bin/circos -conf ' + fn + 'circosConfig/circosConf.conf ' + '-outputdir ' + fn + ' -outputfile ' + 'circosPlot' + ' >/dev/null')
     os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png' + ' >/dev/null')
     circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
 
-    # remove config folder
+    ## remove config folder
     os.system('rm -rf ' + fn + 'circosConfig' + ' >/dev/null')
 
     circosFigObj = tuple(circosFigObj)[0]
@@ -229,24 +233,24 @@ if len(wm) == 1:
 elif len(wm) == 0 and len(geneList) > 7:
     d3FigObj = 'The number of candidate genes for D3network plot should be no more than 7.\n'
 elif len(wm) == 0 and len(geneList) <= 7:
-    # selection and annotation ftmat
+    ## selection and annotation ftmat
     ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
     annoftMat = r['Annoft'](geneList, ftMat, geneAnno)
 
-    # annotation geneList
+    ## annotation geneList
     geneListIdx = r['%in%'](geneAnno.rx(True, 1), geneList)
     geneListSymb = geneAnno.rx(geneListIdx, 2)
     geneListSymb = r['unlist'](geneListSymb)
 
-    # transfer and plot de network
+    ## transfer and plot de network
     d3ft = r['d3Transft'](geneListSymb, annoftMat)
     d3Obj = r['d3PlotNet'](d3ft)
 
-    # write d3net
+    ## write d3net
     r['writed3Net'](d3Obj, fileName = 'networkd3.html', savePath = fn)
     d3FigObj = r['d3ExtractNetEle'](fn + 'networkd3.html')
 
-    # remove old html file and js/css
+    ## remove old html file and js/css
     os.remove(fn + 'networkd3.html')
     os.system('rm -rf ' + fn + 'networkd3_files' + ' >/dev/null')
 
@@ -254,7 +258,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
-# read html template
+## read html template
 htmltemp = open('/var/www/cgi-bin/phyloCGI/' + 'phylo_linkages.html').read()
 replaceDic = {'topNum': topNum,
               'evalueObj': evalueObj,
@@ -265,8 +269,8 @@ replaceDic = {'topNum': topNum,
               'linksMatObj': linksMatObj,
               'fnDir': fnDir}
 htmlReturn = htmltemp.format(**replaceDic)
-# beware of the path!!!!!!!!!!!!!
-# write html index
+## beware of the path!!!!!!!!!!!!!
+## write html index
 f = open(fn + 'index.html', 'w')
 f.write(htmlReturn + '\n')
 f.close()
@@ -278,8 +282,8 @@ os.system(tarcom + ' >/dev/null')
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~Return_HMTL_file~~~~~~~~~~~~~~~~~~~~~~~
-# print htmlReturn
+##~~~~~~~~~~~~~~~~~~~~~~~~~~Return_HMTL_file~~~~~~~~~~~~~~~~~~~~~~~
+## print htmlReturn
 print("""\
 <html>
 <head>
@@ -293,5 +297,5 @@ New address in 2s. Please refresh this page if no response in a long time.
 </body>
 </html>
 """) % fnDir
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##################################################################
