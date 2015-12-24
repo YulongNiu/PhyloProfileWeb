@@ -215,7 +215,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
     r['writeCircos'](geneList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig/phylo/')
 
     ## generate circos config
-    r['writeConf']('phylo/', geneList, geneSym, linkColVec, fn + 'circosConfig/')
+    r['writeConf']('phylo/', geneList, geneSym, linkColVec, org, fn + 'circosConfig/')
 
     ## circos plot
     os.system('circos-0.69/bin/circos -conf ' + fn + 'circosConfig/circosConf.conf ' + '-outputdir ' + fn + ' -outputfile ' + 'circosPlot' + ' >/dev/null')
