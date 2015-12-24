@@ -15,10 +15,10 @@ cgitb.enable()
 import cgi, os, sys, math
 from set_uni_file import RandomName, GetRFilePath
 from rpy2.robjects import r
-from rpy2.robjects.vectors import StrVector, IntVector, FloatVector
+from rpy2.robjects.vectors import IntVector, FloatVector
 from rpy2.robjects.packages import importr
 
-##~~~~~~~~~~~ check threshold and input file~~~~~~~~
+############### check threshold and input file ################
 form = cgi.FieldStorage()
 
 ## get top number threshold
@@ -34,6 +34,9 @@ if (not 1 <= topNum <= 500):
 ## get blast evalue threshold
 evalue = form.getfirst('evalue', '')
 evalueObj = format(float(evalue), '.4f')
+
+## get organism
+org = form.getfirst('org', '')
 
 ## get phylogenetic plot para
 phyloGeneNameSize = float(form.getfirst('phyloGeneNameSize', ''))
@@ -56,9 +59,9 @@ if fileSuffix not in ['csv', 'txt']:
     message += 'Only "txt" or "csv" file format is allowed.\n'
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
-##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#########################################################
 
-##~~~~~~~~~~~~~~~~~~~get file~~~~~~~~~~~~~~~~~~~~~~~~~
+#########################get file###########################
 ##~~~~~~~~~~~~~~~~build tmp folder name~~~~~~~~~
 while True:
     fnDir = RandomName('phylopred')
@@ -84,7 +87,7 @@ if len(batArgu.rx(True, 1)) < 2:
     message += 'The input gene number should be at least two.\n'
     print('<html><body>%s</body></html>' % message)
     sys.exit(0)
-##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##########################################################
 
 #########################Process_data##################
 ## load library
@@ -93,15 +96,16 @@ importr('PhyloProfile')
 importr('PhyloProfileSuppl')
 
 ## I may need to use a database instead of load RData
-r['load']('top500List' + evalue + '.RData')
-r['load']('wholePhyloDataAnno.RData')
-r['load']('wholeProfile' + evalue + '.RData')
+orgPrefix = org + '/' + org + '_'
+r['load'](orgPrefix + 'top500List' + evalue + '.RData')
+r['load'](orgPrefix + 'wholeGenomeAnno.RData')
+r['load'](orgPrefix + 'wholeProfile' + evalue + '.RData')
+r['load'](orgPrefix + 'geneAnno.RData')
 r['load']('kingdomCol.RData')
-r['load']('geneAnno.RData')
 r['load']('phyloSpe.RData')
 r['load']('kingdomAnno.RData')
 top500List = r['top500List']
-wholePhyloDataAnno = r['wholePhyloDataAnno']
+wholeGenomeAnno = r['wholeGenomeAnno']
 wholeProfile = r['wholeProfile']
 kingdomCol = r['kingdomCol']
 geneAnno = r['geneAnno']
@@ -179,7 +183,7 @@ r['write.csv'](corMat, corMatpwd)
 ##~~~~~~~~~~~~~~~~~~~~~~~~~interaction matrix~~~~~~~~~~~~~~~~~~~~
 linksMat = r['GetTopLink'](geneIDs = geneList,
                              linkData = top500List,
-                             annoVec = wholePhyloDataAnno,
+                             annoVec = wholeGenomeAnno,
                              threshold = topNum)
 linksMatpwd = GetRFilePath(fn, 'predicted_linakges.csv')
 r['write.csv'](linksMat, linksMatpwd)

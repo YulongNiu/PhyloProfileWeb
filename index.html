@@ -303,6 +303,7 @@
                 <ul class="nav nav-tabs nav-justified">
                   <li class="active"><a data-toggle="tab" href="#linkNum">Linkages number</a></li>
                   <li><a data-toggle="tab" href="#blastThres">BLAST Evalue</a></li>
+                  <li><a data-toggle="tab" href="#organism">Organism</a></li>
                 </ul>
                 <div class="tab-content">
                   <div id="linkNum" class="tab-pane fade in active">
@@ -338,6 +339,20 @@
                       <div class="alert alert-warning" role="alert">The smaller value, the less homologs in the profile.</div>
                     </div><!-- tip-infor -->
                   </div><!-- blast threshold -->
+                  <div id="organism" class="tab-pane fade">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" name="org" value="hsa" checked="checked"/>
+                      </span>
+                      <input type="text" class="form-control" value="Homo sapiens (human)" readonly/>
+                    </div><!-- hsa -->
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" name="org" value="ath"/>
+                      </span>
+                      <input type="text" class="form-control" value="Arabidopsis thaliana (thale cress)" readonly/>
+                    </div><!-- ath -->
+                  </div><!-- organism -->
                 </div>
               </div><!-- step1-block-excute -->
             </div><!--//step1-block-->
