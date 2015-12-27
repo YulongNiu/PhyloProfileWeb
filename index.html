@@ -65,11 +65,11 @@
 	        <a class="btn btn-cta-primary" href="#docs">Start Now!</a>
         </div>
 	      <div class="version">
-	        <p>Current Version 0.1.4 (November 26, 2015)</p>
+	        <p>Current Version 0.1.5 (December 24, 2015)</p>
 	      </div>
 	      <ul class="meta list-inline">
 	        <li><a href="https://github.com/YulongNiu/PhyloProfileWeb" target="_blank">View on GitHub</a></li>
-	        <li><a href="https://github.com/YulongNiu/PhyloProfileWeb" target="_blank">Full Documentation</a></li>
+	        <li><a href="https://github.com/YulongNiu/PhyloProfileWeb/blob/master/Docs/guide.md" target="_blank">Full Documentation</a></li>
 	        <li>Created by: <a href="http://yulongniu.bionutshell.org/" target="_blank">Yulong Niu</a></li>
         </ul><!--//meta-->
       </div><!--//container-->
@@ -79,7 +79,7 @@
     <section id="about" class="about section">
       <div class="container">
         <h2 class="title text-center">What is PrePhyloPro?</h2>
-        <p class="intro text-center">PrePhyloPro is an online tool for human whole genomic linkages prediction. The predicted linkages reveal the direct or indirect connections. It can be used to detect novel physical protein-protein interactions, new components of biological complexes, and potential linkages in signaling pathways or metabolic processes. The internal algorithm is based on phylogenetic profiles which show genes occurence (presence or absence) in different species.</p>
+        <p class="intro text-center">PrePhyloPro is an online tool for whole genomic linkages prediction. The predicted linkages reveal the direct or indirect connections. It can be used to detect novel physical protein-protein interactions, new components of biological complexes, and potential linkages in signaling pathways or metabolic processes. The internal algorithm is based on phylogenetic profiles which show genes occurence (presence or absence) in different species.</p>
         <div class="row">
           <div class="item col-md-4 col-sm-6 col-xs-12">
             <div class="icon-holder">
@@ -133,7 +133,7 @@
             </div>
             <div class="content">
               <h3 class="sub-title">More...</h3>
-              <p><a href="http://d3js.org/" target="_blank">D3-based</a> interactive network visualization. Pathway analysis of predicted partners will be further supported.</p>
+              <p><a href="http://d3js.org/" target="_blank">D3-based</a> interactive network visualization. Pathway analysis of predicted partners will be further supported. More organisms will be supported.</p>
             </div><!--//content-->
           </div><!--//item-->
         </div><!--//row-->
@@ -145,10 +145,10 @@
       <div class="container text-center">
         <h2 class="title">New features</h2>
         <ul class="feature-list list-unstyled">
+          <li><i class="fa fa-check"></i> Arabidopsis thaliana (thale cress) is supported. </li>
           <li><i class="fa fa-check"></i> <a target="_blank" href="./ExampleData/phylopred_fatp1Link/index.html">Pre-defined</a> annotation of input genes;</li>
           <li><i class="fa fa-check"></i> Options of BLAST Evalue threshold;</li>
           <li><i class="fa fa-check"></i> d3 interactive network;</li>
-          <li><i class="fa fa-check"></i> Advanced parameters to control output figures. </li>
         </ul>
         <ul class="release list-inline">
           <li>
@@ -303,12 +303,13 @@
                 <ul class="nav nav-tabs nav-justified">
                   <li class="active"><a data-toggle="tab" href="#linkNum">Linkages number</a></li>
                   <li><a data-toggle="tab" href="#blastThres">BLAST Evalue</a></li>
+                  <li><a data-toggle="tab" href="#organism">Organism</a></li>
                 </ul>
                 <div class="tab-content">
                   <div id="linkNum" class="tab-pane fade in active">
                     <div class="input-group">
                       <div class="input-group-addon">1 &le;</div>
-                      <input class="form-control" type="text" name="topNum" value="400"/>
+                      <input class="form-control" type="text" name="topNum" value="100"/>
                       <div class="input-group-addon">&le; 500</div>
                     </div><!-- input-group -->
                     <div class="tip-info">
@@ -338,6 +339,20 @@
                       <div class="alert alert-warning" role="alert">The smaller value, the less homologs in the profile.</div>
                     </div><!-- tip-infor -->
                   </div><!-- blast threshold -->
+                  <div id="organism" class="tab-pane fade">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" name="org" value="hsa" checked="checked"/>
+                      </span>
+                      <input type="text" class="form-control" value="Homo sapiens (human)" readonly/>
+                    </div><!-- hsa -->
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" name="org" value="ath"/>
+                      </span>
+                      <input type="text" class="form-control" value="Arabidopsis thaliana (thale cress)" readonly/>
+                    </div><!-- ath -->
+                  </div><!-- organism -->
                 </div>
               </div><!-- step1-block-excute -->
             </div><!--//step1-block-->
