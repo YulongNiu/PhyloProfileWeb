@@ -260,7 +260,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
 
 ##~~~~~~~~~~~~~~~~~~~~~~Generate_HTML_CSS_file~~~~~~~~~~~~~~~~~~~~~
 ## read html template
-htmltemp = open('/var/www/cgi-bin/phyloCGI/' + 'phylo_linkages.html').read()
+htmltemp = open('phylo_linkages.html').read()
 replaceDic = {'topNum': topNum,
               'evalueObj': evalueObj,
               'profileFigObj': profileFigObj,
