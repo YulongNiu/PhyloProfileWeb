@@ -8,6 +8,7 @@
     - [1.1 Algorithm parameters](#11-algorithm-parameters)
     - [1.2 Plot parameters](#12-plot-parameters)
     - [1.3 Candidate gene list](#13-candidate-gene-list) 
+    - [1.4 Annotation files](#14-annotation-files) 
 - [2. Output](#2-output)
 
 <!-- content end -->
@@ -26,6 +27,10 @@ If you want to get less but more reliable linkages, please try a small value, fo
 * BLAST Evalue
 
 Three BLAST E-value threshold, 0.001, 0.0005, 0.0001, were provided. This threshold was used in choosing homologous proteins. For a pair proteins (the referenced protein and test protein), if the blast E-value that is smaller than the threshold, the homologs is through to be present; otherwise, the homologs is absent. Correspondingly, in the phylogenetic profile, "1" and "0" are used to denote the presence and absence.
+
+* Organism
+
+*Homo sapiens* (human) and *Arabidopsis thaliana* (thale cress) are now supported. 
 
 ### 1.2 Plot parameters ###
 
@@ -56,6 +61,13 @@ The D3 interactive network is constructed based on the 3rd column data. It is de
 * 4th column
 
 4th column allows pre-defined gene names (optional). As the GeneID (*e.g.*, `hsa:513`) is hard to get its meaning, the 4th column could provide a way to transfer the GeneID to other formats ([Example](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.txt)). The pre-defined gene names will be used inboth phylogenetic profile and correlation figures. This column is optional; if you want to keep the GeneID in figures, please leave it as blank (no column names and no values).
+
+### 1.4 Annotation files ###
+
+|Organism|Input Gene List (1st Column)|Circos Genes|
+|:------:|:--------------------------:|:----------:|
+|Homo sapiens|[Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/hsa_wholeGenomeAnno.csv)|[Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/hsa_geneAnno.csv)|
+|Arabidopsis thaliana|[Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/ath_wholeGenomeAnno.csv)|[Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/ath_geneAnno.csv)|
 
 ## 2. Output ##
 
