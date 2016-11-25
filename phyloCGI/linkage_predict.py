@@ -217,12 +217,12 @@ elif len(wm) == 0 and len(geneList) <= 7:
     r['writeConf']('phylo/', geneList, geneSym, linkColVec, org, fn + 'circosConfig/')
 
     ## circos plot
-    os.system('circos-0.69/bin/circos -conf ' + fn + 'circosConfig/circosConf.conf ' + '-outputdir ' + fn + ' -outputfile ' + 'circosPlot' + ' >/dev/null')
-    os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png' + ' >/dev/null')
+    os.system('circos-0.69/bin/circos -conf ' + fn + 'circosConfig/circosConf.conf -outputdir ' + fn + ' -outputfile circosPlot >/dev/null')
+    os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png >/dev/null')
     circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
 
     ## remove config folder
-    os.system('rm -rf ' + fn + 'circosConfig' + ' >/dev/null')
+    os.system('rm -rf ' + fn + 'circosConfig >/dev/null')
 
     circosFigObj = tuple(circosFigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
