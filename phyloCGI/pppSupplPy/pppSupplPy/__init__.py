@@ -1,6 +1,6 @@
 """
 'RandomName' is used to randomly generate a name.
-The length of file name will be set to 20, first of which will be capital letters.
+The length of file name will be set to 20.
 """
 import random, os
 def RandomName(fileType):
@@ -9,15 +9,13 @@ def RandomName(fileType):
     # up 26 letters
     LETTER = [chr(i) for i in range(65, 91)]
     # 0-9
-    num = range(10)
+    num = list(range(10))
 
-    # randomly choose head (must be letters) and body
-    head = [random.choice(LETTER) for i in range(1)]
-    body = [str(random.choice(letter + LETTER + num)) for i in range(19)]
+    # randomly choose name
+    name = [str(random.choice(letter + LETTER + num)) for i in range(20)]
+    fullName = fileType + '_' + ''.join(name)
 
-    name = ''.join(head + body)
-    fullName = fileType + '_' + name
-    return(fullName)
+    return fullName
 
 
 """

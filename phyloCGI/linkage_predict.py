@@ -13,7 +13,7 @@ import cgitb
 cgitb.enable()
 
 import cgi, os, sys, math
-from set_uni_file import RandomName, GetRFilePath
+from pppSupplPy import RandomName, GetRFilePath
 from rpy2.robjects import r
 from rpy2.robjects.vectors import IntVector, FloatVector
 from rpy2.robjects.packages import importr
