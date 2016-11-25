@@ -17,7 +17,6 @@ from pppSupplPy import RandomName, GetRFilePath
 from rpy2.robjects import r
 from rpy2.robjects.vectors import IntVector, FloatVector
 from rpy2.robjects.packages import importr
-
 ############### check threshold and input file ################
 form = cgi.FieldStorage()
 
@@ -285,10 +284,11 @@ os.system(tarcom + ' >/dev/null')
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~Return_HMTL_file~~~~~~~~~~~~~~~~~~~~~~~
 ## print htmlReturn
+replaceDirDict = {'outdir':fnDir}
 print("""\
 <html>
 <head>
-<meta http-equiv="Refresh" content="2;url=/phyloprofile/tmpData/%s/index.html">
+<meta http-equiv="Refresh" content="2;url=/phyloprofile/tmpData/{outdir}/index.html">
 <base target="_blank"/>
 </head>
 <body>
@@ -297,6 +297,6 @@ New address in 2s. Please refresh this page if no response in a long time.
 </p>
 </body>
 </html>
-""") % fnDir
+""".format(**replaceDirDict))
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##################################################################
