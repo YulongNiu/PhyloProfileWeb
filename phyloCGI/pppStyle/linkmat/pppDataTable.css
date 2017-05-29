@@ -1,0 +1,7 @@
+td.highlight {
+    background-color: whitesmoke !important;
+}
+
+table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+    background-color: #17BAEF;
+}
