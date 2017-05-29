@@ -68,7 +68,7 @@ while True:
     if os.path.exists(fn) is not True:
         # get an unique name
         os.mkdir(fn)
-        open(fn + filen, 'wb').write(fileitem.file.read())
+        open(fn + filen, 'w').write(fileitem.file.read())
         break
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
