@@ -1,3 +1,5 @@
+## May be deleted in future.
+
 ##' @param linkColVec A vector of colors used for linkages, names, and heatmaps.
 ##' @param geneSymbolVec A vector containing condidate genes symbol.
 ##' @rdname circosConf
