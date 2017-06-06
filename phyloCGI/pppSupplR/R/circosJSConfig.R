@@ -57,6 +57,7 @@ SpeFreqJS <- function(allSpePhylo, allPhyloData, allAnno, splitEu = FALSE) {
   ## step4 merge anno
   anno <- allAnno[match(rownames(phyloFreqMat), allAnno[, 1]), -1]
   anno[, 2] <- paste0('chr', anno[, 2])
+  colnames(anno) <- c('label', 'chromosome', 'start', 'end')
   phyloFreqMat <- cbind(phyloFreqMat, anno)
 
   return(phyloFreqMat)
