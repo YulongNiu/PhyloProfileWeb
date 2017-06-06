@@ -1,6 +1,6 @@
 ##' Generate phylogenetic data for Circos plot
 ##'
-##' This function is used to generate Circos links, Circos lables, and Circos heatmap 
+##' This function is used to generate Circos links, Circos lables, and Circos heatmap.
 ##' @title Generate Circos phylogenetic files
 ##' @param ft A from-to matrix, here we used the undirected network. The 1st and 2nd columns are gene ID, and the 3rd clumn is the weight ranging from 0 to 1 like correlation coefficient or similarity value.
 ##' @param locaAnno The gene location annotation information. The 1st column is the gene ID which should be the same format in "ft". The 2nd column is the chromosome name, like "1", "2", and "MT". The 3rd and 4th columns are the start and end position, respectively.
@@ -21,7 +21,7 @@
 ##' fatpCircos <- ft2circos(ft = atpft, locaAnno = geneAnno, nodeName = 'ATP5A1', showEdge = FALSE)
 ##' @author Yulong Niu \email{niuylscu@@gmail.com}
 ##' @export
-##' 
+##'
 ft2circos <- function(ft, locaAnno, nodeName = 'all', thick = 5, showEdge = TRUE){
 
   if (!identical(nodeName, 'all')){
@@ -79,7 +79,7 @@ ft2circos <- function(ft, locaAnno, nodeName = 'all', thick = 5, showEdge = TRUE
 ##' Calculate gene frequence of three domains of life or more details of Eukaryota.
 ##' @title Generate gene frequency
 ##' @param KEGGPhylo  A character matrix, the 1st column is the KEGGID, and the 2nd column is species phylogeny for example "Eukaryotes;Animals;Vertebrates;Mammals".
-##' @param selectPhyloData  A numeric matrix. The row names are the genes and and the column names are the species. 
+##' @param selectPhyloData  A numeric matrix. The row names are the genes and and the column names are the species.
 ##' @param splitEu Whether to show the eukaryotic split, the default value is "FALSE".
 ##' @return A fequency matrix.
 ##' @examples
@@ -88,9 +88,9 @@ ft2circos <- function(ft, locaAnno, nodeName = 'all', thick = 5, showEdge = TRUE
 ##' freqMat <- SpeFreq(KEGGPhylo = phyloSpe, selectPhyloData = wholeProfile, splitEu = TRUE)
 ##' @author Yulong Niu \email{niuylscu@@gmail.com}
 ##' @export
-##' 
+##'
 SpeFreq <- function(KEGGPhylo, selectPhyloData, splitEu = FALSE) {
-  
+
   phyloCode <- as.character(KEGGPhylo[, 2])
   phyloCode <- sapply(strsplit(phyloCode, split = ';', fixed = TRUE), function(x) x[1:2])
   phyloCode <- t(phyloCode)
@@ -122,68 +122,9 @@ SpeFreq <- function(KEGGPhylo, selectPhyloData, splitEu = FALSE) {
   } else {
     colnames(phyloFreqMat) <- c('freqArc', 'freqBac', 'freqAni', 'freqPlant', 'freqFun', 'freqProt')
   }
-  
+
   return(phyloFreqMat)
 }
 
-##' Whole genome predicted linkages of human F1Fo ATP synthase subunits.
-##'
-##' A character matrix:
-##' the 1st column and 2ed colum are gene ID;
-##' the 3rd clumn is the Jaccard similarity ranging from 0 to 1.
-##' 
-##' @docType data
-##' @name atpft
-##' @format A character matrix
-##' @references Unpublished data from Yulong Niu
-##' @author Yulong Niu \email{niuylscu@@gmail.com}
-##' 
-NULL
-
-
-##' Annotatio of human genes.
-##'
-##' A character matrix:
-##' the 1st column is the gene ID which should be the same format in "atpft";
-##' the 2nd column is the chromosome name, like "1", "2", and "MT";
-##' the 3rd and 4th columns are the start and end position, respectively.
-##' 
-##' @docType data
-##' @name geneAnno
-##' @format A character matrix
-##' @references Unpublished data from Yulong Niu
-##' @author Yulong Niu \email{niuylscu@@gmail.com}
-##' 
-NULL
-
-
-##' Phylogeny of 972 KEGG species
-##'
-##' A character matrix:
-##' the 1st column is KEGG species IDs;
-##' the 2nd column is the corresponding phylogeny;
-##' 
-##' @docType data
-##' @name phyloSpe
-##' @format A character matrix
-##' @references Unpublished data from Yulong Niu
-##' @author Yulong Niu \email{niuylscu@@gmail.com}
-##' 
-NULL
-
-
-##' Phylogenic profiles
-##'
-##' A character matrix:
-##' the column names are the KEGG species IDs;
-##' the row names are the KEGG gene IDs;
-##' 
-##' @docType data
-##' @name wholeProfile
-##' @format A character matrix
-##' @references Unpublished data from Yulong Niu
-##' @author Yulong Niu \email{niuylscu@@gmail.com}
-##' 
-NULL
 
 

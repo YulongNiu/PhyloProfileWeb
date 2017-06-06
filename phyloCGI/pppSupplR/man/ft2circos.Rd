@@ -24,7 +24,7 @@ A list of Circos links, Circos lables, and Circos heatmap.
 Generate phylogenetic data for Circos plot
 }
 \details{
-This function is used to generate Circos links, Circos lables, and Circos heatmap
+This function is used to generate Circos links, Circos lables, and Circos heatmap.
 }
 \examples{
 data(atpft)

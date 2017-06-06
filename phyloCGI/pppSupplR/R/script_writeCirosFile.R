@@ -10,7 +10,7 @@
 ##' @param geneVec A vector containing condidate genes used for Circos plot. The length of one is also allowed.
 ##' @param inputft The "from-to" matrix. The 1st and 2nd columns are nodes names, and the 3rd column is the similarity. The "inputft" may contain genes not presenting the "geneVec".
 ##' @param allAnno The annotation matrix. The 1st is the KEGG gene IDs, which has the same format with "inputft". The 2nd is the symbol name shown in the Circos plot. The 3rd column is the chromosome name. The 4th and 5th columns are the start and end positions. The "allAnno" may contains genes that are absent in the "inputft".
-##' @param allSpePhylo The species and phylogeny matrix. 
+##' @param allSpePhylo The species and phylogeny matrix.
 ##' @param allPhyloData The phylogenetic profiles.
 ##' @param savePath The path used to store Circos files.
 ##' @return NULL

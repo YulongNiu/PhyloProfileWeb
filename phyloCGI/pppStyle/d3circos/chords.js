@@ -122,7 +122,6 @@ var drawCircos = function (error, GRCh37, cytobands, linkage, freqEu, freqArc, f
                 opacity: 1,
                 tooltipContent: function (d) {
                     return `${d.source.label} <-> ${d.target.label}<br> ${d.source.id}:${Math.round(d.source.position)} <-> ${d.target.id}:${Math.round(d.target.position)} <br> Jacccard: ${d.jaccard} &nbsp; Cor: ${d.cor}`
-                    '<h3>' + d.source.label + ' <-> ' + d.target.label + '</h3>Jaccard: ' + d.jaccard + '</i>' + '<i>Cor: ' + d.cor + '</i>'
                 }
             }
         )
