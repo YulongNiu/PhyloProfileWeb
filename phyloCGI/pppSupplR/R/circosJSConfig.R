@@ -62,3 +62,52 @@ SpeFreqJS <- function(allSpePhylo, allPhyloData, allAnno, splitEu = FALSE) {
 
   return(phyloFreqMat)
 }
+
+
+##' Generate linkages for circosJS plot
+##'
+##' This function is used to generate linkages for circosJS plot
+##' @title Linkages for circosJS plot
+##' @param ft A from-to matrix, here we used the undirected network. The 1st and 2nd columns are gene ID, and other columns are similarity or distances (Jaccard, Cor et. al.).
+##' @return A linkage matrix.
+##' @examples
+##' data(atpft)
+##' data(geneAnno)
+##' atpft <- cbind(atpft, Cor = as.character(runif(nrow(atpft))))
+##' # preprocess
+##' geneAnno <- geneAnno[, -2]
+##' interLogic <- (atpft[, 1] %in% geneAnno[, 1]) & (atpft[, 2] %in% geneAnno[, 1])
+##' atpft <- atpft[interLogic, ]
+##' # show all the linkages with weighted thickness
+##' fatpCircos <- ft2circos(ft = atpft, locaAnno = geneAnno)
+##' # only show the links with "ATP5A1" without weighed thickness
+##' fatpCircos <- ft2circos(ft = atpft, locaAnno = geneAnno, nodeName = 'ATP5A1', showEdge = FALSE)
+##' @author Yulong Niu \email{niuylscu@@gmail.com}
+##' @export
+##'
+LinkJS <- function(ft, allAnno) {
+  ## step 1 select genes with anno
+  isAnno <- (ft[, 1] %in% allAnno[, 1]) & (ft[, 2] %in% allAnno[, 1])
+  ft <- ft[isAnno, ]
+
+  ## step 2 anno
+  fromAnno <- allAnno[match(ft[, 1], allAnno[, 1]), c(3:5, 4)]
+  fromAnno[, 1] <- paste0('chr', fromAnno[, 1])
+  colnames(fromAnno) <- c('source_id', 'source_start', 'source_end', 'source_label')
+  toAnno <- allAnno[match(ft[, 2], allAnno[, 1]), c(3:5, 4)]
+  toAnno[, 1] <- paste0('chr', toAnno[, 1])
+  colnames(toAnno) <- c('target_id', 'target_start', 'target_end', 'target_label')
+
+  linkMat <- cbind(fromAnno,
+                   toAnno,
+                   ft[, 3:4])
+
+  return(linkMat)
+
+}
+
+
+writeCircos <- function(geneVec, inputft, allAnno, allSpePhylo, allPhyloData, savePath){
+
+}
+
