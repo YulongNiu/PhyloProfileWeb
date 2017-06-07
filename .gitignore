@@ -4,7 +4,6 @@
 .Rbuildignore
 .Rproj.user/
 .directory
-*.RData
 *.pyc
 ExampleData/*
 DevAidExample.html
