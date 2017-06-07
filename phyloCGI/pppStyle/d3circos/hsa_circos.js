@@ -228,10 +228,10 @@ var drawCircos = function (error, genome, cytobands, linkage, freqEu, freqArc, f
 }
 
 d3.queue()
-    .defer(d3.json, './data/hsa_genome.json')
-    .defer(d3.csv, './data/hsa_cytobands.csv')
-    .defer(d3.csv, './data/linkage.csv')
-    .defer(d3.csv, './data/freqEu.csv')
-    .defer(d3.csv, './data/freqArc.csv')
-    .defer(d3.csv, './data/freqBac.csv')
+    .defer(d3.json, './circosConfig/hsa_genome.json')
+    .defer(d3.csv, './circosConfig/hsa_cytobands.csv')
+    .defer(d3.csv, './circosConfig/linkage.csv')
+    .defer(d3.csv, './circosConfig/freqEu.csv')
+    .defer(d3.csv, './circosConfig/freqArc.csv')
+    .defer(d3.csv, './circosConfig/freqBac.csv')
     .await(drawCircos)
