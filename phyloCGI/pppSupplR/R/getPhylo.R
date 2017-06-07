@@ -123,29 +123,29 @@ GetTopLink <- function(geneIDs, linkData, annoVec, threshold = 400) {
   
 ## }
 
-## ##' Retrieve profiles
-## ##'
-## ##' Retrieve the phylogenetic profiles containing the input gene list. This function will be replaced by a SQL query.
-## ##' @title Retrieve profiles
-## ##' @param profileData A numeric matrix. The row names are the genes and and the column names are the species.
-## ##' @inheritParams GetLinkages
-## ##' @return The selected profiles.
-## ##' @examples
-## ##' genes <- c('a', 'c')
-## ##' profileMat <- matrix(sample(0:1, size = 20, replace = TRUE),
-## ##' ncol = 4,
-## ##' nrow = 5,
-## ##' dimnames = list(letters[1:5], paste0('spe', 1:4)))
-## ##' geneProfileMat <- GetProfile(genes, profileMat)
-## ##' @author Yulong Niu \email{niuylscu@@gmail.com}
-## ##' @export
-## ##' 
-## GetProfile <- function(geneIDs, profileData) {
+##' Retrieve profiles
+##'
+##' Retrieve the phylogenetic profiles containing the input gene list. This function will be replaced by a SQL query.
+##' @title Retrieve profiles
+##' @param profileData A numeric matrix. The row names are the genes and and the column names are the species.
+##' @param geneIDs The vector of geneIDs.
+##' @return The selected profiles.
+##' @examples
+##' genes <- c('a', 'c')
+##' profileMat <- matrix(sample(0:1, size = 20, replace = TRUE),
+##' ncol = 4,
+##' nrow = 5,
+##' dimnames = list(letters[1:5], paste0('spe', 1:4)))
+##' geneProfileMat <- GetProfile(genes, profileMat)
+##' @author Yulong Niu \email{niuylscu@@gmail.com}
+##' @export
+##' 
+GetProfile <- function(geneIDs, profileData) {
 
-##   candProfile <- profileData[rownames(profileData) %in% geneIDs, , drop = FALSE]
+  candProfile <- profileData[rownames(profileData) %in% geneIDs, , drop = FALSE]
 
-##   return(candProfile)
-## }
+  return(candProfile)
+}
 
 ##' Check the input genes whether or not have annotation information and whether or not have colors
 ##'

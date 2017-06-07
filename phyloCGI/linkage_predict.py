@@ -92,7 +92,7 @@ if len(batArgu.rx(True, 1)) < 2:
 ## load library
 importr('hwriter')
 importr('PhyloProfile')
-importr('PhyloProfileSuppl')
+importr('pppSupplR')
 
 ## I may need to use a database instead of load RData
 orgPrefix = org + '/' + org + '_'
@@ -221,10 +221,33 @@ elif len(wm) == 0 and len(geneList) <= 7:
     os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png >/dev/null')
     circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
 
-    ## remove config folder
-    os.system('rm -rf ' + fn + 'circosConfig >/dev/null')
+    # ## remove config folder
+    # os.system('rm -rf ' + fn + 'circosConfig >/dev/null')
 
     circosFigObj = tuple(circosFigObj)[0]
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~circosJS plot~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## check link colours
+checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
+
+if len(wm) == 1:
+    circosJSFigObj = tuple(wm)[0]
+elif len(wm) == 0 and len(geneList) > 7:
+    circosJSFigObj = 'The number of candidate genes for Circos plot should be no more than 7.\n'
+elif len(wm) == 0 and len(geneList) <= 7:
+    ## copy and compress circosJS folder
+    os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
+    os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
+    os.system('rm ' + fn + 'circosConfig.tar.gz' + ' >/dev/null')
+
+    ## generate circosJS files
+    ftMat = linksMat.rx(True, IntVector((1, 3, 5, 6)))
+    r['writeCircosJS'](checkColList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig')
+    circosFigObj = ''
+
+    # ## remove config folder
+    # os.system('rm -rf ' + fn + 'circosConfig >/dev/null')
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~d3 network~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -265,6 +288,7 @@ replaceDic = {'topNum': topNum,
               'profileFigObj': profileFigObj,
               'cormatrixFigObj': cormatrixFigObj,
               'circosFigObj': circosFigObj,
+              'circosJSFigObj': circosJSFigObj,
               'd3FigObj': d3FigObj,
               'linksMatObj': linksMatObj,
               'fnDir': fnDir,
