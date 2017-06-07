@@ -243,8 +243,8 @@ elif len(wm) == 0 and len(geneList) <= 7:
 
     ## generate circosJS files
     ftMat = linksMat.rx(True, IntVector((1, 3, 5, 6)))
-    r['writeCircosJS'](checkColList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig')
-    circosFigObj = ''
+    r['writeCircosJS'](checkColList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig/')
+    circosJSFigObj = ''
 
     # ## remove config folder
     # os.system('rm -rf ' + fn + 'circosConfig >/dev/null')
