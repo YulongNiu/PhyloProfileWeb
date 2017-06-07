@@ -16,7 +16,7 @@ var gieStainColor = {
 var drawCircos = function (error, genome, cytobands, linkage, freqEu, freqArc, freqBac) {
     var width = 800
     var circos = new Circos({
-        container: '#chordsChart',
+        container: '#pppcircos',
         width: width,
         height: width
     })

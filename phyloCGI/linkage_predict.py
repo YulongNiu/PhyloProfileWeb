@@ -267,7 +267,8 @@ replaceDic = {'topNum': topNum,
               'circosFigObj': circosFigObj,
               'd3FigObj': d3FigObj,
               'linksMatObj': linksMatObj,
-              'fnDir': fnDir}
+              'fnDir': fnDir,
+              'orgObj': org}
 htmlReturn = htmltemp.format(**replaceDic)
 ## beware of the path!!!!!!!!!!!!!
 ## write html index

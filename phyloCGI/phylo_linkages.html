@@ -33,6 +33,11 @@
     {circosFigObj}
   </p>
 
+  <h3 id="plot_circosJS">CircosJS plot of predicted linkages</h3>
+  <div id='chordsChart'>
+    
+  </div>
+
   <h3 id="plot_d3network">D3 network of predicted linkages</h3>
   {d3FigObj}
 
@@ -72,8 +77,14 @@
   <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/d3network/htmlwidgets-0.8/htmlwidgets.js"></script>
   <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/d3network/d3-4.5.0/d3.min.js"></script>
   <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/d3network/forceNetwork-binding-0.4/forceNetwork.js"></script>
-  
+
   <!-- DataTable -->
   <Script src="https://cdn.datatables.net/r/dt/jq-2.1.4,dt-1.10.9/datatables.min.js"></script>
   <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/linkmat/pppDataTable.js"></script>
+
+  <!-- circosJS -->
+  <script src="https://cdn.rawgit.com/nicgirault/circosJS/v2/dist/circos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.3/d3-queue.js"></script>
+  <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/d3circos/{orgObj}_circos.js"></script>
 </html>
