@@ -5,11 +5,12 @@
 ##' @param d3GeneVec A gene vector used for d3 plot.
 ##' @param d3Annoft A ft matrix used for d3 plot. "d3GeneVec" must be in this ft matrix. 1st column: from nodes. 2nd column: to nodes. 3rd column: linkage strength, for example the Jaccard similarity ranging from 0 to 1.
 ##' A normalized linkage strength is used. The nodes are grouped by different color, and the latter gene will cover the former one. The size of a node is determined by the number of its partners.
-##' @return Transft2D3 returns a list, the first element is links dataframe and the second element is the nodes dataframe.
+##' @return d3Transft returns a list, the first element is links dataframe and the second element is the nodes dataframe.
 ##' PlotNetworkD3 returns an object of D3 network.
 ##' writeD3network returns nothing.
 ##' @examples
 ##' data(atpft)
+##' atpft <- atpft[, c(1, 3, 5)]
 ##' data(geneAnno)
 ##' f1genes <- c('hsa:498', 'hsa:506', 'hsa:509', 'hsa:539', 'hsa:513', 'hsa:514')
 ##' f1symbol <- c('ATP5A1', 'ATP5B', 'ATP5C1', 'ATP5O', 'ATP5D', 'ATP5E')

@@ -151,8 +151,9 @@ GetTopLink <- function(geneIDs, linkData, annoVec, threshold = 400) {
 ##'
 ##' Check the input genes with annotation or having colors. if not, an error message with length 1 will be returned.
 ##' @title Check linkage colors
-##' @inheritParams cHeatmap
-##' @inheritParams writeCircos
+##' @param geneVec A vector containing condidate genes used for Circos plot. The length of one is also allowed.
+##' @param linkColVec A vector of colors used for linkages.
+##' @param allAnno The annotation matrix. The 1st is the KEGG gene IDs, which has the same format with "inputft". The 2nd is the symbol name shown in the Circos plot. The 3rd column is the chromosome name. The 4th and 5th columns are the start and end positions. The "allAnno" may contains genes that are absent in the "inputft".
 ##' @return A list containing warning message.
 ##' @examples
 ##' data(geneAnno)
@@ -214,6 +215,7 @@ CheckLinkCol <- function(geneVec, linkColVec, allAnno) {
 ##' @return An annotated ft matrix
 ##' @examples
 ##' data(atpft)
+##' atpft <- atpft[, c(1, 3, 5:6)]
 ##' data(geneAnno)
 ##' f1genes <- c('hsa:498', 'hsa:506', 'hsa:509', 'hsa:539', 'hsa:513', 'hsa:514')
 ##' newft <- Annoft(f1genes, atpft, geneAnno)

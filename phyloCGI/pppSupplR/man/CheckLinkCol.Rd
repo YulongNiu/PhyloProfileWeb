@@ -7,9 +7,9 @@
 CheckLinkCol(geneVec, linkColVec, allAnno)
 }
 \arguments{
-\item{geneVec}{A vector containing condidate genes which should be the same as the input of function "writeCircos". CAUTION: The element in the "geneVec" will be used in the files' name!!! An example is c('hsa:516', 'hsa:517')}
+\item{geneVec}{A vector containing condidate genes used for Circos plot. The length of one is also allowed.}
 
-\item{linkColVec}{A vector of colors used for linkages, names, and heatmaps.}
+\item{linkColVec}{A vector of colors used for linkages.}
 
 \item{allAnno}{The annotation matrix. The 1st is the KEGG gene IDs, which has the same format with "inputft". The 2nd is the symbol name shown in the Circos plot. The 3rd column is the chromosome name. The 4th and 5th columns are the start and end positions. The "allAnno" may contains genes that are absent in the "inputft".}
 }

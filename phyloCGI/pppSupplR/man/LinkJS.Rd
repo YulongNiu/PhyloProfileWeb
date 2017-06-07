@@ -22,8 +22,8 @@ This function is used to generate linkages for circosJS plot
 }
 \examples{
 data(atpft)
+atpft <- atpft[, c(1, 3, 5:6)]
 data(geneAnno)
-atpft <- cbind(atpft, Cor = as.character(runif(nrow(atpft))))
 LinkJS(atpft, geneAnno)
 }
 \author{

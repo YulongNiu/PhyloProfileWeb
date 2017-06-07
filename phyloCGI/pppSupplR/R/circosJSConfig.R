@@ -3,10 +3,10 @@
 ##' Calculate gene frequence of three domains of life or more details of Eukaryota.
 ##'
 ##' @title Generate gene frequency for circosJS
-##' @param allAnno The annotation matrix. The 1st is the KEGG gene IDs, which has the same format with "inputft". The 2nd is the symbol name shown in the Circos plot. The 3rd column is the chromosome name. The 4th and 5th columns are the start and end positions. The "allAnno" may contains genes that are absent in the "inputft".
 ##' @param allSpePhylo The species and phylogeny matrix.
 ##' @param allPhyloData The phylogenetic profiles.
 ##' @param splitEu Whether to show the eukaryotic split, the default value is "FALSE".
+##' @inheritParams CheckLinkCol
 ##' @return A fequency matrix.
 ##' @examples
 ##' data(phyloSpe)
@@ -74,8 +74,8 @@ SpeFreqJS <- function(allSpePhylo, allPhyloData, allAnno, splitEu = FALSE) {
 ##' @return A linkage matrix.
 ##' @examples
 ##' data(atpft)
+##' atpft <- atpft[, c(1, 3, 5:6)]
 ##' data(geneAnno)
-##' atpft <- cbind(atpft, Cor = as.character(runif(nrow(atpft))))
 ##' LinkJS(atpft, geneAnno)
 ##' @author Yulong Niu \email{niuylscu@@gmail.com}
 ##' @export
@@ -84,14 +84,17 @@ LinkJS <- function(ft, allAnno) {
   ## step 1 select genes with anno
   isAnno <- (ft[, 1] %in% allAnno[, 1]) & (ft[, 2] %in% allAnno[, 1])
   ft <- ft[isAnno, ]
+  colnames(ft)[3:4] <- c('Jaccard', 'Cor')
 
   ## step 2 anno
   fromAnno <- allAnno[match(ft[, 1], allAnno[, 1]), c(3:5, 2)]
   fromAnno[, 1] <- paste0('chr', fromAnno[, 1])
   colnames(fromAnno) <- c('source_id', 'source_start', 'source_end', 'source_label')
+  rownames(fromAnno) <- NULL
   toAnno <- allAnno[match(ft[, 2], allAnno[, 1]), c(3:5, 2)]
   toAnno[, 1] <- paste0('chr', toAnno[, 1])
   colnames(toAnno) <- c('target_id', 'target_start', 'target_end', 'target_label')
+  rownames(toAnno) <- NULL
 
   linkMat <- cbind(fromAnno,
                    toAnno,
@@ -102,7 +105,73 @@ LinkJS <- function(ft, allAnno) {
 }
 
 
-## writeCircos <- function(geneVec, inputft, allAnno, allSpePhylo, allPhyloData, savePath){
 
-## }
+##' Automatically write circosJS data files for plotting linkages
+##'
+##' Generate two types circosJS data files:
+##' 1. linkages for each input "geneVec";
+##' 2. frequency of presence in three domains;
+##
+##' @title Write circosJS data files
+##' @param geneVecList The output object from the "CheckLinkCol" function.
+##' @param savePath The path used to store circosJS files.
+##' @inheritParams SpeFreqJS
+##' @inheritParams LinkJS
+##' @return NULL
+##' @examples
+##' \dontrun{
+##' data(atpft)
+##' atpft <- atpft[, c(1, 3, 5:6)]
+##' data(geneAnno)
+##' data(phyloSpe)
+##' data(wholeProfile)
+##' g1 <- c('hsa:111111', 'hsa:498', 'hsa:506', 'hsa:509', 'hsa:516', 'hsa:517')
+##' g1Col <- c('#36A03F', '#49AE4F', '#1C386A', '#A03531', NA, NA)
+##' checkList <- CheckLinkCol(g1, g1Col, geneAnno)
+##' tmp1 <- writeCircosJS(checkList, atpft, geneAnno, phyloSpe, wholeProfile, savePath = 'tmp1/')}
+##' @author Yulong Niu \email{niuylscu@@gmail.com}
+##' @importFrom utils write.csv
+##' @export
+##'
+writeCircosJS <- function(geneVecList, ft, allAnno, allSpePhylo, allPhyloData, savePath){
+
+  geneVec <- geneVecList[[1]]
+  geneCol <- geneVecList[[2]]
+  geneSym <- geneVecList[[3]]
+
+  ## step 1 remove linkages do not contain geneVec
+  has1 <- ft[, 1] %in% geneVec
+  ftleft <- ft[!has1, , drop = FALSE]
+  ftleft <- ftleft[ftleft[, 2] %in% geneVec, c(2:1, 3:4), drop = FALSE]
+  colnames(ftleft)[1:2] <- colnames(ftleft)[2:1]
+  ft <- rbind(ft[has1, , drop = FALSE],
+              ftleft)
+
+  ## step2 linkages
+  links <- LinkJS(ft, allAnno)
+  ## with colors
+  links <- cbind(links,
+                 linkage_color = geneCol[match(links[, 'source_label'], geneSym)])
+  write.csv(links,
+            paste0(savePath, 'linkage.csv'),
+            row.names = FALSE,
+            quote = FALSE)
+
+  ## step3 frequence
+  genes <- unique(c(ft[,1 ], ft[, 2]))
+  freqGene <- SpeFreqJS(allSpePhylo,
+                        allPhyloData[rownames(allPhyloData) %in% genes, , drop = FALSE],
+                        allAnno,
+                        splitEu = FALSE)
+  for (i in 1:3) {
+    freqMat <- freqGene[, c(i, 4:7)]
+    colnames(freqMat)[1] <- 'value'
+    write.csv(freqMat,
+              paste0(savePath, colnames(freqGene)[i], '.csv'),
+              row.names = FALSE,
+              quote = FALSE)
+  }
+
+  return(NULL)
+}
 

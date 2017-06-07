@@ -24,6 +24,7 @@ Annotation the "from-to matrix"(network data). The main purpose is: 1. select ft
 }
 \examples{
 data(atpft)
+atpft <- atpft[, c(1, 3, 5:6)]
 data(geneAnno)
 f1genes <- c('hsa:498', 'hsa:506', 'hsa:509', 'hsa:539', 'hsa:513', 'hsa:514')
 newft <- Annoft(f1genes, atpft, geneAnno)

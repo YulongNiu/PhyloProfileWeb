@@ -33,7 +33,7 @@ A normalized linkage strength is used. The nodes are grouped by different color,
 \item{savePath}{The save path of html.}
 }
 \value{
-Transft2D3 returns a list, the first element is links dataframe and the second element is the nodes dataframe.
+d3Transft returns a list, the first element is links dataframe and the second element is the nodes dataframe.
 PlotNetworkD3 returns an object of D3 network.
 writeD3network returns nothing.
 }
@@ -45,6 +45,7 @@ D3 library is used for network plot.
 }
 \examples{
 data(atpft)
+atpft <- atpft[, c(1, 3, 5)]
 data(geneAnno)
 f1genes <- c('hsa:498', 'hsa:506', 'hsa:509', 'hsa:539', 'hsa:513', 'hsa:514')
 f1symbol <- c('ATP5A1', 'ATP5B', 'ATP5C1', 'ATP5O', 'ATP5D', 'ATP5E')
