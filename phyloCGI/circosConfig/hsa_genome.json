@@ -23,5 +23,5 @@
   {"id":"chr22","label":"chr22","color":"#FFFFFF","len":51304566},
   {"id":"chrX","label":"chrX","color":"#FFFFFF","len":155270560},
   {"id":"chrY","label":"chrY","color":"#FFFFFF","len":59373566},
-  {"id":"chrMT","label":"chrMT","color":"#000000","len":16569}
+  {"id":"chrMT","label":"chrMT","color":"#FFFFFF","len":16569}
 ]
