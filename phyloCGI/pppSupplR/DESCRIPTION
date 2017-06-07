@@ -1,0 +1,16 @@
+Package: pppSupplR
+Title: A supplementary R package for web-based phylogenetic profiling analysis
+Description: This is a package providing supplementary codes including Circos
+    and networkD3 configuration.
+Version: 0.4.3
+Author: Yulong Niu <niuylscu@gmail.com>
+Maintainer: Yulong Niu <niuylscu@gmail.com>
+Depends:
+    R (>= 3.2.1)
+Imports:
+    networkD3,
+    RCurl
+ByteCompile: true
+License: GPL
+LazyData: true
+RoxygenNote: 6.0.1
