@@ -6,6 +6,7 @@
 ##' @param allAnno The annotation matrix. The 1st is the KEGG gene IDs, which has the same format with "inputft". The 2nd is the symbol name shown in the Circos plot. The 3rd column is the chromosome name. The 4th and 5th columns are the start and end positions. The "allAnno" may contains genes that are absent in the "inputft".
 ##' @param allSpePhylo The species and phylogeny matrix.
 ##' @param allPhyloData The phylogenetic profiles.
+##' @param splitEu Whether to show the eukaryotic split, the default value is "FALSE".
 ##' @return A fequency matrix.
 ##' @examples
 ##' data(phyloSpe)
@@ -69,19 +70,13 @@ SpeFreqJS <- function(allSpePhylo, allPhyloData, allAnno, splitEu = FALSE) {
 ##' This function is used to generate linkages for circosJS plot
 ##' @title Linkages for circosJS plot
 ##' @param ft A from-to matrix, here we used the undirected network. The 1st and 2nd columns are gene ID, and other columns are similarity or distances (Jaccard, Cor et. al.).
+##' @inheritParams SpeFreqJS
 ##' @return A linkage matrix.
 ##' @examples
 ##' data(atpft)
 ##' data(geneAnno)
 ##' atpft <- cbind(atpft, Cor = as.character(runif(nrow(atpft))))
-##' # preprocess
-##' geneAnno <- geneAnno[, -2]
-##' interLogic <- (atpft[, 1] %in% geneAnno[, 1]) & (atpft[, 2] %in% geneAnno[, 1])
-##' atpft <- atpft[interLogic, ]
-##' # show all the linkages with weighted thickness
-##' fatpCircos <- ft2circos(ft = atpft, locaAnno = geneAnno)
-##' # only show the links with "ATP5A1" without weighed thickness
-##' fatpCircos <- ft2circos(ft = atpft, locaAnno = geneAnno, nodeName = 'ATP5A1', showEdge = FALSE)
+##' LinkJS(atpft, geneAnno)
 ##' @author Yulong Niu \email{niuylscu@@gmail.com}
 ##' @export
 ##'
@@ -91,10 +86,10 @@ LinkJS <- function(ft, allAnno) {
   ft <- ft[isAnno, ]
 
   ## step 2 anno
-  fromAnno <- allAnno[match(ft[, 1], allAnno[, 1]), c(3:5, 4)]
+  fromAnno <- allAnno[match(ft[, 1], allAnno[, 1]), c(3:5, 2)]
   fromAnno[, 1] <- paste0('chr', fromAnno[, 1])
   colnames(fromAnno) <- c('source_id', 'source_start', 'source_end', 'source_label')
-  toAnno <- allAnno[match(ft[, 2], allAnno[, 1]), c(3:5, 4)]
+  toAnno <- allAnno[match(ft[, 2], allAnno[, 1]), c(3:5, 2)]
   toAnno[, 1] <- paste0('chr', toAnno[, 1])
   colnames(toAnno) <- c('target_id', 'target_start', 'target_end', 'target_label')
 
@@ -107,7 +102,7 @@ LinkJS <- function(ft, allAnno) {
 }
 
 
-writeCircos <- function(geneVec, inputft, allAnno, allSpePhylo, allPhyloData, savePath){
+## writeCircos <- function(geneVec, inputft, allAnno, allSpePhylo, allPhyloData, savePath){
 
-}
+## }
 

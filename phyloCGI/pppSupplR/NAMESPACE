@@ -2,11 +2,11 @@
 
 export(Annoft)
 export(CheckLinkCol)
-export(GetLinkages)
-export(GetProfile)
 export(GetTopLink)
+export(LinkJS)
 export(Normalize)
 export(SpeFreq)
+export(SpeFreqJS)
 export(cFreq)
 export(cHeatmap)
 export(cLabelGenes)
