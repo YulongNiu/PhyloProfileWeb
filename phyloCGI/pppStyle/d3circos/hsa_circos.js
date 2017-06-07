@@ -13,7 +13,7 @@ var gieStainColor = {
     select: 'rgb(135,177,255)'
 }
 
-var drawCircos = function (error, GRCh37, cytobands, linkage, freqEu, freqArc, freqBac) {
+var drawCircos = function (error, genome, cytobands, linkage, freqEu, freqArc, freqBac) {
     var width = 800
     var circos = new Circos({
         container: '#chordsChart',
@@ -84,7 +84,7 @@ var drawCircos = function (error, GRCh37, cytobands, linkage, freqEu, freqArc, f
 
     circos
         .layout(
-            GRCh37,
+            genome,
             {
                 innerRadius: width/2 - 150,
                 outerRadius: width/2 - 130,
@@ -228,10 +228,10 @@ var drawCircos = function (error, GRCh37, cytobands, linkage, freqEu, freqArc, f
 }
 
 d3.queue()
-    .defer(d3.json, './data/GRCh37.json')
-    .defer(d3.csv, './data/cytobands.csv')
-    .defer(d3.csv, './data/linkage_example.csv')
-    .defer(d3.csv, './data/freqEu_example.csv')
-    .defer(d3.csv, './data/freqArc_example.csv')
-    .defer(d3.csv, './data/freqBac_example.csv')
+    .defer(d3.json, './data/hsa_genome.json')
+    .defer(d3.csv, './data/hsa_cytobands.csv')
+    .defer(d3.csv, './data/linkage.csv')
+    .defer(d3.csv, './data/freqEu.csv')
+    .defer(d3.csv, './data/freqArc.csv')
+    .defer(d3.csv, './data/freqBac.csv')
     .await(drawCircos)
