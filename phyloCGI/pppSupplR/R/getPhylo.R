@@ -88,41 +88,6 @@ GetTopLink <- function(geneIDs, linkData, annoVec, threshold = 400) {
   
 }
 
-## ##' Retrieve linkages 
-## ##'
-## ##' Retrieve the linkages containing the input gene list. This function will be replaced by a SQL query.
-## ##' @title Retrieve linkages data
-## ##' @param geneIDs The vector of geneIDs.
-## ##' @param linkData A matrix, of which the first and third columns is gene Ids.
-## ##' @return A linkage matrix.
-## ##' @examples
-## ##' genes <- c('a', 'c')
-## ##' linkMat <- matrix(c(letters[1:5], 1:5, letters[5:1], 5:1),
-## ##' ncol = 4,
-## ##' nrow = 5,
-## ##' dimnames = list(paste0('link', 1:5), c('From', 'FromLink', 'To', 'ToLink')))
-## ##' geneLinkMat <- GetLinkages(genes, linkMat)
-## ##' @author Yulong Niu \email{niuylscu@@gmail.com}
-## ##' @export
-## ##' 
-## GetLinkages <- function(geneIDs, linkData) {
-
-##   fromIdx <- linkData[, 1] %in% geneIDs
-##   toIdx <- linkData[, 3] %in% geneIDs
-
-##   linkIdx <- fromIdx | toIdx
-##   candLinksMat <- linkData[linkIdx, , drop = FALSE]
-
-##   ## sort and move input genes left
-##   adIdx <- !(candLinksMat[, 1] %in% geneIDs)
-##   candLinksMat[adIdx, 1:4] <- candLinksMat[adIdx, c(3:4, 1:2)]
-
-##   candLinksMat <- candLinksMat[order(candLinksMat[, 1]), ]
-
-##   return(candLinksMat)
-  
-## }
-
 ##' Retrieve profiles
 ##'
 ##' Retrieve the phylogenetic profiles containing the input gene list. This function will be replaced by a SQL query.
@@ -211,7 +176,8 @@ CheckLinkCol <- function(geneVec, linkColVec, allAnno) {
 ##'
 ##' Annotation the "from-to matrix"(network data). The main purpose is: 1. select ft matrix containing certain gene list; 2. transfer geneID (hsa:1) to gene symbol (A1BG).
 ##' @title Selection and Annotation of ft matrix
-##' @inheritParams writeCircos
+##' @inheritParams writeCircosJS
+##' @inheritParams CheckLinkCol
 ##' @return An annotated ft matrix
 ##' @examples
 ##' data(atpft)
@@ -222,20 +188,20 @@ CheckLinkCol <- function(geneVec, linkColVec, allAnno) {
 ##' @author Yulong Niu \email{niuylscu@@gmail.com}
 ##' @export
 ##'
-Annoft <- function(geneVec, inputft, allAnno) {
+Annoft <- function(geneVec, ft, allAnno) {
 
   ## select ft matrix containing the 'geneVec'
-  ftLogic <- (inputft[, 1] %in% geneVec) | (inputft[, 2] %in% geneVec)
-  inputft <- inputft[ftLogic, ]
+  ftLogic <- (ft[, 1] %in% geneVec) | (ft[, 2] %in% geneVec)
+  ft <- ft[ftLogic, ]
 
   ## anno from and to genes
-  annoFrom <- allAnno[match(inputft[, 1], allAnno[, 1]), 2]
-  annoTo <- allAnno[match(inputft[, 2], allAnno[, 1]), 2]
-  inputft <- cbind(annoFrom, annoTo, inputft[, -1:-2])
+  annoFrom <- allAnno[match(ft[, 1], allAnno[, 1]), 2]
+  annoTo <- allAnno[match(ft[, 2], allAnno[, 1]), 2]
+  ft <- cbind(annoFrom, annoTo, ft[, -1:-2])
 
   ## remove NA
-  annoLogic <- (is.na(inputft[, 1])) | (is.na(inputft[, 2]))
-  inputft <- inputft[!annoLogic, ]
+  annoLogic <- (is.na(ft[, 1])) | (is.na(ft[, 2]))
+  ft <- ft[!annoLogic, ]
 
-  return(inputft)
+  return(ft)
 }

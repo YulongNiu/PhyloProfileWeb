@@ -4,12 +4,12 @@
 \alias{Annoft}
 \title{Selection and Annotation of ft matrix}
 \usage{
-Annoft(geneVec, inputft, allAnno)
+Annoft(geneVec, ft, allAnno)
 }
 \arguments{
 \item{geneVec}{A vector containing condidate genes used for Circos plot. The length of one is also allowed.}
 
-\item{inputft}{The "from-to" matrix. The 1st and 2nd columns are nodes names, and the 3rd column is the similarity. The "inputft" may contain genes not presenting the "geneVec".}
+\item{ft}{A from-to matrix, here we used the undirected network. The 1st and 2nd columns are gene ID, and other columns are similarity or distances (Jaccard, Cor et. al.).}
 
 \item{allAnno}{The annotation matrix. The 1st is the KEGG gene IDs, which has the same format with "inputft". The 2nd is the symbol name shown in the Circos plot. The 3rd column is the chromosome name. The 4th and 5th columns are the start and end positions. The "allAnno" may contains genes that are absent in the "inputft".}
 }
