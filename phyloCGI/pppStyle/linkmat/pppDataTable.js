@@ -1,17 +1,27 @@
-$(document).ready(function() {
-    var lastIdx = null;
-    var table = $('#linksmat').DataTable();
+d3.text("./predicted_linakges.csv", function(text) {
+
+    var linksArray = d3.csvParseRows(text);
+    linksArray.shift();
+
+    var table = $(document).ready(function() {
+        $('#linksmat').DataTable( {
+            data: linksArray,
+            columns: [
+                { title: "From" },
+                { title: "FromAnno" },
+                { title: "To" },
+                { title: "ToAnno" },
+                { title: "Jaccard" },
+                { title: "Cor" }
+            ]
+        } );
+    } );
 
     $('#linksmat tbody')
-        .on( 'mouseover', 'td', function () {
+        .on( 'mouseenter', 'td', function () {
             var colIdx = table.cell(this).index().column;
 
-            if ( colIdx !== lastIdx ) {
-                $( table.cells().nodes() ).removeClass( 'highlight' );
-                $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
-            }
-        } )
-        .on( 'mouseleave', function () {
             $( table.cells().nodes() ).removeClass( 'highlight' );
+            $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
         } );
-} );
+});
