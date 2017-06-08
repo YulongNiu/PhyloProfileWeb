@@ -37,41 +37,14 @@
   <p>
     {circosJSFigObj}
   </p>
-  <div id='pppcircos'>
 
-  </div>
+  <div id='pppcircos'></div>
 
   <h3 id="plot_d3network">D3 network of predicted linkages</h3>
   {d3FigObj}
 
   <h3 id="linkage_matrix">Predicted linkages</h3>
-  <table id="linksmat" class="row-border hover order-column" cellspacing="0" width="100%">
-    <thead>
-      <tr>
-        <th>From</th>
-        <th>FromAnno</th>
-        <th>To</th>
-        <th>ToAnno</th>
-        <th>Jaccard</th>
-        <th>Cor</th>
-      </tr>
-    </thead>
-
-    <tfoot>
-      <tr>
-        <th>From</th>
-        <th>FromAnno</th>
-        <th>To</th>
-        <th>ToAnno</th>
-        <th>Jaccard</th>
-        <th>Cor</th>
-      </tr>
-    </tfoot>
-
-    <tbody>
-      {linksMatObj}
-    </tbody>
-  </table>
+  <table id="linksmat" class="row-border hover order-column" cellspacing="0" width="100%"></table>
 
   <h3 id="download">Download</h3>
   <p><a href="/phyloprofile/tmpData/{fnDir}.tar.gz">Click to download results</a></p>
@@ -88,6 +61,6 @@
   <!-- circosJS -->
   <script src="https://cdn.rawgit.com/nicgirault/circosJS/v2/dist/circos.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.3/d3-queue.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.3/d3-queue.js"></script> -->
   <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/d3circos/{orgObj}_circos.js"></script>
 </html>

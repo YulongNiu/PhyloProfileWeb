@@ -185,10 +185,7 @@ linksMat = r['GetTopLink'](geneIDs = geneList,
                              annoVec = wholeGenomeAnno,
                              threshold = topNum)
 linksMatpwd = GetRFilePath(fn, 'predicted_linakges.csv')
-r['write.csv'](linksMat, linksMatpwd)
-linksMatObj = r['hwrite'](linksMat, **{"col.names": False})
-linksMatObj = r['htmlExtractTable'](linksMatObj)
-linksMatObj = tuple(linksMatObj)[0]
+r['write.csv'](linksMat, linksMatpwd, **{"row.names": False})
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~circos plot~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -290,7 +287,6 @@ replaceDic = {'topNum': topNum,
               'circosFigObj': circosFigObj,
               'circosJSFigObj': circosJSFigObj,
               'd3FigObj': d3FigObj,
-              'linksMatObj': linksMatObj,
               'fnDir': fnDir,
               'orgObj': org}
 htmlReturn = htmltemp.format(**replaceDic)
