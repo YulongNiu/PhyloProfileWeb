@@ -1,9 +1,0 @@
-[
-    {"id":"chr1","label":"chr1","color":"#FFFFFF","len":30427671},
-    {"id":"chr2","label":"chr2","color":"#FFFFFF","len":19698289},
-    {"id":"chr3","label":"chr3","color":"#FFFFFF","len":23459830},
-    {"id":"chr4","label":"chr4","color":"#FFFFFF","len":18585056},
-    {"id":"chr5","label":"chr5","color":"#FFFFFF","len":26975502},
-    {"id":"chrMT","label":"chrMT","color":"#FFFFFF","len":366924},
-    {"id":"chrPT","label":"chrPT","color":"#FFFFFF","len":154478}
-]
