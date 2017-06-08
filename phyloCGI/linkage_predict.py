@@ -188,45 +188,11 @@ linksMatpwd = GetRFilePath(fn, 'predicted_linakges.csv')
 r['write.csv'](linksMat, linksMatpwd, **{"row.names": False})
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-##~~~~~~~~~~~~~~~~~~~~~~~~~circos plot~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## check link colours
-checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
-geneList = checkColList.rx2('checkGeneVec')
-linkColVec = checkColList.rx2('checkLinkCol')
-geneSym = checkColList.rx2('checkGeneSym')
-wm = checkColList.rx2('wm')
-
-if len(wm) == 1:
-    circosFigObj = tuple(wm)[0]
-elif len(wm) == 0 and len(geneList) > 7:
-    circosFigObj = 'The number of candidate genes for Circos plot should be no more than 7.\n'
-elif len(wm) == 0 and len(geneList) <= 7:
-    ## copy and compress circos folder
-    os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
-    os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
-    os.system('rm ' + fn + 'circosConfig.tar.gz' + ' >/dev/null')
-
-    ## generate circos files
-    ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
-    r['writeCircos'](geneList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig/phylo/')
-
-    ## generate circos config
-    r['writeConf']('phylo/', geneList, geneSym, linkColVec, org, fn + 'circosConfig/')
-
-    ## circos plot
-    os.system('circos-0.69/bin/circos -conf ' + fn + 'circosConfig/circosConf.conf -outputdir ' + fn + ' -outputfile circosPlot >/dev/null')
-    os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png >/dev/null')
-    circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
-
-    # ## remove config folder
-    # os.system('rm -rf ' + fn + 'circosConfig >/dev/null')
-
-    circosFigObj = tuple(circosFigObj)[0]
-##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 ##~~~~~~~~~~~~~~~~~~~~~~~~~circosJS plot~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## check link colours
 checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
+wm = checkColList.rx2('wm')
+geneList = checkColList.rx2('checkGeneVec')
 
 if len(wm) == 1:
     circosJSFigObj = tuple(wm)[0]
@@ -284,7 +250,6 @@ replaceDic = {'topNum': topNum,
               'evalueObj': evalueObj,
               'profileFigObj': profileFigObj,
               'cormatrixFigObj': cormatrixFigObj,
-              'circosFigObj': circosFigObj,
               'circosJSFigObj': circosJSFigObj,
               'd3FigObj': d3FigObj,
               'fnDir': fnDir,
