@@ -90,7 +90,6 @@ if len(batArgu.rx(True, 1)) < 2:
 
 #########################Process_data##################
 ## load library
-importr('hwriter')
 importr('PhyloProfile')
 importr('pppSupplR')
 
@@ -149,10 +148,6 @@ profileFig = r['PlotPhyloProfile'](profileMat,
 r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(profileFigPdfPath)) +' ' + ''.join(list(profileFigJpgPath)) + ' >/dev/null')
-
-profileFigObj = r("hwriteImage('profilePlot.jpg', center = TRUE)")
-
-profileFigObj = tuple(profileFigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~plot cormatrix~~~~~~~~~~~~~~~~~~~
@@ -169,9 +164,6 @@ cormatrixFig = r['PlotPhyloCor'](profileMat,
 r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(cormatrixFigPdfPath)) + ' ' + ''.join(list(cormatrixFigJpgPath)) + ' >/dev/null')
-
-cormatrixFigObj = r("hwriteImage('cormatrixPlot.jpg', center = TRUE)")
-cormatrixFigObj = tuple(cormatrixFigObj)[0]
 
 ## write correlation matrix
 corMat = r['GetPhyloCorMat'](profileMat)
@@ -248,8 +240,6 @@ elif len(wm) == 0 and len(geneList) <= 7:
 htmltemp = open('phylo_linkages.html').read()
 replaceDic = {'topNum': topNum,
               'evalueObj': evalueObj,
-              'profileFigObj': profileFigObj,
-              'cormatrixFigObj': cormatrixFigObj,
               'circosJSFigObj': circosJSFigObj,
               'd3FigObj': d3FigObj,
               'fnDir': fnDir,
