@@ -144,38 +144,3 @@ CheckLinkCol <- function(geneVec, linkColVec, allAnno) {
 
   return(reList)
 }
-
-
-##' Selection and Annotation of from-to matrix
-##'
-##' Annotation the "from-to matrix"(network data). The main purpose is: 1. select ft matrix containing certain gene list; 2. transfer geneID (hsa:1) to gene symbol (A1BG).
-##' @title Selection and Annotation of ft matrix
-##' @inheritParams writeCircosJS
-##' @inheritParams CheckLinkCol
-##' @return An annotated ft matrix
-##' @examples
-##' data(atpft)
-##' atpft <- atpft[, c(1, 3, 5:6)]
-##' data(geneAnno)
-##' f1genes <- c('hsa:498', 'hsa:506', 'hsa:509', 'hsa:539', 'hsa:513', 'hsa:514')
-##' newft <- Annoft(f1genes, atpft, geneAnno)
-##' @author Yulong Niu \email{niuylscu@@gmail.com}
-##' @export
-##'
-Annoft <- function(geneVec, ft, allAnno) {
-
-  ## select ft matrix containing the 'geneVec'
-  ftLogic <- (ft[, 1] %in% geneVec) | (ft[, 2] %in% geneVec)
-  ft <- ft[ftLogic, ]
-
-  ## anno from and to genes
-  annoFrom <- allAnno[match(ft[, 1], allAnno[, 1]), 2]
-  annoTo <- allAnno[match(ft[, 2], allAnno[, 1]), 2]
-  ft <- cbind(annoFrom, annoTo, ft[, -1:-2])
-
-  ## remove NA
-  annoLogic <- (is.na(ft[, 1])) | (is.na(ft[, 2]))
-  ft <- ft[!annoLogic, ]
-
-  return(ft)
-}

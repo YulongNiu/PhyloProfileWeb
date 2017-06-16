@@ -211,8 +211,9 @@ elif len(wm) == 0 and len(geneList) > 7:
     d3FigObj = 'The number of candidate genes for D3network plot should be no more than 7.\n'
 elif len(wm) == 0 and len(geneList) <= 7:
     ## selection and annotation ftmat
-    ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
-    annoftMat = r['Annoft'](geneList, ftMat, geneAnno)
+    annoftMat = r['read.csv'](fn + 'circosConfig/linkage.csv',
+                              stringsAsFactor = False)
+    annoftMat = annoftMat.rx(True, IntVector([4, 8, 9, 10]))
 
     ## annotation geneList
     geneListIdx = r['%in%'](geneAnno.rx(True, 1), geneList)

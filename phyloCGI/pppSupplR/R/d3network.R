@@ -13,9 +13,7 @@
 ##' atpft <- atpft[, c(1, 3, 5)]
 ##' data(geneAnno)
 ##' f1genes <- c('hsa:498', 'hsa:506', 'hsa:509', 'hsa:539', 'hsa:513', 'hsa:514')
-##' f1symbol <- c('ATP5A1', 'ATP5B', 'ATP5C1', 'ATP5O', 'ATP5D', 'ATP5E')
-##' newft <- Annoft(f1genes, atpft, geneAnno)
-##' newd3ft <- d3Transft(f1symbol, newft)
+##' newd3ft <- d3Transft(f1genes, atpft)
 ##' d3Obj <- d3PlotNet(newd3ft)
 ##' \dontrun{
 ##' writed3Net(d3Obj, 'testd3.html')
@@ -69,7 +67,7 @@ d3Transft <- function(d3GeneVec, d3Annoft) {
 }
 
 
-##' @param d3ft The d3 ft list from Transft2D3().
+##' @param d3ft The d3 ft list from d3Transft().
 ##' @param linkStrengthBase The base value of linkage strength.
 ##' @param nodeSizeBase The base value of node size.
 ##' @param ... Additional paramters from forceNetwork().
