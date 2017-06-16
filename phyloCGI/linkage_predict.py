@@ -117,14 +117,16 @@ linkColVec = batArgu.rx(True, 3)
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~retrieve profile data~~~~~~~~~~~
 ## select profiles
-profileMat = r['GetProfile'](geneList, wholeProfile)
+geneMatchIdx = r['match'](geneList,
+                          wholeProfile.rownames,
+                          nomatch = 0)
+profileMat = wholeProfile.rx(geneMatchIdx, True)
 
 ## annotation
 if batArgu.ncol == 4:
     ## transfer gene anno to rownames
-    usrGeneName = batArgu.rx(True, 4)
-    geneMatchIdx = r['match'](profileMat.rownames, geneList)
-    profileMat.rownames = usrGeneName.rx(geneMatchIdx)
+    usrGeneName = batArgu.rx(geneMatchIdx.ro != 0, 4)
+    profileMat.rownames = usrGeneName
     ## change gene colours names
     geneColVec.names = usrGeneName
 else:

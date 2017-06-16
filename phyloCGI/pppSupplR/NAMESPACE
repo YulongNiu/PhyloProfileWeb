@@ -2,7 +2,6 @@
 
 export(Annoft)
 export(CheckLinkCol)
-export(GetProfile)
 export(GetTopLink)
 export(LinkJS)
 export(Normalize)
