@@ -186,13 +186,10 @@ r['write.csv'](linksMat, linksMatpwd, **{"row.names": False})
 ## check link colours
 checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
 wm = checkColList.rx2('wm')
-geneList = checkColList.rx2('checkGeneVec')
 
 if len(wm) == 1:
     circosJSFigObj = tuple(wm)[0]
-elif len(wm) == 0 and len(geneList) > 7:
-    circosJSFigObj = 'The number of candidate genes for Circos plot should be no more than 7.\n'
-elif len(wm) == 0 and len(geneList) <= 7:
+else:
     ## copy and compress circosJS folder
     os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
     os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
@@ -207,18 +204,11 @@ elif len(wm) == 0 and len(geneList) <= 7:
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~d3 network~~~~~~~~~~~~~~~~~~~~~~~~~
 if len(wm) == 1:
     d3FigObj = tuple(wm)[0]
-elif len(wm) == 0 and len(geneList) > 7:
-    d3FigObj = 'The number of candidate genes for D3network plot should be no more than 7.\n'
-elif len(wm) == 0 and len(geneList) <= 7:
+else:
     ## selection and annotation ftmat
     annoftMat = r['read.csv'](fn + 'circosConfig/linkage.csv',
                               stringsAsFactor = False)
     annoftMat = annoftMat.rx(True, IntVector([4, 8, 9, 11]))
-
-    ## annotation geneList
-    geneListIdx = r['%in%'](geneAnno.rx(True, 1), geneList)
-    geneListSymb = geneAnno.rx(geneListIdx, 2)
-    geneListSymb = r['unlist'](geneListSymb)
 
     ## transfer and plot de network
     d3ft = r['d3Transft'](annoftMat)
