@@ -213,7 +213,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
     ## selection and annotation ftmat
     annoftMat = r['read.csv'](fn + 'circosConfig/linkage.csv',
                               stringsAsFactor = False)
-    annoftMat = annoftMat.rx(True, IntVector([4, 8, 9, 10]))
+    annoftMat = annoftMat.rx(True, IntVector([4, 8, 9, 11]))
 
     ## annotation geneList
     geneListIdx = r['%in%'](geneAnno.rx(True, 1), geneList)
@@ -221,7 +221,7 @@ elif len(wm) == 0 and len(geneList) <= 7:
     geneListSymb = r['unlist'](geneListSymb)
 
     ## transfer and plot de network
-    d3ft = r['d3Transft'](geneListSymb, annoftMat)
+    d3ft = r['d3Transft'](annoftMat)
     d3Obj = r['d3PlotNet'](d3ft)
 
     ## write d3net
