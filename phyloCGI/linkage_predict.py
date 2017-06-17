@@ -63,12 +63,12 @@ if fileSuffix not in ['csv', 'txt']:
 #########################get file###########################
 ##~~~~~~~~~~~~~~~~build tmp folder name~~~~~~~~~
 while True:
-    fnDir = RandomName('phylopred')
+    fnDir = RandomName('ppp')
     fn = tempPath + fnDir + '/'
     if os.path.exists(fn) is not True:
         # get an unique name
         os.mkdir(fn)
-        open(fn + filen, 'w').write(fileitem.file.read())
+        open(fn + filen, 'wb').write(fileitem.file.read())
         break
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -90,7 +90,6 @@ if len(batArgu.rx(True, 1)) < 2:
 
 #########################Process_data##################
 ## load library
-importr('hwriter')
 importr('PhyloProfile')
 importr('pppSupplR')
 
@@ -118,14 +117,16 @@ linkColVec = batArgu.rx(True, 3)
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~retrieve profile data~~~~~~~~~~~
 ## select profiles
-profileMat = r['GetProfile'](geneList, wholeProfile)
+geneMatchIdx = r['match'](geneList,
+                          wholeProfile.rownames,
+                          nomatch = 0)
+profileMat = wholeProfile.rx(geneMatchIdx, True)
 
 ## annotation
 if batArgu.ncol == 4:
     ## transfer gene anno to rownames
-    usrGeneName = batArgu.rx(True, 4)
-    geneMatchIdx = r['match'](profileMat.rownames, geneList)
-    profileMat.rownames = usrGeneName.rx(geneMatchIdx)
+    usrGeneName = batArgu.rx(geneMatchIdx.ro != 0, 4)
+    profileMat.rownames = usrGeneName
     ## change gene colours names
     geneColVec.names = usrGeneName
 else:
@@ -149,10 +150,6 @@ profileFig = r['PlotPhyloProfile'](profileMat,
 r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(profileFigPdfPath)) +' ' + ''.join(list(profileFigJpgPath)) + ' >/dev/null')
-
-profileFigObj = r("hwriteImage('profilePlot.jpg', center = TRUE)")
-
-profileFigObj = tuple(profileFigObj)[0]
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~plot cormatrix~~~~~~~~~~~~~~~~~~~
@@ -170,9 +167,6 @@ r['dev.off']()
 
 os.system('convert -density 100 ' + ''.join(list(cormatrixFigPdfPath)) + ' ' + ''.join(list(cormatrixFigJpgPath)) + ' >/dev/null')
 
-cormatrixFigObj = r("hwriteImage('cormatrixPlot.jpg', center = TRUE)")
-cormatrixFigObj = tuple(cormatrixFigObj)[0]
-
 ## write correlation matrix
 corMat = r['GetPhyloCorMat'](profileMat)
 corMatpwd = GetRFilePath(fn, 'correlation_matrix.csv')
@@ -188,51 +182,14 @@ linksMatpwd = GetRFilePath(fn, 'predicted_linakges.csv')
 r['write.csv'](linksMat, linksMatpwd, **{"row.names": False})
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-##~~~~~~~~~~~~~~~~~~~~~~~~~circos plot~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## check link colours
-checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
-geneList = checkColList.rx2('checkGeneVec')
-linkColVec = checkColList.rx2('checkLinkCol')
-geneSym = checkColList.rx2('checkGeneSym')
-wm = checkColList.rx2('wm')
-
-if len(wm) == 1:
-    circosFigObj = tuple(wm)[0]
-elif len(wm) == 0 and len(geneList) > 7:
-    circosFigObj = 'The number of candidate genes for Circos plot should be no more than 7.\n'
-elif len(wm) == 0 and len(geneList) <= 7:
-    ## copy and compress circos folder
-    os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
-    os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
-    os.system('rm ' + fn + 'circosConfig.tar.gz' + ' >/dev/null')
-
-    ## generate circos files
-    ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
-    r['writeCircos'](geneList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig/phylo/')
-
-    ## generate circos config
-    r['writeConf']('phylo/', geneList, geneSym, linkColVec, org, fn + 'circosConfig/')
-
-    ## circos plot
-    os.system('circos-0.69/bin/circos -conf ' + fn + 'circosConfig/circosConf.conf -outputdir ' + fn + ' -outputfile circosPlot >/dev/null')
-    os.system('convert -resize 700x700 ' + fn + 'circosPlot.png ' + fn + 'circosPlotWeb.png >/dev/null')
-    circosFigObj = r['hwriteImage']('circosPlotWeb.png', center = True)
-
-    # ## remove config folder
-    # os.system('rm -rf ' + fn + 'circosConfig >/dev/null')
-
-    circosFigObj = tuple(circosFigObj)[0]
-##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 ##~~~~~~~~~~~~~~~~~~~~~~~~~circosJS plot~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## check link colours
 checkColList = r['CheckLinkCol'](geneList, linkColVec, geneAnno)
+wm = checkColList.rx2('wm')
 
 if len(wm) == 1:
     circosJSFigObj = tuple(wm)[0]
-elif len(wm) == 0 and len(geneList) > 7:
-    circosJSFigObj = 'The number of candidate genes for Circos plot should be no more than 7.\n'
-elif len(wm) == 0 and len(geneList) <= 7:
+else:
     ## copy and compress circosJS folder
     os.system('cp circosConfig.tar.gz ' + fn + ' >/dev/null')
     os.system('tar -zxvf ' + fn + 'circosConfig.tar.gz -C ' + fn + ' >/dev/null')
@@ -242,28 +199,19 @@ elif len(wm) == 0 and len(geneList) <= 7:
     ftMat = linksMat.rx(True, IntVector((1, 3, 5, 6)))
     r['writeCircosJS'](checkColList, ftMat, geneAnno, phyloSpe, wholeProfile, savePath = fn + 'circosConfig/')
     circosJSFigObj = ''
-
-    # ## remove config folder
-    # os.system('rm -rf ' + fn + 'circosConfig >/dev/null')
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~d3 network~~~~~~~~~~~~~~~~~~~~~~~~~
 if len(wm) == 1:
     d3FigObj = tuple(wm)[0]
-elif len(wm) == 0 and len(geneList) > 7:
-    d3FigObj = 'The number of candidate genes for D3network plot should be no more than 7.\n'
-elif len(wm) == 0 and len(geneList) <= 7:
+else:
     ## selection and annotation ftmat
-    ftMat = linksMat.rx(True, IntVector((1, 3, 5)))
-    annoftMat = r['Annoft'](geneList, ftMat, geneAnno)
-
-    ## annotation geneList
-    geneListIdx = r['%in%'](geneAnno.rx(True, 1), geneList)
-    geneListSymb = geneAnno.rx(geneListIdx, 2)
-    geneListSymb = r['unlist'](geneListSymb)
+    annoftMat = r['read.csv'](fn + 'circosConfig/linkage.csv',
+                              stringsAsFactor = False)
+    annoftMat = annoftMat.rx(True, IntVector([4, 8, 9, 11]))
 
     ## transfer and plot de network
-    d3ft = r['d3Transft'](geneListSymb, annoftMat)
+    d3ft = r['d3Transft'](annoftMat)
     d3Obj = r['d3PlotNet'](d3ft)
 
     ## write d3net
@@ -282,9 +230,6 @@ elif len(wm) == 0 and len(geneList) <= 7:
 htmltemp = open('phylo_linkages.html').read()
 replaceDic = {'topNum': topNum,
               'evalueObj': evalueObj,
-              'profileFigObj': profileFigObj,
-              'cormatrixFigObj': cormatrixFigObj,
-              'circosFigObj': circosFigObj,
               'circosJSFigObj': circosJSFigObj,
               'd3FigObj': d3FigObj,
               'fnDir': fnDir,

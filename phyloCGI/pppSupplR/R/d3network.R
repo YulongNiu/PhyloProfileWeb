@@ -2,20 +2,17 @@
 ##'
 ##' D3 library is used for network plot.
 ##' @title plot D3 network
-##' @param d3GeneVec A gene vector used for d3 plot.
-##' @param d3Annoft A ft matrix used for d3 plot. "d3GeneVec" must be in this ft matrix. 1st column: from nodes. 2nd column: to nodes. 3rd column: linkage strength, for example the Jaccard similarity ranging from 0 to 1.
+##' @param d3Annoft A ft matrix used for d3 plot. 1st column: from nodes. 2nd column: to nodes. 3rd column: linkage strength, for example the Jaccard similarity ranging from 0 to 1. 4th column: linkage colours.
+##'
 ##' A normalized linkage strength is used. The nodes are grouped by different color, and the latter gene will cover the former one. The size of a node is determined by the number of its partners.
 ##' @return d3Transft returns a list, the first element is links dataframe and the second element is the nodes dataframe.
 ##' PlotNetworkD3 returns an object of D3 network.
 ##' writeD3network returns nothing.
 ##' @examples
-##' data(atpft)
-##' atpft <- atpft[, c(1, 3, 5)]
-##' data(geneAnno)
-##' f1genes <- c('hsa:498', 'hsa:506', 'hsa:509', 'hsa:539', 'hsa:513', 'hsa:514')
-##' f1symbol <- c('ATP5A1', 'ATP5B', 'ATP5C1', 'ATP5O', 'ATP5D', 'ATP5E')
-##' newft <- Annoft(f1genes, atpft, geneAnno)
-##' newd3ft <- d3Transft(f1symbol, newft)
+##' filePath <- system.file("extdata", "linkage.csv", package = "pppSupplR")
+##' atpft <- read.csv(filePath, stringsAsFactor = FALSE)
+##' atpft <- atpft[, c(4, 8, 9, 11)]
+##' newd3ft <- d3Transft(atpft)
 ##' d3Obj <- d3PlotNet(newd3ft)
 ##' \dontrun{
 ##' writed3Net(d3Obj, 'testd3.html')
@@ -24,10 +21,11 @@
 ##' @rdname plotd3
 ##' @export
 ##'
-d3Transft <- function(d3GeneVec, d3Annoft) {
-
+d3Transft <- function(d3Annoft) {
   ## entire gene set
-  entireSet <- unique(c(d3Annoft[, 1], d3Annoft[, 2]))
+  fSet <- unique(d3Annoft[, 1])
+  tSet <- unique(d3Annoft[, 2])
+  entireSet <- unique(c(fSet, tSet))
   entireLen <- length(entireSet)
 
   ## construct link data frame
@@ -41,27 +39,26 @@ d3Transft <- function(d3GeneVec, d3Annoft) {
                         linkStrength = linkStrength)
 
   ## construct node data frame
-  ## group NOTE: the latter gene will cover the former one
-  groupVec <- numeric(entireLen)
-  for (i in 1:length(d3GeneVec)) {
-    subftLogic <- (d3Annoft[, 1] == d3GeneVec[i]) | (d3Annoft[, 2] == d3GeneVec[i])
-    subftMat <- d3Annoft[subftLogic, 1:2]
-    subVec <- unique(c(subftMat[, 1], subftMat[, 2]))
-    ## remove target nodes that are also in 'd3GeneVec'
-    subVec <- subVec[!(subVec %in% d3GeneVec)]
-    groupVec[match(subVec, entireSet)] <- i
+  colorVec <- character(entireLen)
+  for (i in seq_along(fSet)) {
+    eachMat <- d3Annoft[d3Annoft[, 1] == fSet[i], , drop = FALSE]
+    eachNode <- c(eachMat[, 2], fSet[i])
+    eachLogic <- entireSet %in% eachNode
+    colorVec[eachLogic] <- ifelse(colorVec[eachLogic] == '',
+                                  eachMat[1, 4],
+                                  colorVec[eachLogic])
   }
-  groupVec[match(d3GeneVec, entireSet)] <- 1:length(d3GeneVec)
+
   ## node size is denoted by the number of its partners
   sizeVec <- numeric(entireLen)
   for (i in 1:entireLen) {
     interLogic <- (d3Annoft[, 1] == entireSet[i]) | (d3Annoft[, 2] == entireSet[i])
     sizeVec[i] <- sum(interLogic)
   }
-  
+
   d3Nodes <- data.frame(entireSet = entireSet,
-                        groupVec = groupVec,
-                        sizeVec = sizeVec)
+                        sizeVec = sizeVec,
+                        colorVec = colorVec)
   ## d3 ft list
   d3ftList <- list(d3Links = d3Links, d3Nodes = d3Nodes)
 
@@ -69,34 +66,36 @@ d3Transft <- function(d3GeneVec, d3Annoft) {
 }
 
 
-##' @param d3ft The d3 ft list from Transft2D3().
+##' @param d3ft The d3 ft list from d3Transft().
 ##' @param linkStrengthBase The base value of linkage strength.
-##' @param nodeSizeBase The base value of node size.
 ##' @param ... Additional paramters from forceNetwork().
 ##' @rdname plotd3
-##' @importFrom networkD3 forceNetwork
+##' @importFrom networkD3 forceNetwork JS
 ##' @export
-##' 
+##'
 d3PlotNet <- function(d3ft,
                       linkStrengthBase = 5,
-                      nodeSizeBase = 10, ...) {
+                      ...) {
 
   d3Links <- d3ft[[1]]
   d3Nodes <- d3ft[[2]]
 
   ## linkage strength
-  d3Links[, 3] <- linkStrengthBase * Normalize(d3Links[, 3], addSmall = 1e-5)
+  d3Links[, 3] <- linkStrengthBase * d3Links[, 3]
+  ## d3Links[, 3] <- linkStrengthBase * Normalize(d3Links[, 3], addSmall = 1e-5)
   ## d3Nodes[, 3] <- nodeSizeBase * Normalize(d3Nodes[, 3], addSmall = 1e-5)
 
   d3netObj <- forceNetwork(Links = d3Links, Nodes = d3Nodes,
                            Source = 'fromIdx', Target = 'toIdx',
                            Value = 'linkStrength', NodeID = 'entireSet',
-                           Group = 'groupVec', Nodesize = 'sizeVec',
-                           opacity = 0.8, linkColour = '#dfdfdf',
-                           charge = -30, ...)
+                           Group = 'colorVec', Nodesize = 'sizeVec',
+                           opacity = 1, linkColour = '#dfdfdf',
+                           charge = -30, bounded = TRUE,
+                           height = 1000, width = 1000,
+                           zoom = TRUE, fontSize = 18,
+                           colourScale = JS("e = function colourScale(colour) { return colour;}"), ...)
 
   return(d3netObj)
-
 }
 
 ##' @param d3NetObj A d3 network object from PlotNetworkD3().
@@ -123,7 +122,7 @@ writed3Net <- function(d3NetObj,
 ##' @param d3htmlPath An absolute path of html, for example '/home/User1/Download/index.html'.
 ##' @return A string vector containing the d3 network html elements.
 ##' @examples
-##' filePath <- system.file("extdata", "d3net.html", package = "PhyloProfileSuppl")
+##' filePath <- system.file("extdata", "d3net.html", package = "pppSupplR")
 ##' d3Ele <- d3ExtractNetEle(filePath)
 ##' @author Yulong Niu \email{niuylscu@@gmail.com}
 ##' @importFrom RCurl getURL
@@ -170,7 +169,7 @@ Normalize <- function(inputVec, addSmall = 0) {
   } else {
     normVec <- (inputVec - minVal)/(maxVal - minVal)
   }
-  
+
   ## add small value
   normVec <- normVec + addSmall
 

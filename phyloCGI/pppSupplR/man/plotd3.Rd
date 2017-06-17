@@ -6,23 +6,20 @@
 \alias{writed3Net}
 \title{plot D3 network}
 \usage{
-d3Transft(d3GeneVec, d3Annoft)
+d3Transft(d3Annoft)
 
-d3PlotNet(d3ft, linkStrengthBase = 5, nodeSizeBase = 10, ...)
+d3PlotNet(d3ft, linkStrengthBase = 5, ...)
 
 writed3Net(d3NetObj, fileName = "networkd3.html", savePath = "./")
 }
 \arguments{
-\item{d3GeneVec}{A gene vector used for d3 plot.}
+\item{d3Annoft}{A ft matrix used for d3 plot. 1st column: from nodes. 2nd column: to nodes. 3rd column: linkage strength, for example the Jaccard similarity ranging from 0 to 1. 4th column: linkage colours.
 
-\item{d3Annoft}{A ft matrix used for d3 plot. "d3GeneVec" must be in this ft matrix. 1st column: from nodes. 2nd column: to nodes. 3rd column: linkage strength, for example the Jaccard similarity ranging from 0 to 1.
 A normalized linkage strength is used. The nodes are grouped by different color, and the latter gene will cover the former one. The size of a node is determined by the number of its partners.}
 
-\item{d3ft}{The d3 ft list from Transft2D3().}
+\item{d3ft}{The d3 ft list from d3Transft().}
 
 \item{linkStrengthBase}{The base value of linkage strength.}
-
-\item{nodeSizeBase}{The base value of node size.}
 
 \item{...}{Additional paramters from forceNetwork().}
 
@@ -44,13 +41,10 @@ Plot network using the javascript D3 library
 D3 library is used for network plot.
 }
 \examples{
-data(atpft)
-atpft <- atpft[, c(1, 3, 5)]
-data(geneAnno)
-f1genes <- c('hsa:498', 'hsa:506', 'hsa:509', 'hsa:539', 'hsa:513', 'hsa:514')
-f1symbol <- c('ATP5A1', 'ATP5B', 'ATP5C1', 'ATP5O', 'ATP5D', 'ATP5E')
-newft <- Annoft(f1genes, atpft, geneAnno)
-newd3ft <- d3Transft(f1symbol, newft)
+filePath <- system.file("extdata", "linkage.csv", package = "pppSupplR")
+atpft <- read.csv(filePath, stringsAsFactor = FALSE)
+atpft <- atpft[, c(4, 8, 9, 11)]
+newd3ft <- d3Transft(atpft)
 d3Obj <- d3PlotNet(newd3ft)
 \dontrun{
 writed3Net(d3Obj, 'testd3.html')

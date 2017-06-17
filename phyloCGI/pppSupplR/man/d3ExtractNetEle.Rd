@@ -19,7 +19,7 @@ Extract d3 network elements
 Retrieve the d3 network elements from a html file.
 }
 \examples{
-filePath <- system.file("extdata", "d3net.html", package = "PhyloProfileSuppl")
+filePath <- system.file("extdata", "d3net.html", package = "pppSupplR")
 d3Ele <- d3ExtractNetEle(filePath)
 }
 \author{

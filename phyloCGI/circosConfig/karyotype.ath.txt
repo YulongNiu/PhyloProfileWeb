@@ -1,7 +1,0 @@
-chr - hs1 1 0 30427617 black
-chr - hs2 2 0 19698289 black
-chr - hs3 3 0 23459830 black
-chr - hs4 4 0 18585056 black
-chr - hs5 5 0 26975502 black
-chr - hsMT MT 0 366924 chrMT
-chr - hsPT PT 0 154478 chrPT

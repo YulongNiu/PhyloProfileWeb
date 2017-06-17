@@ -23,17 +23,12 @@
   {evalueObj}
 
   <h3 id="plot_profile">Phylogenetic profiles of input genes</h3>
-  {profileFigObj}
+  <center><img border="0" src="profilePlot.jpg" alt="profilePlot.jpg"></img></center>
 
   <h3 id="plot_cormatrix">Correlation matrix of input genes</h3>
-  {cormatrixFigObj}
+  <center><img border="0" src="cormatrixPlot.jpg" alt="cormatrixPlot.jpg"></img></center>
 
-  <h3 id="plot_circos">Circos plot of predicted linkages</h3>
-  <p>
-    {circosFigObj}
-  </p>
-
-  <h3 id="plot_circosJS">CircosJS plot of predicted linkages</h3>
+  <h3 id="plot_circosJS">Circos plot of predicted linkages</h3>
   <p>
     {circosJSFigObj}
   </p>
@@ -51,17 +46,15 @@
 
   <!-- network3d -->
   <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/d3network/htmlwidgets-0.8/htmlwidgets.js"></script>
-  <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/d3network/d3-4.5.0/d3.min.js"></script>
   <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/d3network/forceNetwork-binding-0.4/forceNetwork.js"></script>
 
   <!-- DataTable -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
   <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/linkmat/pppDataTable.js"></script>
 
   <!-- circosJS -->
   <script src="https://cdn.rawgit.com/nicgirault/circosJS/v2/dist/circos.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.js"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.3/d3-queue.js"></script> -->
   <script src="https://rawgit.com/YulongNiu/PhyloProfileWeb/master/phyloCGI/pppStyle/d3circos/{orgObj}_circos.js"></script>
 </html>
