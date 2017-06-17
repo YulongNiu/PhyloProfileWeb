@@ -56,7 +56,7 @@ d3Transft <- function(d3GeneVec, d3Annoft) {
     interLogic <- (d3Annoft[, 1] == entireSet[i]) | (d3Annoft[, 2] == entireSet[i])
     sizeVec[i] <- sum(interLogic)
   }
-  
+
   d3Nodes <- data.frame(entireSet = entireSet,
                         groupVec = groupVec,
                         sizeVec = sizeVec)
@@ -91,7 +91,8 @@ d3PlotNet <- function(d3ft,
                            Value = 'linkStrength', NodeID = 'entireSet',
                            Group = 'groupVec', Nodesize = 'sizeVec',
                            opacity = 0.8, linkColour = '#dfdfdf',
-                           charge = -30, ...)
+                           charge = -30, bounded = TRUE,
+                           height = 1000, width = 1000, ...)
 
   return(d3netObj)
 
