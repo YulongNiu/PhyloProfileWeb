@@ -8,7 +8,7 @@
 \usage{
 d3Transft(d3Annoft)
 
-d3PlotNet(d3ft, linkStrengthBase = 5, nodeSizeBase = 10, ...)
+d3PlotNet(d3ft, linkStrengthBase = 5, ...)
 
 writed3Net(d3NetObj, fileName = "networkd3.html", savePath = "./")
 }
@@ -20,8 +20,6 @@ A normalized linkage strength is used. The nodes are grouped by different color,
 \item{d3ft}{The d3 ft list from d3Transft().}
 
 \item{linkStrengthBase}{The base value of linkage strength.}
-
-\item{nodeSizeBase}{The base value of node size.}
 
 \item{...}{Additional paramters from forceNetwork().}
 

@@ -68,7 +68,6 @@ d3Transft <- function(d3Annoft) {
 
 ##' @param d3ft The d3 ft list from d3Transft().
 ##' @param linkStrengthBase The base value of linkage strength.
-##' @param nodeSizeBase The base value of node size.
 ##' @param ... Additional paramters from forceNetwork().
 ##' @rdname plotd3
 ##' @importFrom networkD3 forceNetwork JS
@@ -76,14 +75,14 @@ d3Transft <- function(d3Annoft) {
 ##'
 d3PlotNet <- function(d3ft,
                       linkStrengthBase = 5,
-                      nodeSizeBase = 10,
                       ...) {
 
   d3Links <- d3ft[[1]]
   d3Nodes <- d3ft[[2]]
 
   ## linkage strength
-  d3Links[, 3] <- linkStrengthBase * Normalize(d3Links[, 3], addSmall = 1e-5)
+  d3Links[, 3] <- linkStrengthBase * d3Links[, 3]
+  ## d3Links[, 3] <- linkStrengthBase * Normalize(d3Links[, 3], addSmall = 1e-5)
   ## d3Nodes[, 3] <- nodeSizeBase * Normalize(d3Nodes[, 3], addSmall = 1e-5)
 
   d3netObj <- forceNetwork(Links = d3Links, Nodes = d3Nodes,
