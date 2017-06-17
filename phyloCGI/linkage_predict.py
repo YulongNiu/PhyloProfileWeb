@@ -63,7 +63,7 @@ if fileSuffix not in ['csv', 'txt']:
 #########################get file###########################
 ##~~~~~~~~~~~~~~~~build tmp folder name~~~~~~~~~
 while True:
-    fnDir = RandomName('phylopred')
+    fnDir = RandomName('ppp')
     fn = tempPath + fnDir + '/'
     if os.path.exists(fn) is not True:
         # get an unique name
