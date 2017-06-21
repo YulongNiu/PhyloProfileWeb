@@ -131,7 +131,7 @@ var drawCircos = function (error, genome, cytobands, linkage, freqEu, freqArc, f
             {
                 color: '#969696',
                 strokeColor: 'black',
-                strokeWidth: 1,
+                strokeWidth: 0.2,
                 shape: 'circle',
                 size: 10,
                 min: 0,
