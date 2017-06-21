@@ -130,7 +130,7 @@ var drawCircos = function (error, genome, cytobands, linkage, freqEu, freqArc, f
             freqEu,
             {
                 color: '#969696',
-                strokeColor: 'black',
+                strokeColor: null,
                 strokeWidth: 1,
                 shape: 'circle',
                 size: 10,
@@ -163,7 +163,7 @@ var drawCircos = function (error, genome, cytobands, linkage, freqEu, freqArc, f
             freqArc,
             {
                 color: '#BDBDBD',
-                strokeColor: 'black',
+                strokeColor: null,
                 strokeWidth: 1,
                 shape: 'circle',
                 size: 10,
@@ -196,7 +196,7 @@ var drawCircos = function (error, genome, cytobands, linkage, freqEu, freqArc, f
             freqBac,
             {
                 color: '#D9D9D9',
-                strokeColor: 'black',
+                strokeColor: null,
                 strokeWidth: 1,
                 shape: 'circle',
                 size: 10,
