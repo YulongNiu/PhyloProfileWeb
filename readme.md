@@ -52,11 +52,7 @@ The number of input genes is supposed to be at least two. Otherwise, an error me
 
 * 3rd column
 
-3rd column defines linkages colours. The colour format is different from the ones in the 2nd column. The legal input colours are described as the [Circos configuration](http://circos.ca/documentation/tutorials/configuration/colors/). Seven colours, red, orange, yellow, green, blue, purple, and grey are predefined with prefix to show the light (`l`, `vl`, `vvl`) and dard (`d`, `vd`, `vvd`) verions. Five degrees of [transparent colous](http://circos.ca/tutorials/lessons/recipes/transparent_links/) are allowed, `_a1` have a 17% transparency, `_a2` 33%, `_a3` 50%, `_a4` 67% and `_a5` 83%. For example, `vlred_a4` is the very light red colour with 67% transparency. You may want to hidden the linkaged for certain genes, just use `NA` (not "na", not "white", not "Na") as the link color. But, at least one genes should have proper linkage colour.
-
-**An internal [Circos gene list](#14-annotation-files) is used for Circos plot, and any genes not in this list will be neglected**. The time of plotting the Circos figure increases dramatically along with increment of predicted linkages. As the web-server connection will be closed in 15 minutes, the input candidate gene number for Circos plot  we recommend is no more than `7`.
-
-The D3 interactive network is constructed based on the 3rd column data. It is designed as an alternative way to show the linkages network.
+3rd column defines linkages colours, which uses the same colour format as the 2nd column. You may want to hidden the linkaged for certain genes, just use `NA` (not "na", not "white", not "Na") as the link color. But, at least one genes should have proper linkage colour.**An internal [Circos gene list](#14-annotation-files) is used for Circos plot, and any genes not in this list will be neglected**. The D3 interactive network is also constructed based on the 3rd column data. It is designed as an alternative way to show the linkages network.
 
 * 4th column
 
