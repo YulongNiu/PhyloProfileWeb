@@ -1,15 +1,15 @@
-# User's guide #
+# PrePhyloPro manual #
 
 <!-- content start -->
 
 **Table of Contents**
 
-- [1. Input](#1-input)
-    - [1.1 Algorithm parameters](#11-algorithm-parameters)
-    - [1.2 Plot parameters](#12-plot-parameters)
-    - [1.3 Candidate gene list](#13-candidate-gene-list) 
-    - [1.4 Annotation files](#14-annotation-files) 
-- [2. Output](#2-output)
+- [2. Input](#2-input)
+    - [2.1 Algorithm parameters](#21-algorithm-parameters)
+    - [2.2 Plot parameters](#22-plot-parameters)
+    - [2.3 Candidate gene list](#23-candidate-gene-list) 
+    - [2.4 Annotation files](#24-annotation-files) 
+- [3. Output](#3-output)
 
 <!-- content end -->
 
