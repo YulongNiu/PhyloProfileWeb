@@ -17,7 +17,7 @@
 
 ## 1. Homepage ##
 
-Welcome visit `PrePhyloPro` at [http://prephylopro.org/phyloprofile/](http://prephylopro.org/phyloprofile/) and a backup [link](http://bioinfor.scu.edu.cn/phyloprofile/).
+`PrePhyloPro` is host at [http://prephylopro.org/phyloprofile/](http://prephylopro.org/phyloprofile/) and a backup [link](http://bioinfor.scu.edu.cn/phyloprofile/).
 
 ## 2. Input ##
 
