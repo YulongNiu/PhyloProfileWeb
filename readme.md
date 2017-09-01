@@ -11,7 +11,7 @@
     - [2.3 Candidate gene list](#23-candidate-gene-list) 
     - [2.4 Annotation files](#24-annotation-files) 
 - [3. Output](#3-output)
-- [4. Citation](#2-citation)
+- [4. Citation](#4-citation)
 
 <!-- content end -->
 
