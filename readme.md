@@ -13,10 +13,13 @@
 
 <!-- content end -->
 
+## 1. Homepage ##
 
-## 1. Input ##
+Welcome visit PrePhyloPro at [http://prephylopro.org/phyloprofile/](http://prephylopro.org/phyloprofile/) and a backup [link](http://bioinfor.scu.edu.cn/phyloprofile/).
 
-### 1.1 Algorithm parameters ###
+## 2. Input ##
+
+### 2.1 Algorithm parameters ###
 
 * Linkages number
 
@@ -32,11 +35,11 @@ Three BLAST E-value threshold, 0.001, 0.0005, 0.0001, were provided. This thresh
 
 *Homo sapiens* (human) and *Arabidopsis thaliana* (thale cress) are now supported. 
 
-### 1.2 Plot parameters ###
+### 2.2 Plot parameters ###
 
 Please try default plot parameters at first. If you are not satisfied with output figures, please adjust the parameters and run it again.
 
-### 1.3 Candidate gene list ###
+### 2.3 Candidate gene list ###
 
 Only the [`txt`](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.txt) (with the separator of `"Tab"`) or the [`csv`](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.csv) (with the separator of `","`) format is allowed for the input files. Please do not try to upload other types of files (like `test.html`). Otherwise, an error webpage may return.
 
@@ -58,14 +61,14 @@ The number of input genes is supposed to be at least two. Otherwise, an error me
 
 4th column allows pre-defined gene names (optional). As the GeneID (*e.g.*, `hsa:513`) is hard to get its meaning, the 4th column could provide a way to transfer the GeneID to other formats ([Example](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.txt)). The pre-defined gene names will be used inboth phylogenetic profile and correlation figures. This column is optional; if you want to keep the GeneID in figures, please leave it as blank (no column names and no values).
 
-### 1.4 Annotation files ###
+### 2.4 Annotation files ###
 
 |Organism|Input gene list (1st column)|Circos gene list|
 |:------:|:--------------------------:|:----------:|
 |*Homo sapiens*|20127 [Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/hsa_wholeGenomeAnno.csv)|19077 [Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/hsa_geneAnno.csv)|
 |*Arabidopsis thaliana*|27396 [Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/ath_wholeGenomeAnno.csv)|27394 [Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/ath_geneAnno.csv)|
 
-## 2. Output ##
+## 3. Output ##
 
 We provide two ways to illustrate the prediction results. A webpage merged the all the figures and tables will be returned at first. At the bottom of the webpage, a linkage will guide you to download all the results into your local computer.
 
@@ -79,7 +82,9 @@ The downloaded folder includes published quality of figures mentioned above in b
 
 Please download and save your results (at the end of the return webpage), the result files will be kept on the web-server only `2` hours.
 
+## 4. Citing PrePhyloPro ##
 
+PrePhyloPro is officially published on PeerJ.
 
 
 
