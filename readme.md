@@ -4,18 +4,20 @@
 
 **Table of Contents**
 
+- [1. Homepage](#1-homepage)
 - [2. Input](#2-input)
     - [2.1 Algorithm parameters](#21-algorithm-parameters)
     - [2.2 Plot parameters](#22-plot-parameters)
     - [2.3 Candidate gene list](#23-candidate-gene-list) 
     - [2.4 Annotation files](#24-annotation-files) 
 - [3. Output](#3-output)
+- [4. Citation](#2-citation)
 
 <!-- content end -->
 
 ## 1. Homepage ##
 
-Welcome visit `PrePhyloPro` at [![](https://img.shields.io/badge/PrePhyloPro-http%3A%2F%2Fprephylopro.org%2Fphyloprofile%2F-brightgreen.svg)](http://prephylopro.org/phyloprofile/) and a backup [link](http://bioinfor.scu.edu.cn/phyloprofile/).
+Welcome visit `PrePhyloPro` at [http://prephylopro.org/phyloprofile/](http://prephylopro.org/phyloprofile/) and a backup [link](http://bioinfor.scu.edu.cn/phyloprofile/).
 
 ## 2. Input ##
 
@@ -82,7 +84,7 @@ The downloaded folder includes published quality of figures mentioned above in b
 
 Please download and save your results (at the end of the return webpage), the result files will be kept on the web-server only `2` hours.
 
-## 4. Citing PrePhyloPro ##
+## 4. Citation ##
 
 `PrePhyloPro` is officially published on PeerJ.
 
