@@ -15,7 +15,7 @@
 
 ## 1. Homepage ##
 
-Welcome visit PrePhyloPro at [http://prephylopro.org/phyloprofile/](http://prephylopro.org/phyloprofile/) and a backup [link](http://bioinfor.scu.edu.cn/phyloprofile/).
+Welcome visit `PrePhyloPro` at [http://prephylopro.org/phyloprofile/](http://prephylopro.org/phyloprofile/) and a backup [link](http://bioinfor.scu.edu.cn/phyloprofile/).
 
 ## 2. Input ##
 
@@ -84,8 +84,9 @@ Please download and save your results (at the end of the return webpage), the re
 
 ## 4. Citing PrePhyloPro ##
 
-PrePhyloPro is officially published on PeerJ.
+`PrePhyloPro` is officially published on PeerJ.
 
+[![](https://img.shields.io/badge/DOI-https%3A%2F%2Fdoi.org%2F10.7717%2Fpeerj.3712-blue.svg)](https://doi.org/10.7717/peerj.3712)
 
 
 
