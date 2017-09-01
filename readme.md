@@ -86,7 +86,9 @@ Please download and save your results (at the end of the return webpage), the re
 
 ## 4. Citation ##
 
-`PrePhyloPro` is officially published on PeerJ.
+`PrePhyloPro` is officially published on PeerJ. Please cite the following article if you use `PrePhyloPro` in your project.
+
+**Niu Y**, Liu C, Moghimyfiroozabad S, Yang Y, Alavian KN. (2017) **PrePhyloPro: phylogenetic profile-based prediction of whole proteome linkages**. *PeerJ* 5:e3712.
 
 [![](https://img.shields.io/badge/DOI-https%3A%2F%2Fdoi.org%2F10.7717%2Fpeerj.3712-blue.svg)](https://doi.org/10.7717/peerj.3712)
 
