@@ -12,6 +12,7 @@
     - [2.4 Annotation files](#24-annotation-files) 
 - [3. Output](#3-output)
 - [4. Citation](#4-citation)
+- [5. Applications](#4-applications)
 
 <!-- content end -->
 
@@ -93,5 +94,12 @@ Please download and save your results (at the end of the return webpage), the re
 [![](https://img.shields.io/badge/DOI-https%3A%2F%2Fdoi.org%2F10.7717%2Fpeerj.3712-blue.svg)](https://doi.org/10.7717/peerj.3712)
 
 
+## 5. Applications ##
+
+1. `PrePhyloPro` is used to investigate the modular evolution of the F1Fo ATP synthase.
+
+**Niu Y**, Moghimyfiroozabad S, Safaie S, Yang Y, Jonas EA, Alavian KN (2017) **Phylogenetic Profiling of Mitochondrial Proteins and Integration Analysis of Bacterial Transcription Units Suggest Evolution of F1Fo ATP Synthase from Multiple Modules**. *J Mol Evol* 85: 219.
+
+[![](https://img.shields.io/badge/DOI-https%3A%2F%2Fdoi.org%2F10.1007%2Fs00239--017--9819--3-blue.svg)](https://doi.org/10.1007/s00239-017-9819-3)
 
 
