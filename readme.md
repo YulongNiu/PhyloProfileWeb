@@ -18,7 +18,7 @@
 
 ## 1. Homepage ##
 
-`PrePhyloPro` is host at [http://prephylopro.org/phyloprofile/](http://prephylopro.org/phyloprofile/) and a backup [link](http://bioinfor.scu.edu.cn/phyloprofile/).
+`PrePhyloPro` is host at [http://prephylopro.org/phyloprofile/](http://prephylopro.org/phyloprofile/) and a backup [link](http://173.255.208.244/phyloprofile/).
 
 ## 2. Input ##
 
@@ -44,7 +44,7 @@ Please try default plot parameters at first. If you are not satisfied with outpu
 
 ### 2.3 Candidate gene list ###
 
-Only the [`txt`](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.txt) (with the separator of `"Tab"`) or the [`csv`](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.csv) (with the separator of `","`) format is allowed for the input files. Please do not try to upload other types of files (like `test.html`). Otherwise, an error webpage may return.
+Only the [`txt`](http://173.255.208.244/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.txt) (with the separator of `"Tab"`) or the [`csv`](http://173.255.208.244/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.csv) (with the separator of `","`) format is allowed for the input files. Please do not try to upload other types of files (like `test.html`). Otherwise, an error webpage may return.
 
 The number of input genes is supposed to be at least two. Otherwise, an error message will return. There are several reasons. The important one is our algorithm is based on the whole genome, and the prediction results are more reliable when taking into account a cluster of genes like genes from a complex or a biological pathway.
 
@@ -62,14 +62,14 @@ The number of input genes is supposed to be at least two. Otherwise, an error me
 
 * 4th column
 
-4th column allows pre-defined gene names (optional). As the GeneID (*e.g.*, `hsa:513`) is hard to get its meaning, the 4th column could provide a way to transfer the GeneID to other formats ([Example](http://bioinfor.scu.edu.cn/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.txt)). The pre-defined gene names will be used inboth phylogenetic profile and correlation figures. This column is optional; if you want to keep the GeneID in figures, please leave it as blank (no column names and no values).
+4th column allows pre-defined gene names (optional). As the GeneID (*e.g.*, `hsa:513`) is hard to get its meaning, the 4th column could provide a way to transfer the GeneID to other formats ([Example](http://173.255.208.244/phyloprofile/Exampledata/phylopred_fatp1Link/atpSubOne.txt)). The pre-defined gene names will be used inboth phylogenetic profile and correlation figures. This column is optional; if you want to keep the GeneID in figures, please leave it as blank (no column names and no values).
 
 ### 2.4 Annotation files ###
 
 |Organism|Input gene list (1st column)|Circos gene list|
 |:------:|:--------------------------:|:----------:|
-|*Homo sapiens*|20127 [Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/hsa_wholeGenomeAnno.csv)|19077 [Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/hsa_geneAnno.csv)|
-|*Arabidopsis thaliana*|27396 [Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/ath_wholeGenomeAnno.csv)|27394 [Download](http://bioinfor.scu.edu.cn/phyloprofile/AnnoData/ath_geneAnno.csv)|
+|*Homo sapiens*|20127 [Download](http://173.255.208.244/phyloprofile/AnnoData/hsa_wholeGenomeAnno.csv)|19077 [Download](http://173.255.208.244/phyloprofile/AnnoData/hsa_geneAnno.csv)|
+|*Arabidopsis thaliana*|27396 [Download](http://173.255.208.244/phyloprofile/AnnoData/ath_wholeGenomeAnno.csv)|27394 [Download](http://173.255.208.244/phyloprofile/AnnoData/ath_geneAnno.csv)|
 
 ## 3. Output ##
 
